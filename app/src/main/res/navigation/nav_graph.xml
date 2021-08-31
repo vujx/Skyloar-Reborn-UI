@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/auctionFragment">
+
+    <fragment
+        android:id="@+id/auctionFragment"
+        android:name="com.example.presentation.ui.auctions.AuctionFragment"
+        android:label="@string/auctions" />
+    <fragment
+        android:id="@+id/leaderboardFragment"
+        android:name="com.example.presentation.ui.leaderboards.LeaderboardFragment"
+        android:label="@string/leaderboard" />
+    <fragment
+        android:id="@+id/statFragment"
+        android:name="com.example.presentation.ui.stat.StatFragment"
+        android:label="@string/stat" />
+
+</navigation>
