@@ -21,5 +21,4 @@ class LeaderboardFragment : Fragment(R.layout.fragment_leaderboard) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_leaderboard, null, false)
         return binding.root
     }
-
 }
