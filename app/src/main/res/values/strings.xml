@@ -2,20 +2,22 @@
     <string name="app_name">SR-UI</string>
 
     <!-- AuctionFragment-->
-    <string name="min_price">Min. price:</string>
-    <string name="max_price">Max. price:</string>
-    <string name="results_page">Results page:</string>
-    <string name="searched">Searched:</string>
+    <string name="min_price">Min. price</string>
+    <string name="max_price">Max. price</string>
+    <string name="results_page">Results page</string>
+    <string name="count_search">Searched: %d</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="enter_card">Card name</string>
+    <string name="search">Search</string>
+    <string name="export">Export</string>
 
     <!-- Toolbar-->
     <string name="auctions">Auctions</string>
     <string name="leaderboard">LeaderBoard</string>
     <string name="stat">Statistics</string>
-    <string name="search">Search</string>
     <string name="navigation">Navigation</string>
-    <string name="export">Export</string>
+
 
     <!-- Errors -->
     <string name="auction_not_found">Auction not found, try again!</string>

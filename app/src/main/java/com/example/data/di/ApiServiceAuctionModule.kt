@@ -1,7 +1,10 @@
 package com.example.data.di
 
+import android.content.Context
 import com.example.data.network.AuctionService
 import com.example.util.Constants
+import com.example.util.getUnsafeOkHttpClient
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,12 +24,13 @@ object ApiServiceAuctionModule {
             .build()
     }
 
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(context: Context): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addInterceptor(ChuckInterceptor(context))
             .build()
     }
 }

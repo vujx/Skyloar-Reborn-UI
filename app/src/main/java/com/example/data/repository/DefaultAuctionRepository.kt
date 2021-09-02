@@ -3,6 +3,7 @@ package com.example.data.repository
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.CardEntity
 import com.example.data.model.auction.ListOfAuctionsEntity
+import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.network.AuctionService
 import com.example.domain.repository.auction.AuctionNetworkDataSource
 import retrofit2.Response
@@ -16,7 +17,7 @@ class DefaultAuctionRepository(private val auctionService: AuctionService) :
         input: String?,
         minPrice: Int?,
         maxPrice: Int?
-    ): Response<ListOfAuctionsEntity> =
+    ): Response<List<AuctionEntityItem>> =
         auctionService.getListOfAuctions(page, number, input, minPrice, maxPrice)
 
     override suspend fun getAuctionById(id: Int): Response<AuctionEntityItem> =
@@ -27,4 +28,11 @@ class DefaultAuctionRepository(private val auctionService: AuctionService) :
 
     override suspend fun exportAuctions(): Response<Any> =
         auctionService.exportAuctions()
+
+    override suspend fun getNumberOfSearchResults(
+        input: String?,
+        minPrice: Int?,
+        maxPrice: Int?
+    ): Response<NumberOfSearchResultsEntity> =
+        auctionService.getNumberOfSearchResults(input, minPrice, maxPrice)
 }
