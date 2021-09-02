@@ -23,18 +23,24 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
     val auctions: LiveData<Resource<List<AuctionEntityItem>>> = _auctions
 
     val numOfSearchResult = MutableLiveData<Int>()
+    val pageResult = MutableLiveData<String>()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         onError(App.getStringResource(R.string.unexpected_error))
     }
 
     private fun getNumberOfSearchResults(
+        page: Int,
+        number: Int,
         input: String?,
         minPrice: Int?,
         maxPrice: Int?
     ) = viewModelScope.launch(Dispatchers.IO) {
         val listOfParams = listOf<Any?>(input, minPrice, maxPrice)
-        numOfSearchResult.postValue(auctionUseCase.getNumberOfSearchResults.getNumberOfSearchResult(listOfParams))
+        val countSearch =
+            auctionUseCase.getNumberOfSearchResults.getNumberOfSearchResult(listOfParams)
+        numOfSearchResult.postValue(countSearch)
+        pageResult.postValue("$page / ${((countSearch/number) + 1)}")
     }
 
     fun getListOfAuctions(
@@ -48,7 +54,7 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _auctions.postValue(Resource.Loading())
             auctionUseCase.getListOfAuctions.execute(listOfParams, this@AuctionViewModel)
-            getNumberOfSearchResults(input, minPrice, maxPrice)
+            getNumberOfSearchResults(page, number, input, minPrice, maxPrice)
         }
     }
 

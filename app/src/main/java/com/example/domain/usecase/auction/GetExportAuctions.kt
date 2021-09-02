@@ -1,5 +1,6 @@
 package com.example.domain.usecase.auction
 
+import android.util.Log
 import com.example.App
 import com.example.R
 import com.example.domain.repository.auction.AuctionRepository
@@ -22,6 +23,7 @@ class GetExportAuctions(
                 else -> callback.onError(App.getStringResource(R.string.unexpected_error))
             }
         } catch (e: Exception) {
+            Log.d("ispis", e.toString())
             HandleCallbackError<Any>().handleOnErrorCallback(e, callback)
         }
     }

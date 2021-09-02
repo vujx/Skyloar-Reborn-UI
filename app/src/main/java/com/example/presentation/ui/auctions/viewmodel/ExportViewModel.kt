@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.App
 import com.example.R
 import com.example.data.usecase.AuctionUseCase
-import com.example.domain.model.Auction
 import com.example.domain.usecase.BaseUseCase
 import com.example.util.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -19,7 +18,7 @@ class ExportViewModel(private val auctionUseCase: AuctionUseCase) :
     BaseUseCase.Callback<Any> {
 
     private val _exportFile = MutableLiveData<Resource<Any>>()
-    val exportFile: LiveData<Resource<Any>> = _exportFile
+    val dsadsaasd: LiveData<Resource<Any>> = _exportFile
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         onError(App.getStringResource(R.string.unexpected_error))

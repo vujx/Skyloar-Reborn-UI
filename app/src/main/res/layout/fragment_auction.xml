@@ -20,6 +20,11 @@
         <variable
             name="viewModelExport"
             type="com.example.presentation.ui.auctions.viewmodel.ExportViewModel" />
+
+        <variable
+            name="clickListener"
+            type="com.example.presentation.ui.helper.AuctionOnClickHelper" />
+
         <import type="android.view.View" />
     </data>
 
@@ -32,6 +37,8 @@
             android:id="@+id/etSearchCardName"
             style="@style/textInputAttributes"
             android:hint="@string/enter_card"
+            android:inputType="text"
+            android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -42,6 +49,7 @@
             android:id="@+id/etMinPrice"
             style="@style/textInputAttributes"
             android:hint="@string/min_price"
+            android:inputType="number"
             app:layout_constraintEnd_toStartOf="@id/etMaxPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etSearchCardName">
@@ -52,6 +60,7 @@
             android:id="@+id/etMaxPrice"
             style="@style/textInputAttributes"
             android:hint="@string/max_price"
+            android:inputType="number"
             app:layout_constraintEnd_toStartOf="@id/etResultsPerPage"
             app:layout_constraintStart_toEndOf="@id/etMinPrice"
             app:layout_constraintTop_toBottomOf="@id/etSearchCardName">
@@ -72,6 +81,7 @@
             android:id="@+id/btnSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModelAuction.getListOfAuctions(Integer.parseInt(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' '))), Integer.parseInt(etResultsPerPage.getText().toString()) , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
             android:text="@string/search"
             app:layout_constraintEnd_toStartOf="@id/btnExport"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +91,7 @@
             android:id="@+id/btnExport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.exportFileOfAuctions()}"
             android:text="@string/export"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnSearch"
@@ -124,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:onClick="@{() -> clickListener.onBackBtnPress(viewModelAuction, tvPage.getText().toString(), Integer.parseInt(etResultsPerPage.getText().toString()) , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -135,6 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
+            android:onClick="@{() -> clickListener.onNextBtnPress(viewModelAuction, tvPage.getText().toString(), Integer.parseInt(etResultsPerPage.getText().toString()) , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
             android:src="@drawable/ic_baseline_arrow_forward_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,8 +155,10 @@
             tools:ignore="ContentDescription" />
 
         <TextView
+            android:id="@+id/tvPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModelAuction.pageResult}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivForward"

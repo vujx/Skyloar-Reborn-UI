@@ -1,6 +1,7 @@
 package com.example
 
 import android.app.Application
+import android.content.Context
 import android.content.res.Resources
 import com.example.data.di.ApiServiceAuctionModule.provideAuctionService
 import com.example.data.di.ApiServiceAuctionModule.provideHttpClient
@@ -49,7 +50,9 @@ class App : Application() {
     }
     override fun onCreate() {
         super.onCreate()
+
         getResources = resources
+        ctx = applicationContext
 
         startKoin {
             androidLogger()
@@ -70,5 +73,6 @@ class App : Application() {
         lateinit var getResources: Resources
         private fun getResource() = getResources
         fun getStringResource(id: Int) = getResource().getString(id)
+        lateinit var ctx: Context
     }
 }

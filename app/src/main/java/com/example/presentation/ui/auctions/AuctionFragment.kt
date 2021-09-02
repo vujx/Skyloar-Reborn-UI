@@ -1,6 +1,7 @@
 package com.example.presentation.ui.auctions
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.auctions.viewmodel.ExportViewModel
+import com.example.presentation.ui.helper.AuctionOnClickHelper
 import com.example.presentation.ui.helper.ProgressBarHelper
 import com.example.presentation.ui.helper.SearchResultHelper
 import com.example.util.Resource
@@ -30,7 +32,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
 
     private val progressBarHelper = ProgressBarHelper()
     private val searchResultHelper = SearchResultHelper()
-
+    private val onClickHelper = AuctionOnClickHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +75,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
             }
         )
 
-        viewModelExportFile.exportFile.observe(viewLifecycleOwner,
+        viewModelExportFile.dsadsaasd.observe(viewLifecycleOwner,
             { result ->
                 when(result) {
                     is Resource.Success -> {
@@ -103,8 +105,9 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
         binding.apply {
             progressBarHlp = progressBarHelper
             searchResult = searchResultHelper
-            this.viewModelAuction = this@AuctionFragment.viewModelAuction
-            this.viewModelExport = viewModelExportFile
+            viewModelAuction = this@AuctionFragment.viewModelAuction
+            viewModelExport = viewModelExportFile
+            clickListener = onClickHelper
         }
     }
 }
