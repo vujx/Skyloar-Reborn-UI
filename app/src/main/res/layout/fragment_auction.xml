@@ -91,7 +91,7 @@
             android:id="@+id/btnExport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.exportFileOfAuctions()}"
+            android:onClick="@{() -> viewModelExport.getExportFileWithAllAuctions()}"
             android:text="@string/export"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnSearch"
@@ -122,7 +122,7 @@
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bottomAppBar"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:backgroundTint="@color/black"
                 android:gravity="bottom">
 
@@ -155,15 +155,25 @@
             tools:ignore="ContentDescription" />
 
         <TextView
+            android:id="@+id/tvSad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivForward"
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"/>
+
+        <TextView
             android:id="@+id/tvPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModelAuction.pageResult}"
             android:textColor="@color/white"
+            android:onClick="@{() -> clickListener.onPagePress(Integer.parseInt(tvPage.getText().toString().substring(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' ')).length() + 3)))}"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
             app:layout_constraintEnd_toStartOf="@id/ivForward"
-            app:layout_constraintStart_toEndOf="@id/ivBack"
-            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+            app:layout_constraintStart_toEndOf="@id/ivBack"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

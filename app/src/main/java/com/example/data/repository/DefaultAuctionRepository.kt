@@ -6,6 +6,7 @@ import com.example.data.model.auction.ListOfAuctionsEntity
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.network.AuctionService
 import com.example.domain.repository.auction.AuctionNetworkDataSource
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class DefaultAuctionRepository(private val auctionService: AuctionService) :
@@ -26,7 +27,7 @@ class DefaultAuctionRepository(private val auctionService: AuctionService) :
     override suspend fun getCardById(id: Int): Response<CardEntity> =
         auctionService.getCardById(id)
 
-    override suspend fun exportAuctions(): Response<Any> =
+    override suspend fun exportAuctions(): Response<ResponseBody> =
         auctionService.exportAuctions()
 
     override suspend fun getNumberOfSearchResults(

@@ -1,14 +1,11 @@
 package com.example.presentation.ui.helper
 
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.net.Uri
-import com.example.App
+import com.example.presentation.ui.auctions.AuctionFragment
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
-import com.example.util.Constants
+import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
 
-class AuctionOnClickHelper(
-) {
+class AuctionOnClickHelper(private val frg: AuctionFragment)
+{
 
     fun onBackBtnPress(
         viewModelAuction: AuctionViewModel,
@@ -43,10 +40,8 @@ class AuctionOnClickHelper(
             viewModelAuction.getListOfAuctions(numOfPage + 1, number, input, minPrice, maxPrice)
     }
 
-    fun exportFileOfAuctions() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(Constants.BASE_URL_EXPORT_FILE)
-        intent.flags = FLAG_ACTIVITY_NEW_TASK
-        App.ctx.startActivity(intent)
+    fun onPagePress(lastPage: Int) {
+        val dialog = DialogForAddingPageNumber(frg, lastPage)
+        dialog.show(frg.requireActivity().supportFragmentManager, "PageNumberChange")
     }
 }

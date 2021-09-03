@@ -4,6 +4,7 @@ import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.CardEntity
 import com.example.data.model.auction.ListOfAuctionsEntity
 import com.example.data.model.auction.NumberOfSearchResultsEntity
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 interface AuctionNetworkDataSource {
@@ -20,7 +21,7 @@ interface AuctionNetworkDataSource {
 
     suspend fun getCardById(id: Int): Response<CardEntity>
 
-    suspend fun exportAuctions(): Response<Any>
+    suspend fun exportAuctions(): Response<ResponseBody>
 
     suspend fun getNumberOfSearchResults(
         input: String?,

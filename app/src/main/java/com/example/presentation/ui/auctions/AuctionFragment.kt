@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,15 +15,17 @@ import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.auctions.viewmodel.ExportViewModel
+import com.example.presentation.ui.dialogs.DialogPageListener
 import com.example.presentation.ui.helper.AuctionOnClickHelper
 import com.example.presentation.ui.helper.ProgressBarHelper
 import com.example.presentation.ui.helper.SearchResultHelper
+import com.example.util.RangeEditText
 import com.example.util.Resource
 import com.example.util.displayMessage
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AuctionFragment : Fragment(R.layout.fragment_auction) {
+class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener {
 
     private lateinit var binding: FragmentAuctionBinding
 
@@ -32,7 +35,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
 
     private val progressBarHelper = ProgressBarHelper()
     private val searchResultHelper = SearchResultHelper()
-    private val onClickHelper = AuctionOnClickHelper()
+    private val onClickHelper = AuctionOnClickHelper(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +57,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
         viewModelAuction.auctions.observe(
             viewLifecycleOwner,
             { result ->
-                when(result) {
+                when (result) {
                     is Resource.Success -> {
                         progressBarHelper.setLoading(false)
                         searchResultHelper.setSearchResult("")
@@ -77,7 +80,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
 
         viewModelExportFile.dsadsaasd.observe(viewLifecycleOwner,
             { result ->
-                when(result) {
+                when (result) {
                     is Resource.Success -> {
                         progressBarHelper.setLoading(false)
                     }
@@ -88,7 +91,10 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
                     is Resource.Loading -> progressBarHelper.setLoading(true)
                     is Resource.Empty -> {
                         progressBarHelper.setLoading(false)
-                        displayMessage(App.getStringResource(R.string.unexpected_error), requireContext())
+                        displayMessage(
+                            App.getStringResource(R.string.unexpected_error),
+                            requireContext()
+                        )
                     }
                 }
             })
@@ -110,4 +116,13 @@ class AuctionFragment : Fragment(R.layout.fragment_auction) {
             clickListener = onClickHelper
         }
     }
+
+    override fun getPageNumber(pageNum: Int) {
+        viewModelAuction.pageResult.postValue("$pageNum / ${
+            viewModelAuction.numOfSearchResult.value?.div(
+                Integer.parseInt(binding.etResultsPerPage.text.toString())
+            )?.plus(1)
+        }")
+    }
 }
+

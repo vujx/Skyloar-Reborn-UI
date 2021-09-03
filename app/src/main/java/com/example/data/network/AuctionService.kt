@@ -3,10 +3,11 @@ package com.example.data.network
 import androidx.annotation.Keep
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.CardEntity
-import com.example.data.model.auction.ListOfAuctionsEntity
 import com.example.data.model.auction.NumberOfSearchResultsEntity
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface AuctionService {
@@ -33,9 +34,11 @@ interface AuctionService {
         @Query("id") id: Int
     ): Response<CardEntity>
 
+    @Headers("accept: text/csv")
     @Keep
     @GET("/api/auctions/export")
-    suspend fun exportAuctions(): Response<Any>
+    suspend fun exportAuctions(): Response<ResponseBody>
+
 
     @Keep
     @GET("/api/auctions/count")
