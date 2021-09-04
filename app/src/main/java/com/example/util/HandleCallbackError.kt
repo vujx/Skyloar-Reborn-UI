@@ -1,4 +1,4 @@
-package com.example.domain.util
+package com.example.util
 
 import com.example.App
 import com.example.domain.usecase.BaseUseCase

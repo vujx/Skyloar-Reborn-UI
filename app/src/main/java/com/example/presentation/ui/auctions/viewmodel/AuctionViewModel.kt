@@ -8,7 +8,6 @@ import com.example.App
 import com.example.R
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.usecase.AuctionUseCase
-import com.example.domain.model.Auction
 import com.example.domain.usecase.BaseUseCase
 import com.example.util.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -40,7 +39,7 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
         val countSearch =
             auctionUseCase.getNumberOfSearchResults.getNumberOfSearchResult(listOfParams)
         numOfSearchResult.postValue(countSearch)
-        pageResult.postValue("$page / ${((countSearch/number) + 1)}")
+        pageResult.postValue("$page / ${((countSearch / number) + 1)}")
     }
 
     fun getListOfAuctions(

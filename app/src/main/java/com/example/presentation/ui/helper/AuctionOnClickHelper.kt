@@ -4,8 +4,7 @@ import com.example.presentation.ui.auctions.AuctionFragment
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
 
-class AuctionOnClickHelper(private val frg: AuctionFragment)
-{
+class AuctionOnClickHelper(private val frg: AuctionFragment) {
 
     fun onBackBtnPress(
         viewModelAuction: AuctionViewModel,
@@ -17,7 +16,7 @@ class AuctionOnClickHelper(private val frg: AuctionFragment)
     ) {
         val numOfPage = page.substring(0, page.indexOf(' ')).toInt()
         val lastPage = page.substring(numOfPage.toString().length + 3).toInt()
-        if(numOfPage == 1)
+        if (numOfPage == 1)
             viewModelAuction.getListOfAuctions(lastPage, number, input, minPrice, maxPrice)
         else
             viewModelAuction.getListOfAuctions(numOfPage - 1, number, input, minPrice, maxPrice)
@@ -34,7 +33,7 @@ class AuctionOnClickHelper(private val frg: AuctionFragment)
         val numOfPage = page.substring(0, page.indexOf(' ')).toInt()
         val lastPage = page.substring(numOfPage.toString().length + 3).toInt()
 
-        if(numOfPage == lastPage)
+        if (numOfPage == lastPage)
             viewModelAuction.getListOfAuctions(1, number, input, minPrice, maxPrice)
         else
             viewModelAuction.getListOfAuctions(numOfPage + 1, number, input, minPrice, maxPrice)

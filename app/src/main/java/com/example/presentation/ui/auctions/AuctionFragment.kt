@@ -1,11 +1,9 @@
 package com.example.presentation.ui.auctions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,6 @@ import com.example.presentation.ui.dialogs.DialogPageListener
 import com.example.presentation.ui.helper.AuctionOnClickHelper
 import com.example.presentation.ui.helper.ProgressBarHelper
 import com.example.presentation.ui.helper.SearchResultHelper
-import com.example.util.RangeEditText
 import com.example.util.Resource
 import com.example.util.displayMessage
 import org.koin.android.ext.android.inject
@@ -78,7 +75,8 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
             }
         )
 
-        viewModelExportFile.dsadsaasd.observe(viewLifecycleOwner,
+        viewModelExportFile.exportFile.observe(
+            viewLifecycleOwner,
             { result ->
                 when (result) {
                     is Resource.Success -> {
@@ -97,7 +95,8 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
                         )
                     }
                 }
-            })
+            }
+        )
     }
 
     private fun setUpRecyclerView() {
@@ -118,11 +117,12 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
     }
 
     override fun getPageNumber(pageNum: Int) {
-        viewModelAuction.pageResult.postValue("$pageNum / ${
-            viewModelAuction.numOfSearchResult.value?.div(
-                Integer.parseInt(binding.etResultsPerPage.text.toString())
-            )?.plus(1)
-        }")
+        viewModelAuction.pageResult.postValue(
+            "$pageNum / ${
+                viewModelAuction.numOfSearchResult.value?.div(
+                    Integer.parseInt(binding.etResultsPerPage.text.toString())
+                )?.plus(1)
+            }"
+        )
     }
 }
-

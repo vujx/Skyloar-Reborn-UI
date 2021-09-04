@@ -3,7 +3,6 @@ package com.example.data.di
 import android.content.Context
 import com.example.data.network.AuctionService
 import com.example.util.Constants
-import com.example.util.getUnsafeOkHttpClient
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

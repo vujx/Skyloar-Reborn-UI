@@ -4,7 +4,7 @@ import com.example.domain.repository.auction.AuctionRepository
 
 class GetNumberOfSearchResults(
     private val auctionRepo: AuctionRepository
-)  {
+) {
 
     suspend fun getNumberOfSearchResult(params: List<Any?>): Int {
         try {
@@ -20,10 +20,10 @@ class GetNumberOfSearchResults(
                 }
             )
 
-            return if(response.code() == 200){
-                response.body()?.count ?:  0
-            } else  0
-        } catch(e: Exception) {
+            return if (response.code() == 200) {
+                response.body()?.count ?: 0
+            } else 0
+        } catch (e: Exception) {
             return 0
         }
     }

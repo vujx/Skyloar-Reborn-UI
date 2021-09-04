@@ -22,23 +22,10 @@ interface AuctionService {
         @Query("maxPrice") maxPrice: Int?
     ): Response<List<AuctionEntityItem>>
 
-    @Keep
-    @GET("/auction")
-    suspend fun getAuctionById(
-        @Query("id") id: Int
-    ): Response<AuctionEntityItem>
-
-    @Keep
-    @GET("/api/auctions/cards")
-    suspend fun getCardById(
-        @Query("id") id: Int
-    ): Response<CardEntity>
-
     @Headers("accept: text/csv")
     @Keep
     @GET("/api/auctions/export")
     suspend fun exportAuctions(): Response<ResponseBody>
-
 
     @Keep
     @GET("/api/auctions/count")

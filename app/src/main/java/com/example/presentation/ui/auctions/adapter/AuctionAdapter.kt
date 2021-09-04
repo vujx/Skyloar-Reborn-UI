@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.R
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.databinding.ItemAuctionBinding
-import com.example.domain.model.Auction
 
 class AuctionAdapter : RecyclerView.Adapter<AuctionViewHolder>() {
 

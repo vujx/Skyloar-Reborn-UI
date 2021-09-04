@@ -161,19 +161,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivForward"
             app:layout_constraintStart_toEndOf="@id/ivBack"
-            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"/>
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
 
         <TextView
             android:id="@+id/tvPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onPagePress(Integer.parseInt(tvPage.getText().toString().substring(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' ')).length() + 3)))}"
             android:text="@{viewModelAuction.pageResult}"
             android:textColor="@color/white"
-            android:onClick="@{() -> clickListener.onPagePress(Integer.parseInt(tvPage.getText().toString().substring(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' ')).length() + 3)))}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
             app:layout_constraintEnd_toStartOf="@id/ivForward"
-            app:layout_constraintStart_toEndOf="@id/ivBack"/>
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
 
         <ProgressBar
             android:id="@+id/progressBar"

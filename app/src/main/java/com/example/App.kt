@@ -14,10 +14,9 @@ import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.auctions.viewmodel.ExportViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import org.koin.androidx.viewmodel.dsl.viewModel
-
 
 class App : Application() {
 
@@ -48,11 +47,10 @@ class App : Application() {
     private val adapterModule = module {
         factory { AuctionAdapter() }
     }
+
     override fun onCreate() {
         super.onCreate()
-
         getResources = resources
-        ctx = applicationContext
 
         startKoin {
             androidLogger()
@@ -73,6 +71,5 @@ class App : Application() {
         lateinit var getResources: Resources
         private fun getResource() = getResources
         fun getStringResource(id: Int) = getResource().getString(id)
-        lateinit var ctx: Context
     }
 }

@@ -1,12 +1,11 @@
 package com.example.domain.usecase.auction
 
-import android.util.Log
 import com.example.App
 import com.example.R
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.domain.repository.auction.AuctionRepository
 import com.example.domain.usecase.BaseUseCase
-import com.example.domain.util.HandleCallbackError
+import com.example.util.HandleCallbackError
 
 class GetListOfAuctions(
     private val auctionRepo: AuctionRepository
@@ -30,7 +29,6 @@ class GetListOfAuctions(
                     it as Int
                 }
             )
-            Log.d("ispis", response.code().toString())
             when (response.code()) {
                 200 -> {
                     response.body()?.let { result ->
@@ -41,7 +39,6 @@ class GetListOfAuctions(
                 else -> callback.onError(App.getStringResource(R.string.unexpected_error))
             }
         } catch (e: Exception) {
-            Log.d("ipsiov", e.toString())
             HandleCallbackError<List<AuctionEntityItem>>().handleOnErrorCallback(e, callback)
         }
     }
