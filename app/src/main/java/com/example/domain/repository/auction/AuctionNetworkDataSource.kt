@@ -16,8 +16,6 @@ interface AuctionNetworkDataSource {
         maxPrice: Int?
     ): Response<List<AuctionEntityItem>>
 
-    suspend fun exportAuctions(): Response<ResponseBody>
-
     suspend fun getNumberOfSearchResults(
         input: String?,
         minPrice: Int?,

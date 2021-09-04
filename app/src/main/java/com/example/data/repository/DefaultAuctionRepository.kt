@@ -20,9 +20,6 @@ class DefaultAuctionRepository(private val auctionService: AuctionService) :
     ): Response<List<AuctionEntityItem>> =
         auctionService.getListOfAuctions(page, number, input, minPrice, maxPrice)
 
-    override suspend fun exportAuctions(): Response<ResponseBody> =
-        auctionService.exportAuctions()
-
     override suspend fun getNumberOfSearchResults(
         input: String?,
         minPrice: Int?,

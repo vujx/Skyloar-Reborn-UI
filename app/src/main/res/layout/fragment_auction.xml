@@ -18,99 +18,105 @@
             type="com.example.presentation.ui.auctions.viewmodel.AuctionViewModel" />
 
         <variable
-            name="viewModelExport"
-            type="com.example.presentation.ui.auctions.viewmodel.ExportViewModel" />
-
-        <variable
             name="clickListener"
             type="com.example.presentation.ui.helper.AuctionOnClickHelper" />
 
+        <variable
+            name="titleCheck"
+            type="java.lang.String" />
+
+        <variable
+            name="auctionHelper"
+            type="com.example.presentation.ui.helper.AuctionHelper" />
         <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         tools:context=".presentation.ui.auctions.AuctionFragment">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSearchCardName"
-            style="@style/textInputAttributes"
-            android:hint="@string/enter_card"
-            android:inputType="text"
-            android:text=""
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlSearchCard"
+            style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:layout_constraintEnd_toStartOf="@id/ivSearchBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tlMinPrice">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearchCardName"
+                android:layout_width="376dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_card"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivSearchBtn"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:onClick="@{() -> viewModelAuction.getListOfAuctions(Integer.parseInt(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' '))), 20 , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMinPrice.getText().toString()), etMaxPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
+            android:src="@drawable/ic_baseline_search_24"
+            app:layout_constraintBottom_toBottomOf="@id/tlSearchCard"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tlMinPrice"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:strokeWidth="1dp"
+            android:background="#56000000"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlMinPrice"
+            style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:layout_constraintEnd_toStartOf="@id/tlMaxPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </com.google.android.material.textfield.TextInputEditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMinPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/min_price"
+                android:inputType="number"
+                android:maxLength="8"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etMinPrice"
-            style="@style/textInputAttributes"
-            android:hint="@string/min_price"
-            android:inputType="number"
-            app:layout_constraintEnd_toStartOf="@id/etMaxPrice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etSearchCardName">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputEditText>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etMaxPrice"
-            style="@style/textInputAttributes"
-            android:hint="@string/max_price"
-            android:inputType="number"
-            app:layout_constraintEnd_toStartOf="@id/etResultsPerPage"
-            app:layout_constraintStart_toEndOf="@id/etMinPrice"
-            app:layout_constraintTop_toBottomOf="@id/etSearchCardName">
-
-        </com.google.android.material.textfield.TextInputEditText>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etResultsPerPage"
-            style="@style/textInputAttributes"
-            android:hint="@string/results_page"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/etMaxPrice"
-            app:layout_constraintTop_toBottomOf="@id/etSearchCardName">
-
-        </com.google.android.material.textfield.TextInputEditText>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSearch"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlMaxPrice"
+            style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModelAuction.getListOfAuctions(Integer.parseInt(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' '))), Integer.parseInt(etResultsPerPage.getText().toString()) , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
-            android:text="@string/search"
-            app:layout_constraintEnd_toStartOf="@id/btnExport"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etMinPrice" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnExport"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModelExport.getExportFileWithAllAuctions()}"
-            android:text="@string/export"
+            android:layout_margin="2dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnSearch"
-            app:layout_constraintTop_toBottomOf="@id/etMinPrice" />
+            app:layout_constraintStart_toEndOf="@id/tlMinPrice"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMaxPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/max_price"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAuction"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/tvSearchedResults"
-            app:layout_constraintTop_toBottomOf="@id/btnSearch" />
-
-        <TextView
-            android:id="@+id/tvSearchedResults"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.format(@string/count_search, viewModelAuction.numOfSearchResult)}"
-            app:layout_constraintBottom_toTopOf="@id/coordinatorLayout"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
+            app:layout_constraintTop_toBottomOf="@id/tvCardTitle" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
@@ -130,38 +136,39 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+        <TextView
+            android:id="@+id/tvSearchedResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModelAuction.numOfSearchResult.equals(null) ? String.format(@string/count_search, 0) : String.format(@string/count_search, viewModelAuction.numOfSearchResult)}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:onClick="@{() -> clickListener.onBackBtnPress(viewModelAuction, tvPage.getText().toString(), Integer.parseInt(etResultsPerPage.getText().toString()) , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{() -> clickListener.onBackBtnPress(viewModelAuction, tvPage.getText().toString(), 20, auctionHelper.cardName, auctionHelper.minPrice, auctionHelper.maxPrice)}"
             android:src="@drawable/ic_baseline_arrow_back_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
+            app:layout_constraintBottom_toBottomOf="@id/tvPage"
+            app:layout_constraintEnd_toStartOf="@id/tvPage"
+            app:layout_constraintTop_toTopOf="@id/tvPage"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/ivForward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:onClick="@{() -> clickListener.onNextBtnPress(viewModelAuction, tvPage.getText().toString(), Integer.parseInt(etResultsPerPage.getText().toString()) , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
+            android:layout_marginStart="8dp"
+            android:onClick="@{() -> clickListener.onNextBtnPress(viewModelAuction, tvPage.getText().toString(), 20, auctionHelper.cardName, auctionHelper.minPrice, auctionHelper.maxPrice)}"
             android:src="@drawable/ic_baseline_arrow_forward_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
+            app:layout_constraintBottom_toBottomOf="@id/tvPage"
+            app:layout_constraintStart_toEndOf="@id/tvPage"
+            app:layout_constraintTop_toTopOf="@id/tvPage"
             tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/tvSad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivForward"
-            app:layout_constraintStart_toEndOf="@id/ivBack"
-            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
 
         <TextView
             android:id="@+id/tvPage"
@@ -171,9 +178,21 @@
             android:text="@{viewModelAuction.pageResult}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivForward"
-            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+
+        <ImageView
+            android:id="@+id/ivExportBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> clickListener.onExportPress()}"
+            android:src="@drawable/ic_baseline_ios_share_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
+            tools:ignore="ContentDescription" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -197,6 +216,78 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCardTitle"
+            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#65000000"
+            android:gravity="center"
+            android:text="@string/card"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/tlSearchCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvStartTitle"/>
+
+        <TextView
+            android:id="@+id/tvStartTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:text="@string/start"
+            android:textColor="@color/white"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
+            app:layout_constraintStart_toEndOf="@id/tvCardTitle"
+            app:layout_constraintEnd_toStartOf="@id/tvBidTitle"
+          />
+
+
+        <TextView
+            android:id="@+id/tvBidTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:text="@string/bid"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
+            app:layout_constraintStart_toEndOf="@id/tvStartTitle"
+            app:layout_constraintEnd_toStartOf="@id/tvBuyoutTitle"/>
+
+        <TextView
+            android:id="@+id/tvBuyoutTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:text="@string/buyout"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
+            app:layout_constraintStart_toEndOf="@id/tvBidTitle"
+            app:layout_constraintEnd_toStartOf="@id/tvEndTitle" />
+
+        <TextView
+            android:id="@+id/tvEndTitle"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:text="@string/end"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

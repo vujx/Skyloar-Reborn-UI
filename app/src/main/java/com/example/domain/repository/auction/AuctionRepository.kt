@@ -17,9 +17,6 @@ class AuctionRepository(private val auctionDataSource: AuctionNetworkDataSource)
     ): Response<List<AuctionEntityItem>> =
         auctionDataSource.getListOfAuctions(page, number, input, minPrice, maxPrice)
 
-    suspend fun exportAuctions(): Response<ResponseBody> =
-        auctionDataSource.exportAuctions()
-
     suspend fun getNumberOfSearchResults(
         input: String?,
         minPrice: Int?,

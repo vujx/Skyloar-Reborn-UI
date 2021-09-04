@@ -10,3 +10,9 @@ fun displayMessage(message: String, context: Context) {
     toast.show()
 }
 
+fun checkIfInputIsEmpty(input: String): Int? =
+    if(input.isBlank())
+        null
+    else
+        Integer.parseInt(input)
+

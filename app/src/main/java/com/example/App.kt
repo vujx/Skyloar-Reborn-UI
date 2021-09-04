@@ -1,7 +1,6 @@
 package com.example
 
 import android.app.Application
-import android.content.Context
 import android.content.res.Resources
 import com.example.data.di.ApiServiceAuctionModule.provideAuctionService
 import com.example.data.di.ApiServiceAuctionModule.provideHttpClient
@@ -11,7 +10,6 @@ import com.example.data.repository.DefaultAuctionRepository
 import com.example.domain.repository.auction.AuctionRepository
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
-import com.example.presentation.ui.auctions.viewmodel.ExportViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -38,9 +36,6 @@ class App : Application() {
     private val viewModelModule = module {
         viewModel {
             AuctionViewModel(get())
-        }
-        viewModel {
-            ExportViewModel(get())
         }
     }
 

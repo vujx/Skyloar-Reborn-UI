@@ -9,7 +9,6 @@ object UseCaseModule {
     fun provideAuctionUseCase(auctionRepo: AuctionRepository) =
         AuctionUseCase(
             GetListOfAuctions(auctionRepo),
-            GetExportAuctions(auctionRepo),
             GetNumberOfSearchResults(auctionRepo)
         )
 }
