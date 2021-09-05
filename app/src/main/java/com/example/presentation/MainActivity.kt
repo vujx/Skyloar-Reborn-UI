@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.example.R
 import com.example.databinding.ActivityMainBinding
+import com.example.presentation.ui.helper.ConnectionHelper
+import com.example.util.ConnectionLiveData
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,12 +22,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private val navDrawerList = NavDrawerList(this)
 
+    private lateinit var connectionLiveData: ConnectionLiveData
+    private lateinit var connectionHelper: ConnectionHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        setDataValues()
         setToolbar()
         setNavHost()
+    }
+
+    private fun setDataValues() {
+        connectionLiveData = ConnectionLiveData(context = this)
+        connectionHelper = ConnectionHelper(connectionLiveData, this)
+        binding.connection = connectionHelper
+        connectionHelper.observeInternetConnection()
     }
 
     override fun onSupportNavigateUp(): Boolean {

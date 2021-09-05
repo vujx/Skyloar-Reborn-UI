@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="connection"
+            type="com.example.presentation.ui.helper.ConnectionHelper" />
+
+        <import type="android.view.View" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,12 +26,24 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/app_name" />
 
+        <TextView
+            android:id="@+id/text_view_network_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#BC000000"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="@string/no_internet_connection"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:visibility="@{connection.isLoading ? View.GONE : View.VISIBLE}" />
+
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawerLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toBottomOf="@id/text_view_network_banner">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment_container"
@@ -31,7 +52,7 @@
                 android:layout_height="0dp"
                 app:defaultNavHost="true"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintTop_toBottomOf="@id/text_view_network_banner"
                 app:navGraph="@navigation/nav_graph" />
 
             <com.google.android.material.navigation.NavigationView
