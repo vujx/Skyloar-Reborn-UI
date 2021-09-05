@@ -2,6 +2,7 @@ package com.example.presentation.ui.auctions
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,6 +70,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
                             checkIfInputIsEmpty(binding.etMinPrice.text.toString()),
                             checkIfInputIsEmpty(binding.etMaxPrice.text.toString())
                         )
+                        Log.d("issosi", "ovo")
                     }
                     is Resource.Failure -> {
                         progressBarHelper.setLoading(false)

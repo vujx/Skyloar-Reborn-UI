@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@id/tlMinPrice"
             app:shapeAppearanceOverlay="@style/roundedImageView"
             app:strokeWidth="1dp"
-            android:background="#56000000"
+            android:background="#E53935"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout
