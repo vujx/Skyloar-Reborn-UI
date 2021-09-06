@@ -1,4 +1,4 @@
-package com.example.presentation.ui.helper
+package com.example.presentation.ui.helper.auction
 
 import android.app.DownloadManager
 import android.content.Context

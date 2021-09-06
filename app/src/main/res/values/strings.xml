@@ -25,6 +25,7 @@
 
     <!-- Errors -->
     <string name="auction_not_found">Auction not found, try again!</string>
+    <string name="stat_not_found">Statistics not found, try again!</string>
     <string name="unexpected_error">Unexpected error. Please try again later.</string>
     <string name="check_internet">Check you internet connection!</string>
     <string name="no_internet_connection">No Internet Connection</string>
@@ -38,4 +39,103 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <!-- FragmentStat -->
+    <string-array name="statPaths">
+        <item>accounts</item>
+        <item>sessions</item>
+        <item>matches</item>
+        <item>players</item>
+        <item>matches/1v1</item>
+        <item>matches/2v2</item>
+        <item>matches/1pve</item>
+        <item>matches/2pve</item>
+        <item>matches/4pve</item>
+        <item>matches/12pve</item>
+        <item>matches/1rpve</item>
+        <item>matches/2rpve</item>
+        <item>matches/4rpve</item>
+        <item>matches/1cpve</item>
+        <item>matches/2cpve</item>
+        <item>matches/4cpve</item>
+        <item>matches/c1v1</item>
+        <item>matches/c2v2</item>
+        <item>quests/active</item>
+        <item>quests/completed</item>
+        <item>matches/1pve</item>
+        <item>matches/2pve</item>
+        <item>matches/4pve</item>
+        <item>matches/12pve</item>
+        <item>matches/1rpve</item>
+        <item>matches/2rpve</item>
+        <item>matches/4rpve</item>
+        <item>matches/1cpve</item>
+        <item>quests/rerolled</item>
+        <item>auctions</item>
+        <item>auctions/watchers</item>
+        <item>cards</item>
+        <item>upgrades</item>
+        <item>boosters</item>
+        <item>boosters/opened</item>
+        <item>boosters/spent</item>
+        <item>mails</item>
+        <item>decks</item>
+        <item>transactions</item>
+        <item>friendlist</item>
+        <item>mutelist</item>
+        <item>experience</item>
+        <item>elo</item>
+        <item>bfp</item>
+        <item>gold</item>
+        <item>scratch</item>
+    </string-array>
+
+
+    <string-array name="statTitle">
+        <item>Registered accounts</item>
+        <item>Online players</item>
+        <item>Running matches</item>
+        <item>Total players in matches</item>
+        <item>Active quests</item>
+        <item>Completed quests</item>
+        <item>Rerolled quests</item>
+        <item>Live auctions</item>
+        <item>Unopened boosters</item>
+        <item>Opened boosters</item>
+        <item>Total BFP spent on boosters</item>
+        <item>Owned cards</item>
+        <item>Owned card upgrades</item>
+        <item>Unique decks</item>
+        <item>Sent mails</item>
+        <item>Completed game transactions</item>
+        <item>Total scratch codes used</item>
+        <item>Total number of players watching auctions</item>
+        <item>Total experience</item>
+        <item>Total PvP ELO</item>
+        <item>Total gold</item>
+        <item>Total BFP</item>
+        <item>Total number of players in friends lists</item>
+        <item>Total number of players on mute</item>
+        <item>1-player PvE matches won</item>
+        <item>2-player PvE matches won</item>
+        <item>4-player PvE matches won</item>
+        <item>12-player PvE matches won</item>
+        <item>1-player Random PvE matches won</item>
+        <item>2-player Random PvE matches won</item>
+        <item>4-player Random PvE matches won</item>
+        <item>1-player Community PvE matches won</item>
+        <item>2-player Community PvE matches won</item>
+        <item>4-player Community PvE matches won</item>
+        <item>1v1 PvP matches won</item>
+        <item>2v2 PvP matches won</item>
+        <item>1v1 PvP Community matches played</item>
+        <item>2v2 PvP Community matches played</item>
+        <item>3v3 PvP Community matches played</item>
+        <item>friendlist</item>
+        <item>mutelist</item>
+        <item>experience</item>
+        <item>elo</item>
+        <item>bfp</item>
+        <item>gold</item>
+        <item>scratch</item>
+    </string-array>
 </resources>

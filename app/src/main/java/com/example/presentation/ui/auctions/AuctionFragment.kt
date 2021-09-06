@@ -15,10 +15,10 @@ import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.dialogs.DialogPageListener
-import com.example.presentation.ui.helper.AuctionHelper
-import com.example.presentation.ui.helper.AuctionOnClickHelper
-import com.example.presentation.ui.helper.ProgressBarHelper
-import com.example.presentation.ui.helper.SearchResultHelper
+import com.example.presentation.ui.helper.auction.AuctionHelper
+import com.example.presentation.ui.helper.auction.AuctionOnClickHelper
+import com.example.presentation.ui.helper.auction.ProgressBarHelper
+import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.util.RangeEditText
 import com.example.util.Resource
 import com.example.util.checkIfInputIsEmpty

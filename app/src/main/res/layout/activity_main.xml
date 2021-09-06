@@ -7,7 +7,7 @@
 
         <variable
             name="connection"
-            type="com.example.presentation.ui.helper.ConnectionHelper" />
+            type="com.example.presentation.ui.helper.auction.ConnectionHelper" />
 
         <import type="android.view.View" />
     </data>

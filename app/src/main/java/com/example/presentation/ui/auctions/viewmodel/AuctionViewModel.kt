@@ -53,7 +53,6 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _auctions.postValue(Resource.Loading())
             auctionUseCase.getListOfAuctions.execute(listOfParams, this@AuctionViewModel)
-
         }
 
         getNumberOfSearchResults(page, number, input, minPrice, maxPrice)

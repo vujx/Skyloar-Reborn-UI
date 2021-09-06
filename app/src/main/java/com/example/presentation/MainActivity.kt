@@ -1,6 +1,7 @@
 package com.example.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.example.R
 import com.example.databinding.ActivityMainBinding
-import com.example.presentation.ui.helper.ConnectionHelper
+import com.example.presentation.ui.helper.auction.ConnectionHelper
 import com.example.util.ConnectionLiveData
 
 class MainActivity : AppCompatActivity() {

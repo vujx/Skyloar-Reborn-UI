@@ -7,11 +7,11 @@
 
         <variable
             name="progressBarHlp"
-            type="com.example.presentation.ui.helper.ProgressBarHelper" />
+            type="com.example.presentation.ui.helper.auction.ProgressBarHelper" />
 
         <variable
             name="searchResult"
-            type="com.example.presentation.ui.helper.SearchResultHelper" />
+            type="com.example.presentation.ui.helper.auction.SearchResultHelper" />
 
         <variable
             name="viewModelAuction"
@@ -19,7 +19,7 @@
 
         <variable
             name="clickListener"
-            type="com.example.presentation.ui.helper.AuctionOnClickHelper" />
+            type="com.example.presentation.ui.helper.auction.AuctionOnClickHelper" />
 
         <variable
             name="titleCheck"
@@ -27,7 +27,7 @@
 
         <variable
             name="auctionHelper"
-            type="com.example.presentation.ui.helper.AuctionHelper" />
+            type="com.example.presentation.ui.helper.auction.AuctionHelper" />
         <import type="android.view.View" />
     </data>
 
