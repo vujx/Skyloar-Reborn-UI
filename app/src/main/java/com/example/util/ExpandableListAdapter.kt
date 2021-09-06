@@ -10,7 +10,6 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import com.example.R
 
-
 class ExpandableListAdapter(
     private val ctx: Context,
     private val listDataHeader: List<String>,
@@ -30,8 +29,11 @@ class ExpandableListAdapter(
 
     @SuppressLint("InflateParams")
     override fun getChildView(
-        groupPosition: Int, childPosition: Int,
-        isLastChild: Boolean, convertView: View?, parent: ViewGroup?
+        groupPosition: Int,
+        childPosition: Int,
+        isLastChild: Boolean,
+        convertView: View?,
+        parent: ViewGroup?
     ): View {
         var chgConvertView: View? = convertView
         val childText = getChild(groupPosition, childPosition) as String
@@ -67,8 +69,10 @@ class ExpandableListAdapter(
 
     @SuppressLint("InflateParams")
     override fun getGroupView(
-        groupPosition: Int, isExpanded: Boolean,
-        convertView: View?, parent: ViewGroup?
+        groupPosition: Int,
+        isExpanded: Boolean,
+        convertView: View?,
+        parent: ViewGroup?
     ): View? {
         var chgConvertView: View? = convertView
         val headerTitle = getGroup(groupPosition) as String

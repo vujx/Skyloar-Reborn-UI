@@ -10,17 +10,18 @@ import com.example.databinding.ItemStatBinding
 
 class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
 
-    private val listOfStatValue = mutableListOf<Int>()
+    private val listOfStatValue = mutableListOf<Long>()
 
-    fun setListOfStatValues(list: List<Int>) {
+    fun setListOfStatValues(list: List<Long>) {
         listOfStatValue.clear()
         listOfStatValue.addAll(list)
         notifyDataSetChanged()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatViewHolder {
         val binding: ItemStatBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_auction,
+            R.layout.item_stat,
             parent,
             false
         )
@@ -28,7 +29,8 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
-        holder.itemStat.statTitle = App.getResources.getStringArray(R.array.statTitle)[position].toString()
+        holder.itemStat.statTitle =
+            App.getResources.getStringArray(R.array.statTitle)[position].toString()
         holder.itemStat.statValue = listOfStatValue[position]
     }
 

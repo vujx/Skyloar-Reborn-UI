@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
 
 class StatViewModel(private val statUseCase: StatUseCase) :
     ViewModel(),
-    BaseUseCase.Callback<List<Int>> {
+    BaseUseCase.Callback<List<Long>> {
 
-    private val _statValues = MutableLiveData<Resource<List<Int>>>()
-    val statValues: LiveData<Resource<List<Int>>> = _statValues
+    private val _statValues = MutableLiveData<Resource<List<Long>>>()
+    val statValues: LiveData<Resource<List<Long>>> = _statValues
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         onError(App.getStringResource(R.string.unexpected_error))
@@ -29,7 +29,7 @@ class StatViewModel(private val statUseCase: StatUseCase) :
         statUseCase.getListOfStatValues.execute(null, this@StatViewModel)
     }
 
-    override fun onSuccess(result: List<Int>) {
+    override fun onSuccess(result: List<Long>) {
         if (result.isEmpty()) _statValues.postValue(Resource.Empty())
         else _statValues.postValue(Resource.Success(result))
     }

@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="statTitle"
             type="java.lang.String" />
 
         <variable
             name="statValue"
-            type="java.lang.Integer" />
+            type="java.lang.Long" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,21 +21,29 @@
             android:id="@+id/tvStatTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/tv_borders"
+            android:text="@{statTitle}"
+            android:padding="10dp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvStatValue"
-            app:layout_constraintVertical_weight="7"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_weight="6" />
 
         <TextView
             android:id="@+id/tvStatValue"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="tvStatTitle"
-            app:layout_constraintBottom_toBottomOf="tvStatTitle"
+            android:layout_height="0dp"
+            android:background="@drawable/tv_borders"
+            android:padding="10dp"
+            android:text="@{String.valueOf(statValue).equals(`-1`) ? @string/not_found_stat_value : String.valueOf(statValue)}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tvStatTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvStatTitle"
-            app:layout_constraintVertical_weight="3"/>
+            app:layout_constraintTop_toTopOf="@id/tvStatTitle"
+            app:layout_constraintHorizontal_weight="4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,6 @@
 package com.example.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +50,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
         drawerToggle = ActionBarDrawerToggle(
-            this, binding.drawerLayout, binding.toolbar,
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
             R.string.open,
             R.string.close
         )

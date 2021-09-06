@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SR-UI</string>
 
@@ -22,6 +23,8 @@
     <string name="leaderboard">LeaderBoard</string>
     <string name="stat">Statistics</string>
     <string name="navigation">Navigation</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <!-- Errors -->
     <string name="auction_not_found">Auction not found, try again!</string>
@@ -36,17 +39,37 @@
     <string name="page_title">Page Number:</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
 
     <!-- FragmentStat -->
+    <string name="stat_title">Stat</string>
+    <string name="value">Value</string>
+    <string name="statistic_values_not_found_try_again">Statistic values not found, try again!</string>
+    <string name="not_found_stat_value">Not found!</string>
     <string-array name="statPaths">
         <item>accounts</item>
         <item>sessions</item>
         <item>matches</item>
-        <item>players</item>
-        <item>matches/1v1</item>
-        <item>matches/2v2</item>
+        <item>matches/players</item>
+        <item>quests/active</item>
+        <item>quests/completed</item>
+        <item>quests/rerolled</item>
+        <item>auctions</item>
+        <item>boosters</item>
+        <item>boosters/opened</item>
+        <item>boosters/spent</item>
+        <item>cards</item>
+        <item>upgrades</item>
+        <item>decks</item>
+        <item>mails</item>
+        <item>transactions</item>
+        <item>scratch</item>
+        <item>auctions/watchers</item>
+        <item>experience</item>
+        <item>elo</item>
+        <item>gold</item>
+        <item>bfp</item>
+        <item>friendlist</item>
+        <item>mutelist</item>
         <item>matches/1pve</item>
         <item>matches/2pve</item>
         <item>matches/4pve</item>
@@ -57,36 +80,11 @@
         <item>matches/1cpve</item>
         <item>matches/2cpve</item>
         <item>matches/4cpve</item>
+        <item>matches/1v1</item>
+        <item>matches/2v2</item>
         <item>matches/c1v1</item>
         <item>matches/c2v2</item>
-        <item>quests/active</item>
-        <item>quests/completed</item>
-        <item>matches/1pve</item>
-        <item>matches/2pve</item>
-        <item>matches/4pve</item>
-        <item>matches/12pve</item>
-        <item>matches/1rpve</item>
-        <item>matches/2rpve</item>
-        <item>matches/4rpve</item>
-        <item>matches/1cpve</item>
-        <item>quests/rerolled</item>
-        <item>auctions</item>
-        <item>auctions/watchers</item>
-        <item>cards</item>
-        <item>upgrades</item>
-        <item>boosters</item>
-        <item>boosters/opened</item>
-        <item>boosters/spent</item>
-        <item>mails</item>
-        <item>decks</item>
-        <item>transactions</item>
-        <item>friendlist</item>
-        <item>mutelist</item>
-        <item>experience</item>
-        <item>elo</item>
-        <item>bfp</item>
-        <item>gold</item>
-        <item>scratch</item>
+        <item>matches/c3v3</item>
     </string-array>
 
 
@@ -130,12 +128,5 @@
         <item>1v1 PvP Community matches played</item>
         <item>2v2 PvP Community matches played</item>
         <item>3v3 PvP Community matches played</item>
-        <item>friendlist</item>
-        <item>mutelist</item>
-        <item>experience</item>
-        <item>elo</item>
-        <item>bfp</item>
-        <item>gold</item>
-        <item>scratch</item>
     </string-array>
 </resources>

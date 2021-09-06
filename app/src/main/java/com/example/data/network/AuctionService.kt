@@ -30,8 +30,15 @@ interface AuctionService {
     ): Response<NumberOfSearchResultsEntity>
 
     @Keep
-    @GET("/api/{statPath}")
+    @GET("/api/stats/{statPath}")
     suspend fun getCount(
         @Path("statPath") stat: String
+    ): Response<StatEntity>
+
+    @Keep
+    @GET("/api/stats/{statPath1}/{statPath2}")
+    suspend fun getCountWithMultiplePath(
+        @Path("statPath1") stat1: String,
+        @Path("statPath2") stat2: String
     ): Response<StatEntity>
 }

@@ -28,6 +28,7 @@
         <variable
             name="auctionHelper"
             type="com.example.presentation.ui.helper.auction.AuctionHelper" />
+
         <import type="android.view.View" />
     </data>
 
@@ -62,6 +63,7 @@
             android:layout_height="52dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="2dp"
+            android:background="#E53935"
             android:onClick="@{() -> viewModelAuction.getListOfAuctions(Integer.parseInt(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' '))), 20 , etSearchCardName.getText().toString().isEmpty() ? null : etSearchCardName.getText().toString(), etMinPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMinPrice.getText().toString()), etMaxPrice.getText().toString().isEmpty() ? null : Integer.parseInt(etMaxPrice.getText().toString()))}"
             android:src="@drawable/ic_baseline_search_24"
             app:layout_constraintBottom_toBottomOf="@id/tlSearchCard"
@@ -69,7 +71,6 @@
             app:layout_constraintTop_toBottomOf="@id/tlMinPrice"
             app:shapeAppearanceOverlay="@style/roundedImageView"
             app:strokeWidth="1dp"
-            android:background="#E53935"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/min_price"
                 android:inputType="number"
-                android:maxLength="8"/>
+                android:maxLength="8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -219,33 +220,32 @@
 
         <TextView
             android:id="@+id/tvCardTitle"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="#65000000"
             android:gravity="center"
             android:text="@string/card"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toBottomOf="@id/tlSearchCard"
+            app:layout_constraintEnd_toStartOf="@id/tvStartTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tvStartTitle"/>
+            app:layout_constraintTop_toBottomOf="@id/tlSearchCard" />
 
         <TextView
             android:id="@+id/tvStartTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:background="@drawable/tv_border_values"
             android:gravity="center"
             android:text="@string/start"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
-            app:layout_constraintStart_toEndOf="@id/tvCardTitle"
             app:layout_constraintEnd_toStartOf="@id/tvBidTitle"
-          />
+            app:layout_constraintStart_toEndOf="@id/tvCardTitle"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
 
         <TextView
@@ -255,12 +255,12 @@
             android:background="@drawable/tv_border_values"
             android:gravity="center"
             android:text="@string/bid"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
+            app:layout_constraintEnd_toStartOf="@id/tvBuyoutTitle"
             app:layout_constraintStart_toEndOf="@id/tvStartTitle"
-            app:layout_constraintEnd_toStartOf="@id/tvBuyoutTitle"/>
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
         <TextView
             android:id="@+id/tvBuyoutTitle"
@@ -269,12 +269,12 @@
             android:background="@drawable/tv_border_values"
             android:gravity="center"
             android:text="@string/buyout"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
+            app:layout_constraintEnd_toStartOf="@id/tvEndTitle"
             app:layout_constraintStart_toEndOf="@id/tvBidTitle"
-            app:layout_constraintEnd_toStartOf="@id/tvEndTitle" />
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
         <TextView
             android:id="@+id/tvEndTitle"
@@ -283,11 +283,11 @@
             android:background="@drawable/tv_border_values"
             android:gravity="center"
             android:text="@string/end"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,9 +2,9 @@ package com.example.presentation.ui.helper.auction
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import com.example.BR
 import com.example.presentation.MainActivity
 import com.example.util.ConnectionLiveData
-import com.example.BR
 
 class ConnectionHelper(
     private var connectionLiveData: ConnectionLiveData,

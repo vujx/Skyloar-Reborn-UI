@@ -11,4 +11,9 @@ class DefaultStatRepository(private val auctionService: AuctionService) :
     override suspend fun getCount(path: String): Response<StatEntity> =
         auctionService.getCount(path)
 
+    override suspend fun getCountWithMultiplePaths(
+        path1: String,
+        path2: String
+    ): Response<StatEntity> =
+        auctionService.getCountWithMultiplePath(path1, path2)
 }

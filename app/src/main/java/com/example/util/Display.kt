@@ -11,8 +11,7 @@ fun displayMessage(message: String, context: Context) {
 }
 
 fun checkIfInputIsEmpty(input: String): Int? =
-    if(input.isBlank())
+    if (input.isBlank())
         null
     else
         Integer.parseInt(input)
-

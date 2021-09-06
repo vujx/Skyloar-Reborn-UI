@@ -56,7 +56,6 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
         }
 
         getNumberOfSearchResults(page, number, input, minPrice, maxPrice)
-
     }
 
     override fun onSuccess(result: List<AuctionEntityItem>) {

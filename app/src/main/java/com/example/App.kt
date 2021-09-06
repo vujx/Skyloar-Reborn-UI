@@ -6,10 +6,15 @@ import com.example.data.di.ApiServiceAuctionModule.provideAuctionService
 import com.example.data.di.ApiServiceAuctionModule.provideHttpClient
 import com.example.data.di.ApiServiceAuctionModule.provideRetrofit
 import com.example.data.di.UseCaseModule.provideAuctionUseCase
+import com.example.data.di.UseCaseModule.provideStatUseCase
 import com.example.data.repository.DefaultAuctionRepository
+import com.example.data.repository.DefaultStatRepository
 import com.example.domain.repository.auction.AuctionRepository
+import com.example.domain.repository.stat.StatRepository
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
+import com.example.presentation.ui.stat.adapter.StatAdapter
+import com.example.presentation.ui.stat.viewmodel.StatViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -27,20 +32,29 @@ class App : Application() {
     private val repoModule = module {
         single { DefaultAuctionRepository(get()) }
         single { AuctionRepository(get<DefaultAuctionRepository>()) }
+
+        single { DefaultStatRepository(get()) }
+        single { StatRepository(get<DefaultStatRepository>()) }
     }
 
     private val useCaseModule = module {
         factory { provideAuctionUseCase(get()) }
+        factory { provideStatUseCase(get()) }
     }
 
     private val viewModelModule = module {
         viewModel {
             AuctionViewModel(get())
         }
+
+        viewModel {
+            StatViewModel(get())
+        }
     }
 
     private val adapterModule = module {
         factory { AuctionAdapter() }
+        factory { StatAdapter() }
     }
 
     override fun onCreate() {

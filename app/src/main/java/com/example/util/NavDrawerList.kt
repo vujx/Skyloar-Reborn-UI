@@ -3,6 +3,7 @@ package com.algebra.soccernewtry.navdrawer
 import android.view.View
 import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.R
 import com.example.util.ExpandableListAdapter
 
@@ -37,6 +38,11 @@ class NavDrawerList(private val activity: AppCompatActivity) {
         (listDataHeader as ArrayList<String>).add("Statistics")
         (listDataHeader as ArrayList<String>).add("LeaderBoards")
 
+        val auctions: MutableList<String> = ArrayList()
+        auctions.add("Auctions")
+        val stat: MutableList<String> = ArrayList()
+        stat.add("Statistics")
+
         val leaderboards: MutableList<String> = ArrayList()
         leaderboards.add("1vs1")
         leaderboards.add("2vs2")
@@ -45,11 +51,15 @@ class NavDrawerList(private val activity: AppCompatActivity) {
         leaderboards.add("4P PvE")
         leaderboards.add("12P PvE")
 
+        listDataChild!![(listDataHeader as ArrayList<String>)[0]] = auctions
+        listDataChild!![(listDataHeader as ArrayList<String>)[1]] = stat
         listDataChild!![(listDataHeader as ArrayList<String>)[2]] = leaderboards
 
-        expListView?.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+        expListView?.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             when (listDataChild!![listDataHeader!![groupPosition]]!![childPosition]) {
+                "Auctions" -> {
 
+                }
             }
             false
         }

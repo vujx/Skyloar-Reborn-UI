@@ -1,11 +1,9 @@
 package com.example.data.repository
 
 import com.example.data.model.auction.AuctionEntityItem
-import com.example.data.model.auction.CardEntity
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.network.AuctionService
 import com.example.domain.repository.auction.AuctionNetworkDataSource
-import okhttp3.ResponseBody
 import retrofit2.Response
 
 class DefaultAuctionRepository(private val auctionService: AuctionService) :
