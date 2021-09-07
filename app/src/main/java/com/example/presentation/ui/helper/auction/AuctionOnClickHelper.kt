@@ -50,7 +50,7 @@ class AuctionOnClickHelper(private val frg: AuctionFragment) {
     }
 
     fun onExportPress() {
-        val request = DownloadManager.Request(Uri.parse(Constants.BASE_URL_EXPORT_FILE))
+        val request = DownloadManager.Request(Uri.parse(Constants.BASE_URL_EXPORT_AUCTIONS))
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
         request.setTitle("Download")
         request.setDescription("The file is downloading...")

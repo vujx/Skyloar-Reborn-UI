@@ -1,4 +1,4 @@
-package com.example.data.repository
+package com.example.data.repository.stat
 
 import com.example.data.model.stat.StatEntity
 import com.example.data.network.AuctionService

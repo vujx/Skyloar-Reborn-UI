@@ -3,6 +3,10 @@ package com.example.data.network
 import androidx.annotation.Keep
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.NumberOfSearchResultsEntity
+import com.example.data.model.leaderboards.NameValueEntityItem
+import com.example.data.model.leaderboards.PlayerPvEEntityItem
+import com.example.data.model.leaderboards.PlayerPvPEntityItem
+import com.example.data.model.leaderboards.TimeToNextRefreshEntity
 import com.example.data.model.stat.StatEntity
 import retrofit2.Response
 import retrofit2.http.GET
@@ -41,4 +45,57 @@ interface AuctionService {
         @Path("statPath1") stat1: String,
         @Path("statPath2") stat2: String
     ): Response<StatEntity>
+
+    @Keep
+    @GET("/api/next-load")
+    suspend fun getTimeToNextRefresh(): Response<TimeToNextRefreshEntity>
+
+    @Keep
+    @GET("/api/maps")
+    suspend fun getMapsByMode(
+        @Query("type") type: Int
+    ): Response<List<NameValueEntityItem>>
+
+    @Keep
+    @GET("/api/{path}}")
+    suspend fun getRanges(
+        @Path("path") path: String
+    ): Response<List<NameValueEntityItem>>
+
+    @Keep
+    @GET("/api/leaderboards/pve-count")
+    suspend fun getPvECount(
+        @Query("type") type: Int,
+        @Query("players") players: Int,
+        @Query("map") map: Int,
+        @Query("month") month: Int
+    ): Response<NumberOfSearchResultsEntity>
+
+    @Keep
+    @GET("/api/leaderboards/pve")
+    suspend fun getListOfPvELeaderboard(
+        @Query("type") type: Int,
+        @Query("players") players: Int,
+        @Query("map") map: Int,
+        @Query("month") month: Int,
+        @Query("page") page: Int,
+        @Query("number") number: Int,
+    ): Response<List<PlayerPvEEntityItem>>
+
+    @Keep
+    @GET("/api/leaderboards/pvp-count")
+    suspend fun getPvPCount(
+        @Query("type") type: Int,
+        @Query("month") month: Int
+    ): Response<NumberOfSearchResultsEntity>
+
+    @Keep
+    @GET("/api/leaderboards/pvp")
+    suspend fun getListOfPvPLeaderboard(
+        @Query("type") type: Int,
+        @Query("month") month: Int,
+        @Query("page") page: Int,
+        @Query("number") number: Int,
+    ): Response<List<PlayerPvPEntityItem>>
+
 }

@@ -17,7 +17,7 @@ object ApiServiceAuctionModule {
 
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_AUCTION)
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create().asLenient())
             .client(client)
             .build()

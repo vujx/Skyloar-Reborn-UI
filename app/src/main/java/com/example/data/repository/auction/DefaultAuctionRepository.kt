@@ -1,4 +1,4 @@
-package com.example.data.repository
+package com.example.data.repository.auction
 
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.NumberOfSearchResultsEntity

@@ -7,8 +7,8 @@ import com.example.data.di.ApiServiceAuctionModule.provideHttpClient
 import com.example.data.di.ApiServiceAuctionModule.provideRetrofit
 import com.example.data.di.UseCaseModule.provideAuctionUseCase
 import com.example.data.di.UseCaseModule.provideStatUseCase
-import com.example.data.repository.DefaultAuctionRepository
-import com.example.data.repository.DefaultStatRepository
+import com.example.data.repository.auction.DefaultAuctionRepository
+import com.example.data.repository.stat.DefaultStatRepository
 import com.example.domain.repository.auction.AuctionRepository
 import com.example.domain.repository.stat.StatRepository
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
