@@ -1,13 +1,10 @@
 package com.example.presentation.ui.helper.auction
 
-import android.app.DownloadManager
-import android.content.Context
-import android.net.Uri
-import android.os.Environment
 import com.example.presentation.ui.auctions.AuctionFragment
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
 import com.example.util.Constants
+import com.example.util.exportFile
 
 class AuctionOnClickHelper(private val frg: AuctionFragment) {
 
@@ -50,20 +47,6 @@ class AuctionOnClickHelper(private val frg: AuctionFragment) {
     }
 
     fun onExportPress() {
-        val request = DownloadManager.Request(Uri.parse(Constants.BASE_URL_EXPORT_AUCTIONS))
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-        request.setTitle("Download")
-        request.setDescription("The file is downloading...")
-
-        request.allowScanningByMediaScanner()
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(
-            Environment.DIRECTORY_DOWNLOADS,
-            "${System.currentTimeMillis()}"
-        )
-
-        val manager =
-            frg.requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        manager.enqueue(request)
+        exportFile(frg, Constants.BASE_URL_EXPORT_AUCTIONS)
     }
 }

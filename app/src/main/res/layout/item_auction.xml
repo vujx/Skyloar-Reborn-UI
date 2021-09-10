@@ -17,7 +17,7 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/tvCard"
+            android:id="@+id/tvPlayer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/tv_borders"
@@ -27,61 +27,61 @@
             android:text="@{auction.cardName}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tvStart"
+            app:layout_constraintEnd_toStartOf="@id/tvRating"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvStart"
+            android:id="@+id/tvRating"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:text="@{Double.toString(auction.startingPrice)}"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tvCard"
-            app:layout_constraintEnd_toStartOf="@id/tvBid"
-            app:layout_constraintStart_toEndOf="@id/tvCard"
-            app:layout_constraintTop_toTopOf="@id/tvCard" />
+            app:layout_constraintBottom_toBottomOf="@id/tvPlayer"
+            app:layout_constraintEnd_toStartOf="@id/tvELO"
+            app:layout_constraintStart_toEndOf="@id/tvPlayer"
+            app:layout_constraintTop_toTopOf="@id/tvPlayer" />
 
         <TextView
-            android:id="@+id/tvBid"
+            android:id="@+id/tvELO"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:text="@{Double.toString(auction.currentPrice)}"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tvCard"
-            app:layout_constraintEnd_toStartOf="@id/tvBuyout"
-            app:layout_constraintStart_toEndOf="@id/tvStart"
-            app:layout_constraintTop_toTopOf="@id/tvCard" />
+            app:layout_constraintBottom_toBottomOf="@id/tvPlayer"
+            app:layout_constraintEnd_toStartOf="@id/tvActivity"
+            app:layout_constraintStart_toEndOf="@id/tvRating"
+            app:layout_constraintTop_toTopOf="@id/tvPlayer" />
 
         <TextView
-            android:id="@+id/tvBuyout"
+            android:id="@+id/tvActivity"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:text="@{Double.toString(auction.buyoutPrice)}"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tvCard"
-            app:layout_constraintEnd_toStartOf="@id/tvEnd"
-            app:layout_constraintStart_toEndOf="@id/tvBid"
-            app:layout_constraintTop_toTopOf="@id/tvCard" />
+            app:layout_constraintBottom_toBottomOf="@id/tvPlayer"
+            app:layout_constraintEnd_toStartOf="@id/tvMatches"
+            app:layout_constraintStart_toEndOf="@id/tvELO"
+            app:layout_constraintTop_toTopOf="@id/tvPlayer" />
 
         <TextView
-            android:id="@+id/tvEnd"
+            android:id="@+id/tvMatches"
             android:layout_width="40dp"
             android:layout_height="0dp"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:text="@{auction.endingOn}"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tvCard"
+            app:layout_constraintBottom_toBottomOf="@id/tvPlayer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvBuyout"
-            app:layout_constraintTop_toTopOf="@id/tvCard" />
+            app:layout_constraintStart_toEndOf="@id/tvActivity"
+            app:layout_constraintTop_toTopOf="@id/tvPlayer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

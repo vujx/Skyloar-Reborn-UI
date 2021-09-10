@@ -3,12 +3,12 @@ package com.example.domain.repository.leaderboard.pvp
 class PvPRepository(private val pvpData: PvPNetworkDataSource) {
 
     suspend fun getNumOfPvPSearchResult(
-        type: Int,
+        type: String,
         month: Int
     ) = pvpData.getNumOfPvPSearchResult(type, month)
 
     suspend fun getPvPPlayers(
-        type: Int,
+        type: String,
         month: Int,
         page: Int,
         number: Int

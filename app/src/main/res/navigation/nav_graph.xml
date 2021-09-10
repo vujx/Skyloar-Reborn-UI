@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/statFragment">
+    app:startDestination="@id/pvP1vs1PlayersFragment">
 
     <fragment
         android:id="@+id/auctionFragment"
@@ -16,5 +16,9 @@
         android:id="@+id/statFragment"
         android:name="com.example.presentation.ui.stat.StatFragment"
         android:label="@string/stat" />
+    <fragment
+        android:id="@+id/pvP1vs1PlayersFragment"
+        android:name="com.example.presentation.ui.leaderboards.fragments.PvP1vs1PlayersFragment"
+        android:label="PvP1vs1PlayersFragment" />
 
 </navigation>

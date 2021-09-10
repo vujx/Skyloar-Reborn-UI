@@ -6,24 +6,64 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.App
 import com.example.R
-import com.example.data.model.leaderboards.PlayerPvPEntityItem
+import com.example.data.usecase.leaderboards.PvPUseCase
+import com.example.domain.model.PvPPlayer1v1
 import com.example.domain.usecase.BaseUseCase
 import com.example.util.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
-class PvPPlayerViewModel():
+class PvPPlayerViewModel(private val useCasePvp: PvPUseCase):
     ViewModel(),
-    BaseUseCase.Callback<List<PlayerPvPEntityItem>> {
+    BaseUseCase.Callback<List<PvPPlayer1v1>?> {
 
-    private val _pvpPlayer = MutableLiveData<Resource<List<PlayerPvPEntityItem>>>()
-    val pvpPlayer: LiveData<Resource<List<PlayerPvPEntityItem>>> = _pvpPlayer
+    private val _pvpPlayer = MutableLiveData<Resource<List<PvPPlayer1v1>?>>()
+    val pvpPlayer: LiveData<Resource<List<PvPPlayer1v1>?>> = _pvpPlayer
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+    val numOfSearchResult = MutableLiveData<Int>()
+    val pageResult = MutableLiveData<String>()
+
+    private val exceptionHandler = CoroutineExceptionHandler { ctx, _ ->
         onError(App.getStringResource(R.string.unexpected_error))
+        ctx.cancel()
     }
 
-    override fun onSuccess(result: List<PlayerPvPEntityItem>) {
-        _pvpPlayer.postValue(Resource.Loading())
+    fun getPvPPlayers(
+        type: String,
+        month: Int,
+        page: Int,
+        number: Int
+    ) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            _pvpPlayer.postValue(Resource.Loading())
+            useCasePvp.getPvPPlayers.execute(listOf(type, month, page, number), this@PvPPlayerViewModel)
+        }
+
+        getNumOfPvPSearchResult(type, month, page)
+    }
+
+    private fun getNumOfPvPSearchResult(
+        type: String,
+        month: Int,
+        page: Int
+    ) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+        val countSearch =
+            useCasePvp.getNumOfPvPSearchResult.execute(type, month)
+        val numOfPage = (countSearch.toDouble() / 20)
+        if(numOfPage % 1 == 0.0)
+            pageResult.postValue("$page / ${((countSearch / 20))}")
+        else
+            pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
+        numOfSearchResult.postValue(countSearch)
+    }
+
+    override fun onSuccess(result: List<PvPPlayer1v1>?) {
+        result?.let {
+            if(it.isEmpty()) _pvpPlayer.postValue(Resource.Empty())
+            else _pvpPlayer.postValue(Resource.Success(it))
+        } ?: _pvpPlayer.postValue(Resource.Success(null))
     }
 
     override fun onError(errorMessage: String) {

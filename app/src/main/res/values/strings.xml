@@ -29,7 +29,7 @@
     <!-- Errors -->
     <string name="auction_not_found">Auction not found, try again!</string>
     <string name="stat_not_found">Statistics not found, try again!</string>
-    <string name="pvp_players_not_found">PvP LeaderBoards not found, try again!</string>
+    <string name="pvp_players_not_found">PvP 1vs1 not found, try again!</string>
     <string name="unexpected_error">Unexpected error. Please try again later.</string>
     <string name="check_internet">Check you internet connection!</string>
     <string name="no_internet_connection">No Internet Connection</string>
@@ -131,4 +131,17 @@
         <item>2v2 PvP Community matches played</item>
         <item>3v3 PvP Community matches played</item>
     </string-array>
+
+    <!-- FragmentPvP1v1 -->
+    <string name="this_month">This month</string>
+    <string name="caching_data">Backend is currently caching new data
+It may take up to 10 minutes for new data to be cached and available.</string>
+    <string name="player">Player</string>
+    <string name="rating">Rating</string>
+    <string name="elo">ELO</string>
+    <string name="activity">Activity</string>
+    <string name="matches">Matches</string>
+    <string name="wins">Wins</string>
+    <string name="losses">Losses</string>
+    <string name="activity_precentage">%d%%</string>
 </resources>

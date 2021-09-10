@@ -47,17 +47,17 @@ interface AuctionService {
     ): Response<StatEntity>
 
     @Keep
-    @GET("/api/next-load")
+    @GET("/api/leaderboards/next-load")
     suspend fun getTimeToNextRefresh(): Response<TimeToNextRefreshEntity>
 
     @Keep
-    @GET("/api/maps")
+    @GET("/api/leaderboards/maps")
     suspend fun getMapsByMode(
         @Query("type") type: Int
     ): Response<List<NameValueEntityItem>>
 
     @Keep
-    @GET("/api/{path}}")
+    @GET("/api/leaderboards/{path}")
     suspend fun getRanges(
         @Path("path") path: String
     ): Response<List<NameValueEntityItem>>
@@ -85,14 +85,14 @@ interface AuctionService {
     @Keep
     @GET("/api/leaderboards/pvp-count")
     suspend fun getPvPCount(
-        @Query("type") type: Int,
+        @Query("type") type: String,
         @Query("month") month: Int
     ): Response<NumberOfSearchResultsEntity>
 
     @Keep
     @GET("/api/leaderboards/pvp")
     suspend fun getListOfPvPLeaderboard(
-        @Query("type") type: Int,
+        @Query("type") type: String,
         @Query("month") month: Int,
         @Query("page") page: Int,
         @Query("number") number: Int,

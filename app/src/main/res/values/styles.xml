@@ -34,4 +34,5 @@
     <style name="NegativeButtonStyle.textColor" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">#E53935</item>
     </style>
+
 </resources>

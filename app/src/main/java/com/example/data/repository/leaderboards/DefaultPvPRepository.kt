@@ -8,12 +8,12 @@ import retrofit2.Response
 
 class DefaultPvPRepository(private val auctionService: AuctionService) : PvPNetworkDataSource {
     override suspend fun getNumOfPvPSearchResult(
-        type: Int,
+        type: String,
         month: Int
     ): Response<NumberOfSearchResultsEntity> = auctionService.getPvPCount(type, month)
 
     override suspend fun getPvPPlayers(
-        type: Int,
+        type: String,
         month: Int,
         page: Int,
         number: Int

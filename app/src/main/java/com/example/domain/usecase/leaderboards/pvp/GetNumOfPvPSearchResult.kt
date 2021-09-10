@@ -6,7 +6,7 @@ import java.lang.Exception
 class GetNumOfPvPSearchResult(private val pvpRepo: PvPRepository) {
 
     suspend fun execute(
-        type: Int,
+        type: String,
         month: Int
     ): Int =
         try {

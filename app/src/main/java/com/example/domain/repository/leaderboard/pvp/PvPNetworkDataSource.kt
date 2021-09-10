@@ -7,12 +7,12 @@ import retrofit2.Response
 interface PvPNetworkDataSource {
 
     suspend fun getNumOfPvPSearchResult(
-        type: Int,
+        type: String,
         month: Int
     ): Response<NumberOfSearchResultsEntity>
 
     suspend fun getPvPPlayers(
-        type: Int,
+        type: String,
         month: Int,
         page: Int,
         number: Int
