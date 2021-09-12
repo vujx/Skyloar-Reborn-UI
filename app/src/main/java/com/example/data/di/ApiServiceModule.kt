@@ -1,7 +1,8 @@
 package com.example.data.di
 
 import android.content.Context
-import com.example.data.network.AuctionService
+import com.example.data.network.AuctionStatService
+import com.example.data.network.LeaderboardService
 import com.example.util.Constants
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
@@ -9,10 +10,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-object ApiServiceAuctionModule {
+object ApiServiceModule {
 
-    fun provideAuctionService(retrofit: Retrofit): AuctionService {
-        return retrofit.create(AuctionService::class.java)
+    fun provideAuctionService(retrofit: Retrofit): AuctionStatService {
+        return retrofit.create(AuctionStatService::class.java)
+    }
+
+    fun provideLeaderboardService(retrofit: Retrofit): LeaderboardService {
+        return retrofit.create(LeaderboardService::class.java)
     }
 
     fun provideRetrofit(client: OkHttpClient): Retrofit {

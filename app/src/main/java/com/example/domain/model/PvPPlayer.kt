@@ -1,6 +1,6 @@
 package com.example.domain.model
 
-data class PvPPlayer1v1(
+data class PvPPlayer(
     val activity: Int,
     val baseElo: Int,
     val losesLimited: Int,

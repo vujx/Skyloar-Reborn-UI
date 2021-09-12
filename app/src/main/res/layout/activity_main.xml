@@ -45,15 +45,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_network_banner">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/nav_host_fragment_container"
+            <fragment
+                android:id="@+id/frg"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:defaultNavHost="true"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_network_banner"
-                app:navGraph="@navigation/nav_graph" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_network_banner" />
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navigationDrawer"
@@ -61,13 +59,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
-                app:headerLayout="@layout/header_navdrawer">
-
-                <ExpandableListView
-                    android:id="@+id/lvExp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="180dp" />
+                app:headerLayout="@layout/header_navdrawer"
+                app:menu="@menu/menu_nav_drawer">
 
             </com.google.android.material.navigation.NavigationView>
         </androidx.drawerlayout.widget.DrawerLayout>

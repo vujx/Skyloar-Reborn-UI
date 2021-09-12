@@ -6,13 +6,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.R
 import com.example.databinding.ItemPvpPlayerBinding
-import com.example.domain.model.PvPPlayer1v1
+import com.example.domain.model.PvPPlayer
 
 class PvPAdapter : RecyclerView.Adapter<PvPViewHolder>() {
 
-    private val listOfPvPPlayers = mutableListOf<PvPPlayer1v1>()
+    private val listOfPvPPlayers = mutableListOf<PvPPlayer>()
 
-    fun setListOfPvPPlayers(list: List<PvPPlayer1v1>) {
+    fun setListOfPvPPlayers(list: List<PvPPlayer>) {
         listOfPvPPlayers.clear()
         listOfPvPPlayers.addAll(list)
         notifyDataSetChanged()

@@ -15,7 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) : ViewModel(),
+class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) :
+    ViewModel(),
     BaseUseCase.Callback<List<PvEPlayer>?> {
 
     private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
@@ -39,7 +40,7 @@ class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) : ViewModel(),
     ) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _pvePlayer.postValue(Resource.Loading())
-            useCasePvE.getPvPPlayers.execute(
+            useCasePvE.getPvEPlayers.execute(
                 listOf(type, players, map, month, page, number),
                 this@PvEPlayerViewModel
             )
@@ -55,7 +56,7 @@ class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) : ViewModel(),
         page: Int
     ) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
         val countSearch =
-            useCasePvE.getNumOfPvPSearchResult.execute(type, players, map, month)
+            useCasePvE.getNumOfPvESearchResult.execute(type, players, map, month)
         val numOfPage = (countSearch.toDouble() / 20)
         if (numOfPage % 1 == 0.0)
             pageResult.postValue("$page / ${((countSearch / 20))}")

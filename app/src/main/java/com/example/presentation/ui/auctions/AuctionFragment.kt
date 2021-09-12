@@ -14,10 +14,7 @@ import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.dialogs.DialogPageListener
-import com.example.presentation.ui.helper.auction.AuctionHelper
-import com.example.presentation.ui.helper.auction.AuctionOnClickHelper
-import com.example.presentation.ui.helper.auction.ProgressBarHelper
-import com.example.presentation.ui.helper.auction.SearchResultHelper
+import com.example.presentation.ui.helper.auction.*
 import com.example.util.RangeEditText
 import com.example.util.Resource
 import com.example.util.checkIfInputIsEmpty
@@ -37,6 +34,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
     private val searchResultHelper = SearchResultHelper()
     private val onClickHelper = AuctionOnClickHelper(this)
     private val auctionHelper = AuctionHelper(null, null, null)
+    private val auctionRefreshHelper = RefreshAuctionsHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +70,8 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
                     }
                     is Resource.Failure -> {
                         progressBarHelper.setLoading(false)
-                        searchResultHelper.setSearchResult("")
+                        searchResultHelper.setSearchResult(getString(R.string.auction_not_found))
+                        adapter.setListOfAuctions(emptyList())
                         displayMessage(result.message, requireContext())
                         binding.titleCheck = ""
                         binding.auctionHelper = auctionHelper
@@ -111,6 +110,7 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
             etMinPrice.filters = arrayOf(RangeEditText(1, 2147483647))
             etMaxPrice.filters = arrayOf(RangeEditText(1, 2147483647))
             auctionHelper = this@AuctionFragment.auctionHelper
+            refresh = auctionRefreshHelper
         }
     }
 

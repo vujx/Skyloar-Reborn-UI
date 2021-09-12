@@ -1,12 +1,12 @@
 package com.example.data.mapper
 
 import com.example.data.model.leaderboards.PlayerPvPEntityItem
-import com.example.domain.model.PvPPlayer1v1
+import com.example.domain.model.PvPPlayer
 
-class PvPPlayer1v1Mapper : EntityMapper<PlayerPvPEntityItem, PvPPlayer1v1> {
+class PvPPlayerMapper : EntityMapper<PlayerPvPEntityItem, PvPPlayer> {
 
-    override fun mapFromEntity(entity: PlayerPvPEntityItem): PvPPlayer1v1 =
-        PvPPlayer1v1(
+    override fun mapFromEntity(entity: PlayerPvPEntityItem): PvPPlayer =
+        PvPPlayer(
             entity.activity.toInt(),
             entity.baseElo,
             entity.losesLimited,

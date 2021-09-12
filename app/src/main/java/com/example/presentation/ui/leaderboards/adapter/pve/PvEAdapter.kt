@@ -28,11 +28,11 @@ class PvEAdapter(private val difficulties: Map<Int, String>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: PvEViewHolder, position: Int) {
-        //nije dobar nacin, obavezno promjenit
+        // nije dobar nacin, obavezno promjenit
         var diff = ""
         difficulties.forEach {
-           if(it.key == listOfPvEPlayer[position].difficulty)
-               diff = it.value
+            if (it.key == listOfPvEPlayer[position].difficulty)
+                diff = it.value
         }
         holder.itemPvE.difficulty = diff
         holder.itemPvE.pvePlayer = listOfPvEPlayer[position]

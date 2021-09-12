@@ -7,7 +7,6 @@ import android.os.Environment
 import android.view.Gravity
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import java.net.URLEncoder
 
 fun displayMessage(message: String, context: Context) {
     val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)

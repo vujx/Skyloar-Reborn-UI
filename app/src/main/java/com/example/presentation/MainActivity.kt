@@ -6,32 +6,23 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.example.R
 import com.example.databinding.ActivityMainBinding
+import com.example.presentation.ui.auctions.AuctionFragment
 import com.example.presentation.ui.helper.auction.ConnectionHelper
-import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
+import com.example.presentation.ui.leaderboards.fragments.PvEFragment
+import com.example.presentation.ui.leaderboards.fragments.PvP1vs1PlayersFragment
+import com.example.presentation.ui.stat.StatFragment
 import com.example.util.ConnectionLiveData
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navController: NavController
     private lateinit var drawerToggle: ActionBarDrawerToggle
-    private val navDrawerList = NavDrawerList(this)
 
-    private val viewModelLeaderboards: LeaderboardsViewModel by viewModel()
     private lateinit var connectionLiveData: ConnectionLiveData
     private lateinit var connectionHelper: ConnectionHelper
-
-    override fun onStart() {
-        getMonth()
-        super.onStart()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         setDataValues()
         setToolbar()
-        setNavHost()
     }
 
     private fun setDataValues() {
@@ -49,12 +39,10 @@ class MainActivity : AppCompatActivity() {
         connectionHelper.observeInternetConnection()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
     private fun setToolbar() {
         (this as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        binding.navigationDrawer.setNavigationItemSelectedListener(this)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
         drawerToggle = ActionBarDrawerToggle(
@@ -66,14 +54,6 @@ class MainActivity : AppCompatActivity() {
         )
         drawerToggle.syncState()
         binding.drawerLayout.addDrawerListener(drawerToggle)
-        navDrawerList.setUpValues()
-        navDrawerList.prepareListData()
-    }
-
-    private fun setNavHost() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-        navController = navHostFragment.findNavController()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -88,23 +68,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getMonth() {
-        val job = viewModelLeaderboards.getRange("ranges")
-        viewModelLeaderboards.listOfRanges.value?.let { result ->
-            listOfMonth = result
-        }
-        getDifficulties()
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        else
+            super.onBackPressed()
     }
 
-    private fun getDifficulties() {
-        viewModelLeaderboards.getRange("difficulties")
-        viewModelLeaderboards.listOfRanges.value?.let { result ->
-            listOfDifficulties = result
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_auction -> supportFragmentManager.beginTransaction().replace(R.id.frg, AuctionFragment()).commit()
+            R.id.nav_stat -> supportFragmentManager.beginTransaction().replace(R.id.frg, StatFragment()).commit()
+            R.id.nav_leaderPvE -> supportFragmentManager.beginTransaction().replace(R.id.frg, PvEFragment()).commit()
+            R.id.nav_leaderPvP -> supportFragmentManager.beginTransaction().replace(R.id.frg, PvP1vs1PlayersFragment()).commit()
         }
-    }
-
-    companion object {
-        lateinit var listOfMonth: Map<Int, String>
-        lateinit var listOfDifficulties: Map<Int, String>
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 }

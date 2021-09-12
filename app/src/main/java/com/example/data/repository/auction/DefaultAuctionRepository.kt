@@ -2,11 +2,11 @@ package com.example.data.repository.auction
 
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.NumberOfSearchResultsEntity
-import com.example.data.network.AuctionService
+import com.example.data.network.AuctionStatService
 import com.example.domain.repository.auction.AuctionNetworkDataSource
 import retrofit2.Response
 
-class DefaultAuctionRepository(private val auctionService: AuctionService) :
+class DefaultAuctionRepository(private val auctionService: AuctionStatService) :
     AuctionNetworkDataSource {
 
     override suspend fun getListOfAuctions(

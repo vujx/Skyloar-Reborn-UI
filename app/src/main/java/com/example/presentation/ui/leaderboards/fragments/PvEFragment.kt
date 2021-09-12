@@ -1,12 +1,9 @@
 package com.example.presentation.ui.leaderboards.fragments
 
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +17,6 @@ import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Resource
 import com.example.util.displayMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.net.URLEncoder
 
 class PvEFragment : Fragment(R.layout.fragment_pv_e) {
 
@@ -59,38 +55,41 @@ class PvEFragment : Fragment(R.layout.fragment_pv_e) {
     }
 
     private fun bind() {
-        viewModelPvE.pvePlayer.observe(viewLifecycleOwner, { result ->
-            when (result) {
-                is Resource.Success -> {
-                    progressBarHelper.setLoading(false)
-                    binding.titleCheck = "1"
-                    if (result.value == null) {
-                        adapter.setList(emptyList())
-                        searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
-                    } else {
-                        result.value.let { adapter.setList(it) }
+        viewModelPvE.pvePlayer.observe(
+            viewLifecycleOwner,
+            { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        progressBarHelper.setLoading(false)
+                        binding.titleCheck = "1"
+                        if (result.value == null) {
+                            adapter.setList(emptyList())
+                            searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
+                        } else {
+                            result.value.let { adapter.setList(it) }
+                            searchResultHelper.setSearchResult("")
+                        }
+                    }
+                    is Resource.Failure -> {
+                        progressBarHelper.setLoading(false)
+                        binding.titleCheck = ""
                         searchResultHelper.setSearchResult("")
+                        displayMessage(result.message, requireContext())
+                    }
+                    is Resource.Loading -> {
+                        progressBarHelper.setLoading(true)
+                        binding.titleCheck = ""
+                        adapter.setList(emptyList())
+                    }
+                    is Resource.Empty -> {
+                        binding.titleCheck = ""
+                        progressBarHelper.setLoading(false)
+                        adapter.setList(emptyList())
+                        searchResultHelper.setSearchResult(getString(R.string.pvp_players_not_found))
                     }
                 }
-                is Resource.Failure -> {
-                    progressBarHelper.setLoading(false)
-                    binding.titleCheck = ""
-                    searchResultHelper.setSearchResult("")
-                    displayMessage(result.message, requireContext())
-                }
-                is Resource.Loading -> {
-                    progressBarHelper.setLoading(true)
-                    binding.titleCheck = ""
-                    adapter.setList(emptyList())
-                }
-                is Resource.Empty -> {
-                    binding.titleCheck = ""
-                    progressBarHelper.setLoading(false)
-                    adapter.setList(emptyList())
-                    searchResultHelper.setSearchResult(getString(R.string.pvp_players_not_found))
-                }
             }
-        })
+        )
     }
 
     private fun setData() {

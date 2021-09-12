@@ -39,11 +39,11 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
         val countSearch =
             auctionUseCase.getNumberOfSearchResults.getNumberOfSearchResult(listOfParams)
         numOfSearchResult.postValue(countSearch)
-        if((countSearch.toDouble() / number) % 1 == 0.0)
-            pageResult.postValue("$page / ${((countSearch / number))}")
-        else
-            pageResult.postValue("$page / ${((countSearch / number) + 1)}")
-
+        when {
+            countSearch == 0 -> pageResult.postValue("1 / 1")
+            (countSearch.toDouble() / number) % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / number))}")
+            else -> pageResult.postValue("$page / ${((countSearch / number) + 1)}")
+        }
     }
 
     fun getListOfAuctions(
@@ -55,7 +55,15 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
     ) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _auctions.postValue(Resource.Loading())
-            auctionUseCase.getListOfAuctions.execute(listOf<Any?>(page, number, input, minPrice, maxPrice), this@AuctionViewModel)
+            auctionUseCase.getListOfAuctions.execute(
+                listOf<Any?>(
+                    page,
+                    number,
+                    input,
+                    minPrice,
+                    maxPrice
+                ), this@AuctionViewModel
+            )
         }
         getNumberOfSearchResults(page, number, input, minPrice, maxPrice)
     }

@@ -17,55 +17,28 @@ class GetStatValues(
 
     override suspend fun execute(params: String?, callback: BaseUseCase.Callback<List<Long>>) {
         val listOfResponse = LongArray(39)
-        val jobs = mutableListOf<Job>()
-
-        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-            callback.onError(App.getStringResource(R.string.unexpected_error))
-        }
 
         try {
-            CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-                (0..38).forEach {
-                    val path = App.getResources.getStringArray(R.array.statPaths)[it]
-                    if (path.contains("/")) {
-                        try {
-                            withTimeout(500) {
-                                jobs += launch {
-                                    response = statRepo.getCountWithMultiplePaths(
-                                        path.substring(0, path.indexOf('/')),
-                                        path.substring(
-                                            path.substring(
-                                                0,
-                                                path.indexOf('/')
-                                            ).length + 1
-                                        )
-                                    )
-                                    addCountNumberToList(response, listOfResponse, it)
-                                }
-                            }
-                        } catch (e: TimeoutCancellationException) {
-                            listOfResponse[it] = -1
-                        }
-                    } else {
-                        try {
-                            withTimeout(500) {
-                                jobs += launch {
-                                    response =
-                                        statRepo.getCount(App.getResources.getStringArray(R.array.statPaths)[it])
-                                    addCountNumberToList(response, listOfResponse, it)
-                                }
-                            }
-                        } catch (e: TimeoutCancellationException) {
-                            listOfResponse[it] = -1
-                        }
-                    }
+            (0..38).asyncAll {
+                val path = App.getResources.getStringArray(R.array.statPaths)[it]
+                if (path.contains("/")) {
+                    response = statRepo.getCountWithMultiplePaths(
+                        path.substring(0, path.indexOf('/')),
+                        path.substring(
+                            path.substring(
+                                0,
+                                path.indexOf('/')
+                            ).length + 1
+                        )
+                    )
+                    addCountNumberToList(response, listOfResponse, it)
+                } else {
+                    response =
+                        statRepo.getCount(App.getResources.getStringArray(R.array.statPaths)[it])
+                    addCountNumberToList(response, listOfResponse, it)
                 }
-                jobs.map {
-                    it.join()
-                }
-
-                callback.onSuccess(listOfResponse.toList())
             }
+            callback.onSuccess(listOfResponse.toList())
         } catch (e: Exception) {
             HandleCallbackError<List<Long>>().handleOnErrorCallback(e, callback)
         }
@@ -85,4 +58,9 @@ class GetStatValues(
             404 -> listOfResponse[it] = -1
         }
     }
+
+    suspend fun <T, V> Iterable<T>.asyncAll(coroutine: suspend (T) -> V): Iterable<V> =
+        coroutineScope {
+            this@asyncAll.map { async { coroutine(it) } }.awaitAll()
+        }
 }

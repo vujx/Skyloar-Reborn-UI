@@ -29,6 +29,10 @@
             name="auctionHelper"
             type="com.example.presentation.ui.helper.auction.AuctionHelper" />
 
+        <variable
+            name="refresh"
+            type="com.example.presentation.ui.helper.auction.RefreshAuctionsHelper" />
+
         <import type="android.view.View" />
     </data>
 
@@ -112,12 +116,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:onRefreshListener="@{() -> refresh.refreshList(viewModelAuction, tvPage.getText().toString(), 20, auctionHelper.cardName, auctionHelper.minPrice, auctionHelper.maxPrice)}"
+            app:refreshing="@{refresh.isLoading}">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAuction"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
-            app:layout_constraintTop_toBottomOf="@id/tvCardTitle" />
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
@@ -218,81 +233,90 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvCardTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/tv_border_values"
-            android:gravity="center"
-            android:text="@string/card"
-            android:padding="8dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toStartOf="@id/tvStartTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tlSearchCard" />
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:id="@+id/title"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@color/white"
+           android:layout_marginTop="8dp"
+           android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+           app:layout_constraintTop_toBottomOf="@id/tlSearchCard"
+           app:layout_constraintBottom_toTopOf="@id/swipeRefresh">
 
-        <TextView
-            android:id="@+id/tvStartTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_border_values"
-            android:gravity="center"
-            android:text="@string/start"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:padding="8dp"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toStartOf="@id/tvBidTitle"
-            app:layout_constraintStart_toEndOf="@id/tvCardTitle"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
+           <TextView
+               android:id="@+id/tvCardTitle"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+
+               android:background="@drawable/tv_border_values"
+               android:gravity="center"
+               android:text="@string/card"
+               android:padding="8dp"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toStartOf="@id/tvStartTitle"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintBottom_toBottomOf="parent"/>
+
+           <TextView
+               android:id="@+id/tvStartTitle"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:background="@drawable/tv_border_values"
+               android:gravity="center"
+               android:text="@string/start"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               android:padding="8dp"
+               app:layout_constraintEnd_toStartOf="@id/tvBidTitle"
+               app:layout_constraintStart_toEndOf="@id/tvCardTitle"
+               app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
 
-        <TextView
-            android:id="@+id/tvBidTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_border_values"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/bid"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toStartOf="@id/tvBuyoutTitle"
-            app:layout_constraintStart_toEndOf="@id/tvStartTitle"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
+           <TextView
+               android:id="@+id/tvBidTitle"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:background="@drawable/tv_border_values"
+               android:gravity="center"
+               android:padding="8dp"
+               android:text="@string/bid"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toStartOf="@id/tvBuyoutTitle"
+               app:layout_constraintStart_toEndOf="@id/tvStartTitle"
+               app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
-        <TextView
-            android:id="@+id/tvBuyoutTitle"
-            android:layout_width="0dp"
-            android:padding="8dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_border_values"
-            android:gravity="center"
-            android:text="@string/buyout"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toStartOf="@id/tvEndTitle"
-            app:layout_constraintStart_toEndOf="@id/tvBidTitle"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
+           <TextView
+               android:id="@+id/tvBuyoutTitle"
+               android:layout_width="0dp"
+               android:padding="8dp"
+               android:layout_height="wrap_content"
+               android:background="@drawable/tv_border_values"
+               android:gravity="center"
+               android:text="@string/buyout"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toStartOf="@id/tvEndTitle"
+               app:layout_constraintStart_toEndOf="@id/tvBidTitle"
+               app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
 
-        <TextView
-            android:id="@+id/tvEndTitle"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_border_values"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/end"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
+           <TextView
+               android:id="@+id/tvEndTitle"
+               android:layout_width="40dp"
+               android:layout_height="wrap_content"
+               android:background="@drawable/tv_border_values"
+               android:gravity="center"
+               android:padding="8dp"
+               android:text="@string/end"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="@id/tvCardTitle" />
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

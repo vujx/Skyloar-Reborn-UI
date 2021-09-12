@@ -57,6 +57,15 @@ class StatFragment : Fragment(R.layout.fragment_stat) {
                         adapter.setListOfStatValues(result.value)
                     }
                     is Resource.Loading -> progressBarHelper.setLoading(true)
+                    is Resource.Failure -> {
+                        progressBarHelper.setLoading(false)
+                        adapter.setListOfStatValues(emptyList())
+                        binding.titleCheck = ""
+                        displayMessage(
+                            result.message,
+                            requireContext()
+                        )
+                    }
                     else -> {
                         progressBarHelper.setLoading(false)
                         binding.titleCheck = ""

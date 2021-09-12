@@ -27,12 +27,14 @@ class GetPvEPlayers(private val pveRepo: PvERepository) :
                 params[5]
             )
 
-            when(response.code()){
+            when (response.code()) {
                 200 -> response.body()?.let { result ->
-                    callback.onSuccess(result.map {
-                        mapper.mapFromEntity(it)
-                    })
-                } ?:  callback.onError(App.getStringResource(R.string.unexpected_error))
+                    callback.onSuccess(
+                        result.map {
+                            mapper.mapFromEntity(it)
+                        }
+                    )
+                } ?: callback.onError(App.getStringResource(R.string.unexpected_error))
                 400 -> callback.onError(App.getStringResource(R.string.pvp_players_not_found))
                 401 -> callback.onSuccess(null)
                 else -> callback.onError(App.getStringResource(R.string.unexpected_error))

@@ -12,7 +12,6 @@ import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.repository.stat.StatRepository
 import com.example.domain.usecase.auction.*
 import com.example.domain.usecase.leaderboards.GetRanges
-import com.example.domain.usecase.leaderboards.GetTimeToRefresh
 import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
 import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
@@ -40,8 +39,7 @@ object UseCaseModule {
 
     fun provideLeaderBoardsUseCase(leaderboardRepo: LeaderboardRepository) =
         LeaderBoardsUseCase(
-            GetRanges(leaderboardRepo),
-            GetTimeToRefresh(leaderboardRepo)
+            GetRanges(leaderboardRepo)
         )
 
     fun providePvEUseCase(pveRepo: PvERepository) =

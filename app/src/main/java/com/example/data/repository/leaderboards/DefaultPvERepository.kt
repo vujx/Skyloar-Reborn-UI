@@ -2,18 +2,20 @@ package com.example.data.repository.leaderboards
 
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.model.leaderboards.PlayerPvEEntityItem
-import com.example.data.network.AuctionService
+import com.example.data.network.LeaderboardService
 import com.example.domain.repository.leaderboard.pve.PvENetworkDataSource
 import retrofit2.Response
 
-class DefaultPvERepository(private val auctionService: AuctionService) : PvENetworkDataSource {
+class DefaultPvERepository(private val leaderboardService: LeaderboardService) :
+    PvENetworkDataSource {
 
     override suspend fun getNumOfPvESearchResult(
         type: Int,
         players: Int,
         map: Int,
         month: Int
-    ): Response<NumberOfSearchResultsEntity> = auctionService.getPvECount(type, players, map, month)
+    ): Response<NumberOfSearchResultsEntity> =
+        leaderboardService.getPvECount(type, players, map, month)
 
     override suspend fun getPvEPlayers(
         type: Int,
@@ -23,5 +25,5 @@ class DefaultPvERepository(private val auctionService: AuctionService) : PvENetw
         page: Int,
         number: Int
     ): Response<List<PlayerPvEEntityItem>> =
-        auctionService.getListOfPvELeaderboard(type, players, map, month, page, number)
+        leaderboardService.getListOfPvEPlayers(type, players, map, month, page, number)
 }

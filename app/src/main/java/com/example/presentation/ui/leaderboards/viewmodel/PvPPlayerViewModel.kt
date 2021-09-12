@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.App
 import com.example.R
 import com.example.data.usecase.leaderboards.PvPUseCase
-import com.example.domain.model.PvPPlayer1v1
+import com.example.domain.model.PvPPlayer
 import com.example.domain.usecase.BaseUseCase
 import com.example.util.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,12 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class PvPPlayerViewModel(private val useCasePvp: PvPUseCase):
+class PvPPlayerViewModel(private val useCasePvp: PvPUseCase) :
     ViewModel(),
-    BaseUseCase.Callback<List<PvPPlayer1v1>?> {
+    BaseUseCase.Callback<List<PvPPlayer>?> {
 
-    private val _pvpPlayer = MutableLiveData<Resource<List<PvPPlayer1v1>?>>()
-    val pvpPlayer: LiveData<Resource<List<PvPPlayer1v1>?>> = _pvpPlayer
+    private val _pvpPlayer = MutableLiveData<Resource<List<PvPPlayer>?>>()
+    val pvpPlayer: LiveData<Resource<List<PvPPlayer>?>> = _pvpPlayer
 
     val numOfSearchResult = MutableLiveData<Int>()
     val pageResult = MutableLiveData<String>()
@@ -52,16 +52,16 @@ class PvPPlayerViewModel(private val useCasePvp: PvPUseCase):
         val countSearch =
             useCasePvp.getNumOfPvPSearchResult.execute(type, month)
         val numOfPage = (countSearch.toDouble() / 20)
-        if(numOfPage % 1 == 0.0)
+        if (numOfPage % 1 == 0.0)
             pageResult.postValue("$page / ${((countSearch / 20))}")
         else
             pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
         numOfSearchResult.postValue(countSearch)
     }
 
-    override fun onSuccess(result: List<PvPPlayer1v1>?) {
+    override fun onSuccess(result: List<PvPPlayer>?) {
         result?.let {
-            if(it.isEmpty()) _pvpPlayer.postValue(Resource.Empty())
+            if (it.isEmpty()) _pvpPlayer.postValue(Resource.Empty())
             else _pvpPlayer.postValue(Resource.Success(it))
         } ?: _pvpPlayer.postValue(Resource.Success(null))
     }

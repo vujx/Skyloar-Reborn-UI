@@ -22,14 +22,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/tv_borders"
-            android:text="@{statTitle}"
             android:padding="10dp"
+            android:text="@{statTitle}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvStatValue"
+            app:layout_constraintHorizontal_weight="6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_weight="6" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvStatValue"
@@ -41,9 +41,9 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tvStatTitle"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="4"
             app:layout_constraintStart_toEndOf="@id/tvStatTitle"
-            app:layout_constraintTop_toTopOf="@id/tvStatTitle"
-            app:layout_constraintHorizontal_weight="4" />
+            app:layout_constraintTop_toTopOf="@id/tvStatTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

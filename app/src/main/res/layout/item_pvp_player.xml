@@ -5,7 +5,7 @@
 
         <variable
             name="player"
-            type="com.example.domain.model.PvPPlayer1v1" />
+            type="com.example.domain.model.PvPPlayer" />
     </data>
 
 

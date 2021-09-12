@@ -10,9 +10,9 @@ class GetNumOfPvESearchResult(private val pveRepo: PvERepository) {
         map: Int,
         month: Int
     ) =
-        try{
+        try {
             val response = pveRepo.getNumOfPvESearchResult(type, players, map, month)
-            if(response.code() == 200) {
+            if (response.code() == 200) {
                 response.body()?.let { result ->
                     result.count
                 } ?: 0
@@ -20,5 +20,4 @@ class GetNumOfPvESearchResult(private val pveRepo: PvERepository) {
         } catch (e: Exception) {
             0
         }
-
 }

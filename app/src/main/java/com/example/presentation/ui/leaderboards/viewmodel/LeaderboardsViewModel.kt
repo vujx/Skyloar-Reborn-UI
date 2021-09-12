@@ -18,6 +18,6 @@ class LeaderboardsViewModel(private val useCaseLeaderboards: LeaderBoardsUseCase
     }
 
     fun getRange(path: String) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            listOfRanges.postValue(useCaseLeaderboards.getRanges.execute(path))
+        listOfRanges.postValue(useCaseLeaderboards.getRanges.execute(path))
     }
 }

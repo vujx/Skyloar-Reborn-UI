@@ -2,9 +2,8 @@ package com.example.domain.usecase.leaderboards.pvp
 
 import com.example.App
 import com.example.R
-import com.example.data.mapper.PvPPlayer1v1Mapper
-import com.example.data.model.leaderboards.PlayerPvPEntityItem
-import com.example.domain.model.PvPPlayer1v1
+import com.example.data.mapper.PvPPlayerMapper
+import com.example.domain.model.PvPPlayer
 import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.usecase.BaseUseCase
 import com.example.util.HandleCallbackError
@@ -12,12 +11,12 @@ import java.lang.Exception
 
 class GetPvPPlayers(
     private val pvpRepo: PvPRepository
-) : BaseUseCase<List<Any>, List<PvPPlayer1v1>?> {
+) : BaseUseCase<List<Any>, List<PvPPlayer>?> {
 
-    private val pvpMapper = PvPPlayer1v1Mapper()
+    private val pvpMapper = PvPPlayerMapper()
     override suspend fun execute(
         params: List<Any>,
-        callback: BaseUseCase.Callback<List<PvPPlayer1v1>?>
+        callback: BaseUseCase.Callback<List<PvPPlayer>?>
     ) {
         try {
             val response = pvpRepo.getPvPPlayers(
@@ -30,9 +29,11 @@ class GetPvPPlayers(
             when (response.code()) {
                 200 -> {
                     response.body()?.let { result ->
-                        callback.onSuccess(result.map {
-                            pvpMapper.mapFromEntity(it)
-                        })
+                        callback.onSuccess(
+                            result.map {
+                                pvpMapper.mapFromEntity(it)
+                            }
+                        )
                     } ?: callback.onError(App.getStringResource(R.string.unexpected_error))
                 }
                 400 -> callback.onError(App.getStringResource(R.string.pvp_players_not_found))
@@ -40,7 +41,7 @@ class GetPvPPlayers(
                 else -> callback.onError(App.getStringResource(R.string.unexpected_error))
             }
         } catch (e: Exception) {
-            HandleCallbackError<List<PvPPlayer1v1>?>().handleOnErrorCallback(e, callback)
+            HandleCallbackError<List<PvPPlayer>?>().handleOnErrorCallback(e, callback)
         }
     }
 }

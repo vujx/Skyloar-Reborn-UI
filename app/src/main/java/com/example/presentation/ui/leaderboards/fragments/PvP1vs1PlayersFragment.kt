@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentPvP1vs1PlayersBinding
-import com.example.presentation.MainActivity
 import com.example.presentation.ui.dialogs.DialogPageListener
 import com.example.presentation.ui.helper.auction.ProgressBarHelper
 import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.helper.leaderboards.PvP1v1OnClickHelper
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
-import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
 import com.example.util.Resource
 import com.example.util.displayMessage
@@ -54,50 +50,48 @@ class PvP1vs1PlayersFragment : Fragment(R.layout.fragment_pv_p1vs1_players), Dia
     }
 
     private fun setUpRecylerView() {
-        val arrayAdapter =
-            ArrayAdapter(requireContext(), R.layout.item_drop_down, MainActivity.listOfMonth.map {
-                it.value
-            })
         binding.apply {
             rvPvPPlayers.layoutManager = LinearLayoutManager(requireContext())
             rvPvPPlayers.adapter = adapter
-            spinner.adapter = arrayAdapter
         }
     }
 
     private fun bind() {
-        viewModelPvP1vs1.pvpPlayer.observe(viewLifecycleOwner, { result ->
-            when (result) {
-                is Resource.Success -> {
-                    progressBarHelper.setLoading(false)
-                    binding.titleCheck = "1"
-                    if (result.value == null) {
-                        adapter.setListOfPvPPlayers(emptyList())
-                        searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
-                    } else {
-                        result.value.let { adapter.setListOfPvPPlayers(it) }
+        viewModelPvP1vs1.pvpPlayer.observe(
+            viewLifecycleOwner,
+            { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        progressBarHelper.setLoading(false)
+                        binding.titleCheck = "1"
+                        if (result.value == null) {
+                            adapter.setListOfPvPPlayers(emptyList())
+                            searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
+                        } else {
+                            result.value.let { adapter.setListOfPvPPlayers(it) }
+                            searchResultHelper.setSearchResult("")
+                        }
+                    }
+                    is Resource.Failure -> {
+                        progressBarHelper.setLoading(false)
+                        binding.titleCheck = ""
                         searchResultHelper.setSearchResult("")
+                        displayMessage(result.message, requireContext())
+                    }
+                    is Resource.Loading -> {
+                        progressBarHelper.setLoading(true)
+                        binding.titleCheck = ""
+                        adapter.setListOfPvPPlayers(emptyList())
+                    }
+                    is Resource.Empty -> {
+                        binding.titleCheck = ""
+                        progressBarHelper.setLoading(false)
+                        adapter.setListOfPvPPlayers(emptyList())
+                        searchResultHelper.setSearchResult(getString(R.string.pvp_players_not_found))
                     }
                 }
-                is Resource.Failure -> {
-                    progressBarHelper.setLoading(false)
-                    binding.titleCheck = ""
-                    searchResultHelper.setSearchResult("")
-                    displayMessage(result.message, requireContext())
-                }
-                is Resource.Loading -> {
-                    progressBarHelper.setLoading(true)
-                    binding.titleCheck = ""
-                    adapter.setListOfPvPPlayers(emptyList())
-                }
-                is Resource.Empty -> {
-                    binding.titleCheck = ""
-                    progressBarHelper.setLoading(false)
-                    adapter.setListOfPvPPlayers(emptyList())
-                    searchResultHelper.setSearchResult(getString(R.string.pvp_players_not_found))
-                }
             }
-        })
+        )
     }
 
     private fun setData() {

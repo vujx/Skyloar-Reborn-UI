@@ -2,9 +2,10 @@ package com.example
 
 import android.app.Application
 import android.content.res.Resources
-import com.example.data.di.ApiServiceAuctionModule.provideAuctionService
-import com.example.data.di.ApiServiceAuctionModule.provideHttpClient
-import com.example.data.di.ApiServiceAuctionModule.provideRetrofit
+import com.example.data.di.ApiServiceModule.provideAuctionService
+import com.example.data.di.ApiServiceModule.provideHttpClient
+import com.example.data.di.ApiServiceModule.provideLeaderboardService
+import com.example.data.di.ApiServiceModule.provideRetrofit
 import com.example.data.di.UseCaseModule.provideAuctionUseCase
 import com.example.data.di.UseCaseModule.provideLeaderBoardsUseCase
 import com.example.data.di.UseCaseModule.providePvEUseCase
@@ -40,29 +41,30 @@ class App : Application() {
         single { provideHttpClient(applicationContext) }
         single { provideRetrofit(get()) }
         single { provideAuctionService(get()) }
+        single { provideLeaderboardService(get()) }
     }
 
     private val repoModule = module {
         single { DefaultAuctionRepository(get()) }
         single { AuctionRepository(get<DefaultAuctionRepository>()) }
 
-        single { DefaultStatRepository(get()) }
-        single { StatRepository(get<DefaultStatRepository>()) }
-
         single { DefaultPvPRepository(get()) }
         single { PvPRepository(get<DefaultPvPRepository>()) }
+
+        single { DefaultStatRepository(get()) }
+        single { StatRepository(get<DefaultStatRepository>()) }
 
         single { DefaultLeaderboardsRepository(get()) }
         single { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
 
         single { DefaultPvERepository(get()) }
-        single { PvERepository(get<DefaultPvERepository>())}
+        single { PvERepository(get<DefaultPvERepository>()) }
     }
 
     private val useCaseModule = module {
         factory { provideAuctionUseCase(get()) }
         factory { provideStatUseCase(get()) }
-        factory {  providePvP1UseCase(get()) }
+        factory { providePvP1UseCase(get()) }
         factory { provideLeaderBoardsUseCase(get()) }
         factory { providePvEUseCase(get()) }
     }
