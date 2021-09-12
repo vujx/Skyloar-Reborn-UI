@@ -1,4 +1,4 @@
-package com.example.presentation.ui.leaderboards.adapter
+package com.example.presentation.ui.leaderboards.adapter.pvp
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databinding.ItemPvpPlayerBinding

@@ -13,7 +13,9 @@ import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.example.R
 import com.example.databinding.ActivityMainBinding
 import com.example.presentation.ui.helper.auction.ConnectionHelper
+import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.util.ConnectionLiveData
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,8 +24,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private val navDrawerList = NavDrawerList(this)
 
+    private val viewModelLeaderboards: LeaderboardsViewModel by viewModel()
     private lateinit var connectionLiveData: ConnectionLiveData
     private lateinit var connectionHelper: ConnectionHelper
+
+    override fun onStart() {
+        getMonth()
+        super.onStart()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,5 +86,25 @@ class MainActivity : AppCompatActivity() {
             }
             else -> false
         }
+    }
+
+    fun getMonth() {
+        val job = viewModelLeaderboards.getRange("ranges")
+        viewModelLeaderboards.listOfRanges.value?.let { result ->
+            listOfMonth = result
+        }
+        getDifficulties()
+    }
+
+    private fun getDifficulties() {
+        viewModelLeaderboards.getRange("difficulties")
+        viewModelLeaderboards.listOfRanges.value?.let { result ->
+            listOfDifficulties = result
+        }
+    }
+
+    companion object {
+        lateinit var listOfMonth: Map<Int, String>
+        lateinit var listOfDifficulties: Map<Int, String>
     }
 }

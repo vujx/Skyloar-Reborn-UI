@@ -9,3 +9,6 @@ data class PlayerPvPEntityItem(
     val totalMatches: Int,
     val winsLimited: Int
 )
+
+//players -> List<String>?
+//name -> String?

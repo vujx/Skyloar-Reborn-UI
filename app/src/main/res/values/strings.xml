@@ -144,4 +144,9 @@ It may take up to 10 minutes for new data to be cached and available.</string>
     <string name="wins">Wins</string>
     <string name="losses">Losses</string>
     <string name="activity_precentage">%d%%</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="players">Players</string>
+    <string name="time">Time</string>
+    <string name="difficulty">Difficulty</string>
 </resources>

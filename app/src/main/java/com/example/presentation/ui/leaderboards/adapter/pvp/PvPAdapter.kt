@@ -1,11 +1,10 @@
-package com.example.presentation.ui.leaderboards.adapter
+package com.example.presentation.ui.leaderboards.adapter.pvp
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.R
-import com.example.data.model.leaderboards.PlayerPvPEntityItem
 import com.example.databinding.ItemPvpPlayerBinding
 import com.example.domain.model.PvPPlayer1v1
 

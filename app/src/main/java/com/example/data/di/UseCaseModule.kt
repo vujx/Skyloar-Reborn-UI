@@ -3,14 +3,18 @@ package com.example.data.di
 import com.example.data.usecase.AuctionUseCase
 import com.example.data.usecase.StatUseCase
 import com.example.data.usecase.leaderboards.LeaderBoardsUseCase
+import com.example.data.usecase.leaderboards.PvEUseCase
 import com.example.data.usecase.leaderboards.PvPUseCase
 import com.example.domain.repository.auction.AuctionRepository
 import com.example.domain.repository.leaderboard.LeaderboardRepository
+import com.example.domain.repository.leaderboard.pve.PvERepository
 import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.repository.stat.StatRepository
 import com.example.domain.usecase.auction.*
 import com.example.domain.usecase.leaderboards.GetRanges
 import com.example.domain.usecase.leaderboards.GetTimeToRefresh
+import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
+import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
 import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
@@ -38,5 +42,11 @@ object UseCaseModule {
         LeaderBoardsUseCase(
             GetRanges(leaderboardRepo),
             GetTimeToRefresh(leaderboardRepo)
+        )
+
+    fun providePvEUseCase(pveRepo: PvERepository) =
+        PvEUseCase(
+            GetPvEPlayers(pveRepo),
+            GetNumOfPvESearchResult(pveRepo)
         )
 }
