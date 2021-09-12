@@ -1,5 +1,6 @@
 package com.example.presentation.ui.leaderboards.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,10 @@ class PvPPlayerViewModel(private val useCasePvp: PvPUseCase) :
         ctx.cancel()
     }
 
+    init {
+        getPvPPlayers("1v1", 0, 1, 20)
+    }
+
     fun getPvPPlayers(
         type: String,
         month: Int,
@@ -51,12 +56,15 @@ class PvPPlayerViewModel(private val useCasePvp: PvPUseCase) :
     ) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
         val countSearch =
             useCasePvp.getNumOfPvPSearchResult.execute(type, month)
-        val numOfPage = (countSearch.toDouble() / 20)
-        if (numOfPage % 1 == 0.0)
-            pageResult.postValue("$page / ${((countSearch / 20))}")
-        else
-            pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
         numOfSearchResult.postValue(countSearch)
+        val numOfPage = (countSearch.toDouble() / 20)
+        Log.d("ispisovo", countSearch.toString())
+        Log.d("ispisovo", numOfPage.toString())
+        when {
+            countSearch == 0 || (numOfPage < 1 && countSearch != 0)-> pageResult.postValue("1 / 1")
+            (countSearch.toDouble() / numOfPage) % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / 20))}")
+            else -> pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
+        }
     }
 
     override fun onSuccess(result: List<PvPPlayer>?) {

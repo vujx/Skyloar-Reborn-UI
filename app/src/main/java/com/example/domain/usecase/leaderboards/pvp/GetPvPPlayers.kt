@@ -27,7 +27,7 @@ class GetPvPPlayers(
             )
 
             when (response.code()) {
-                200 -> {
+                200,209 -> {
                     response.body()?.let { result ->
                         callback.onSuccess(
                             result.map {

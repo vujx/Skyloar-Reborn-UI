@@ -47,7 +47,6 @@ class AuctionFragment : Fragment(R.layout.fragment_auction), DialogPageListener 
         setData()
         setUpRecyclerView()
         bind()
-        viewModelAuction.getListOfAuctions(1, 20, null, null, null)
 
         return binding.root
     }

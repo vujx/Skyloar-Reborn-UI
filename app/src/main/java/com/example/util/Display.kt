@@ -7,6 +7,8 @@ import android.os.Environment
 import android.view.Gravity
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.presentation.MainActivity.Companion.listOfMonth
+import com.readystatesoftware.chuck.internal.ui.MainActivity
 
 fun displayMessage(message: String, context: Context) {
     val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
@@ -38,3 +40,21 @@ fun exportFile(frg: Fragment, url: String) {
         frg.requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     manager.enqueue(request)
 }
+
+fun getMonthValueByName(month: String): Int {
+    var monthRange = 0
+    listOfMonth?.let { result ->
+        result.forEach {
+            if (it.value == month)
+                monthRange = it.key
+        }
+    }
+    return monthRange
+}
+
+fun getTypePvP(type: String): String =
+    if (type == "1vs1")
+        "1v1"
+    else
+        "2v2"
+

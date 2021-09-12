@@ -41,7 +41,6 @@ class StatFragment : Fragment(R.layout.fragment_stat) {
         setUpRecyclerView()
         bind()
         setData()
-        viewModelStat.getListOfStatValues()
 
         return binding.root
     }

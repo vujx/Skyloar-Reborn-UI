@@ -11,7 +11,7 @@ import com.example.databinding.ActivityMainBinding
 import com.example.presentation.ui.auctions.AuctionFragment
 import com.example.presentation.ui.helper.auction.ConnectionHelper
 import com.example.presentation.ui.leaderboards.fragments.PvEFragment
-import com.example.presentation.ui.leaderboards.fragments.PvP1vs1PlayersFragment
+import com.example.presentation.ui.leaderboards.fragments.PvPFragment
 import com.example.presentation.ui.stat.StatFragment
 import com.example.util.ConnectionLiveData
 import com.google.android.material.navigation.NavigationView
@@ -80,9 +80,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_auction -> supportFragmentManager.beginTransaction().replace(R.id.frg, AuctionFragment()).commit()
             R.id.nav_stat -> supportFragmentManager.beginTransaction().replace(R.id.frg, StatFragment()).commit()
             R.id.nav_leaderPvE -> supportFragmentManager.beginTransaction().replace(R.id.frg, PvEFragment()).commit()
-            R.id.nav_leaderPvP -> supportFragmentManager.beginTransaction().replace(R.id.frg, PvP1vs1PlayersFragment()).commit()
+            R.id.nav_leaderPvP -> supportFragmentManager.beginTransaction().replace(R.id.frg, PvPFragment()).commit()
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    companion object{
+        var listOfMonth: Map<Int, String>? = null
+        var listOfDifficulties: Map<Int, String>? = null
     }
 }

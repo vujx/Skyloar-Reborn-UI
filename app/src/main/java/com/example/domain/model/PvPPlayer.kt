@@ -6,6 +6,6 @@ data class PvPPlayer(
     val losesLimited: Int,
     val name: String,
     val rating: Int,
-    val totalMatches: Int,
+    val totalMatches: Int?,
     val winsLimited: Int
 )

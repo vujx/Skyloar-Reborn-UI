@@ -58,11 +58,12 @@ class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) :
         val countSearch =
             useCasePvE.getNumOfPvESearchResult.execute(type, players, map, month)
         val numOfPage = (countSearch.toDouble() / 20)
-        if (numOfPage % 1 == 0.0)
-            pageResult.postValue("$page / ${((countSearch / 20))}")
-        else
-            pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
         numOfSearchResult.postValue(countSearch)
+        when {
+            countSearch == 0 -> pageResult.postValue("1 / 1")
+            (countSearch.toDouble() / numOfPage) % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / numOfPage))}")
+            else -> pageResult.postValue("$page / ${((countSearch / numOfPage) + 1)}")
+        }
     }
 
     override fun onSuccess(result: List<PvEPlayer>?) {

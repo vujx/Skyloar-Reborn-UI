@@ -19,7 +19,7 @@
 
         <variable
             name="clickListener"
-            type="com.example.presentation.ui.helper.leaderboards.PvP1v1OnClickHelper" />
+            type="com.example.presentation.ui.helper.leaderboards.PvPOnClickHelper" />
 
         <variable
             name="titleCheck"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".presentation.ui.leaderboards.fragments.PvP1vs1PlayersFragment">
+        tools:context=".presentation.ui.leaderboards.fragments.PvPFragment">
 
         <Spinner
             android:id="@+id/spinner"
@@ -44,9 +44,37 @@
             android:background="@drawable/spinner_background"
             android:spinnerMode="dropdown"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerPlayers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintEnd_toStartOf="@id/ivSearchBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivSearchBtn"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="#E53935"
+            android:onClick="@{() -> clickListener.onSearchBtnPress(viewModelPvP1, spinnerPlayers.getSelectedItem().toString(),tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
+            android:src="@drawable/ic_baseline_search_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:strokeWidth="1dp"
+            tools:ignore="ContentDescription" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -54,7 +82,7 @@
             android:fillViewport="true"
             android:scrollbars="none"
             app:layout_constraintBottom_toTopOf="@id/coordinatorLayout"
-            app:layout_constraintTop_toBottomOf="@+id/spinner">
+            app:layout_constraintTop_toBottomOf="@+id/ivSearchBtn">
 
             <LinearLayout
                 android:id="@+id/ll_main"
@@ -194,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:onClick="@{() -> clickListener.onBackBtnPress(viewModelPvP1, tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
+            android:onClick="@{() -> clickListener.onBackBtnPress(viewModelPvP1, spinnerPlayers.getSelectedItem().toString(), tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintBottom_toBottomOf="@id/tvPage"
             app:layout_constraintEnd_toStartOf="@id/tvPage"
@@ -206,7 +234,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:onClick="@{() -> clickListener.onNextBtnPress(viewModelPvP1, tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
+            android:onClick="@{() -> clickListener.onNextBtnPress(viewModelPvP1, spinnerPlayers.getSelectedItem().toString(),tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
             android:src="@drawable/ic_baseline_arrow_forward_24"
             app:layout_constraintBottom_toBottomOf="@id/tvPage"
             app:layout_constraintStart_toEndOf="@id/tvPage"

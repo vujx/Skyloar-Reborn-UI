@@ -24,6 +24,10 @@ class StatViewModel(private val statUseCase: StatUseCase) :
         onError(App.getStringResource(R.string.unexpected_error))
     }
 
+    init {
+        getListOfStatValues()
+    }
+
     fun getListOfStatValues() = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
         _statValues.postValue(Resource.Loading())
         statUseCase.getListOfStatValues.execute(null, this@StatViewModel)

@@ -28,6 +28,9 @@ class AuctionViewModel(private val auctionUseCase: AuctionUseCase) :
         onError(App.getStringResource(R.string.unexpected_error))
     }
 
+    init {
+        getListOfAuctions(1, 20, null, null, null)
+    }
     private fun getNumberOfSearchResults(
         page: Int,
         number: Int,

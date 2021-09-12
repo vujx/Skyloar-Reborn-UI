@@ -6,4 +6,6 @@ import retrofit2.Response
 interface LeaderboardsNetworkDataSource {
 
     suspend fun getRange(path: String): Response<List<NameValueEntityItem>>
+
+    suspend fun getMaps(type: Int): Response<List<NameValueEntityItem>>
 }

@@ -6,6 +6,7 @@
         <variable
             name="player"
             type="com.example.domain.model.PvPPlayer" />
+        <import type="android.view.View" />
     </data>
 
 
@@ -28,7 +29,7 @@
         <TextView
             android:id="@+id/tvRating"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="@drawable/tv_borders"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -40,7 +41,7 @@
         <TextView
             android:id="@+id/tvELO"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:paddingTop="16dp"
@@ -51,7 +52,7 @@
         <TextView
             android:id="@+id/tvActivity"
             android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:background="@drawable/tv_borders"
@@ -62,11 +63,12 @@
         <TextView
             android:id="@+id/tvMatches"
             android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
+            android:visibility="@{String.valueOf(player.totalMatches).equals(null) ? View.VISIBLE : View.GONE}"
             android:text="@{String.valueOf(player.totalMatches)}"
             android:textColor="@color/white" />
 
@@ -75,7 +77,7 @@
             android:layout_width="70dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:text="@{String.valueOf(player.winsLimited)}"
@@ -84,7 +86,7 @@
         <TextView
             android:id="@+id/tvLosses"
             android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="@drawable/tv_borders"
             android:gravity="center"
             android:paddingTop="16dp"
