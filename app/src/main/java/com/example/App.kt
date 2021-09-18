@@ -21,6 +21,8 @@ import com.example.domain.repository.leaderboard.LeaderboardRepository
 import com.example.domain.repository.leaderboard.pve.PvERepository
 import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.repository.stat.StatRepository
+import com.example.domain.usecase.auction.GetListOfAuctions
+import com.example.domain.usecase.auction.GetNumberOfSearchResults
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
@@ -45,24 +47,25 @@ class App : Application() {
   }
 
   private val repoModule = module {
-    single { DefaultAuctionRepository(get()) }
-    single { AuctionRepository(get<DefaultAuctionRepository>()) }
+    factory { DefaultAuctionRepository(get()) }
+    factory { AuctionRepository(get<DefaultAuctionRepository>()) }
 
-    single { DefaultPvPRepository(get()) }
-    single { PvPRepository(get<DefaultPvPRepository>()) }
+    factory { DefaultPvPRepository(get()) }
+    factory { PvPRepository(get<DefaultPvPRepository>()) }
 
-    single { DefaultStatRepository(get()) }
-    single { StatRepository(get<DefaultStatRepository>()) }
+    factory { DefaultStatRepository(get()) }
+    factory { StatRepository(get<DefaultStatRepository>()) }
 
-    single { DefaultLeaderboardsRepository(get()) }
-    single { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
+    factory { DefaultLeaderboardsRepository(get()) }
+    factory { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
 
-    single { DefaultPvERepository(get()) }
-    single { PvERepository(get<DefaultPvERepository>()) }
+    factory { DefaultPvERepository(get()) }
+    factory { PvERepository(get<DefaultPvERepository>()) }
   }
 
   private val useCaseModule = module {
-    factory { provideAuctionUseCase(get()) }
+    factory { GetListOfAuctions(get()) }
+    factory { GetNumberOfSearchResults(get()) }
     factory { provideStatUseCase(get()) }
     factory { providePvP1UseCase(get()) }
     factory { provideLeaderBoardsUseCase(get()) }
@@ -71,7 +74,7 @@ class App : Application() {
 
   private val viewModelModule = module {
     viewModel {
-      AuctionViewModel(get())
+      AuctionViewModel(get(), get())
     }
     viewModel {
       StatViewModel(get())
