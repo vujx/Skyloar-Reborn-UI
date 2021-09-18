@@ -37,84 +37,84 @@ import org.koin.dsl.module
 
 class App : Application() {
 
-    private val apiModule = module {
-        single { provideHttpClient(applicationContext) }
-        single { provideRetrofit(get()) }
-        single { provideAuctionService(get()) }
-        single { provideLeaderboardService(get()) }
+  private val apiModule = module {
+    single { provideHttpClient(applicationContext) }
+    single { provideRetrofit(get()) }
+    single { provideAuctionService(get()) }
+    single { provideLeaderboardService(get()) }
+  }
+
+  private val repoModule = module {
+    single { DefaultAuctionRepository(get()) }
+    single { AuctionRepository(get<DefaultAuctionRepository>()) }
+
+    single { DefaultPvPRepository(get()) }
+    single { PvPRepository(get<DefaultPvPRepository>()) }
+
+    single { DefaultStatRepository(get()) }
+    single { StatRepository(get<DefaultStatRepository>()) }
+
+    single { DefaultLeaderboardsRepository(get()) }
+    single { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
+
+    single { DefaultPvERepository(get()) }
+    single { PvERepository(get<DefaultPvERepository>()) }
+  }
+
+  private val useCaseModule = module {
+    factory { provideAuctionUseCase(get()) }
+    factory { provideStatUseCase(get()) }
+    factory { providePvP1UseCase(get()) }
+    factory { provideLeaderBoardsUseCase(get()) }
+    factory { providePvEUseCase(get()) }
+  }
+
+  private val viewModelModule = module {
+    viewModel {
+      AuctionViewModel(get())
     }
-
-    private val repoModule = module {
-        single { DefaultAuctionRepository(get()) }
-        single { AuctionRepository(get<DefaultAuctionRepository>()) }
-
-        single { DefaultPvPRepository(get()) }
-        single { PvPRepository(get<DefaultPvPRepository>()) }
-
-        single { DefaultStatRepository(get()) }
-        single { StatRepository(get<DefaultStatRepository>()) }
-
-        single { DefaultLeaderboardsRepository(get()) }
-        single { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
-
-        single { DefaultPvERepository(get()) }
-        single { PvERepository(get<DefaultPvERepository>()) }
+    viewModel {
+      StatViewModel(get())
     }
-
-    private val useCaseModule = module {
-        factory { provideAuctionUseCase(get()) }
-        factory { provideStatUseCase(get()) }
-        factory { providePvP1UseCase(get()) }
-        factory { provideLeaderBoardsUseCase(get()) }
-        factory { providePvEUseCase(get()) }
+    viewModel {
+      PvPPlayerViewModel(get())
     }
-
-    private val viewModelModule = module {
-        viewModel {
-            AuctionViewModel(get())
-        }
-        viewModel {
-            StatViewModel(get())
-        }
-        viewModel {
-            PvPPlayerViewModel(get())
-        }
-        viewModel {
-            LeaderboardsViewModel(get())
-        }
-        viewModel {
-            PvEPlayerViewModel(get())
-        }
+    viewModel {
+      LeaderboardsViewModel(get())
     }
-
-    private val adapterModule = module {
-        factory { AuctionAdapter() }
-        factory { StatAdapter() }
-        factory { PvPAdapter() }
+    viewModel {
+      PvEPlayerViewModel(get())
     }
+  }
 
-    override fun onCreate() {
-        super.onCreate()
-        getResources = resources
+  private val adapterModule = module {
+    factory { AuctionAdapter() }
+    factory { StatAdapter() }
+    factory { PvPAdapter() }
+  }
 
-        startKoin {
-            androidLogger()
-            androidContext(this@App)
-            modules(
-                listOf(
-                    apiModule,
-                    repoModule,
-                    useCaseModule,
-                    viewModelModule,
-                    adapterModule
-                )
-            )
-        }
+  override fun onCreate() {
+    super.onCreate()
+    getResources = resources
+
+    startKoin {
+      androidLogger()
+      androidContext(this@App)
+      modules(
+        listOf(
+          apiModule,
+          repoModule,
+          useCaseModule,
+          viewModelModule,
+          adapterModule
+        )
+      )
     }
+  }
 
-    companion object {
-        lateinit var getResources: Resources
-        private fun getResource() = getResources
-        fun getStringResource(id: Int) = getResource().getString(id)
-    }
+  companion object {
+    lateinit var getResources: Resources
+    private fun getResource() = getResources
+    fun getStringResource(id: Int) = getResource().getString(id)
+  }
 }

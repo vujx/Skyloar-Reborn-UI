@@ -6,13 +6,13 @@ import com.example.BR
 
 class ProgressBarHelper : BaseObservable() {
 
-    private var isLoading = true
+  private var isLoading = true
 
-    @Bindable
-    fun isLoading() = isLoading
+  @Bindable
+  fun isLoading() = isLoading
 
-    fun setLoading(loading: Boolean) {
-        isLoading = loading
-        notifyPropertyChanged(BR.loading)
-    }
+  fun setLoading(loading: Boolean) {
+    isLoading = loading
+    notifyPropertyChanged(BR.loading)
+  }
 }

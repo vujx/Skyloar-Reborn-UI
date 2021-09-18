@@ -10,27 +10,27 @@ import com.example.databinding.ItemAuctionBinding
 
 class AuctionAdapter : RecyclerView.Adapter<AuctionViewHolder>() {
 
-    private val listOfAuctions = mutableListOf<AuctionEntityItem>()
+  private val listOfAuctions = mutableListOf<AuctionEntityItem>()
 
-    fun setListOfAuctions(list: List<AuctionEntityItem>) {
-        listOfAuctions.clear()
-        listOfAuctions.addAll(list)
-        notifyDataSetChanged()
-    }
+  fun setListOfAuctions(list: List<AuctionEntityItem>) {
+    listOfAuctions.clear()
+    listOfAuctions.addAll(list)
+    notifyDataSetChanged()
+  }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionViewHolder {
-        val binding: ItemAuctionBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_auction,
-            parent,
-            false
-        )
-        return AuctionViewHolder(binding)
-    }
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionViewHolder {
+    val binding: ItemAuctionBinding = DataBindingUtil.inflate(
+      LayoutInflater.from(parent.context),
+      R.layout.item_auction,
+      parent,
+      false
+    )
+    return AuctionViewHolder(binding)
+  }
 
-    override fun onBindViewHolder(holder: AuctionViewHolder, position: Int) {
-        holder.itemAuction.auction = listOfAuctions[position]
-    }
+  override fun onBindViewHolder(holder: AuctionViewHolder, position: Int) {
+    holder.itemAuction.auction = listOfAuctions[position]
+  }
 
-    override fun getItemCount(): Int = listOfAuctions.size
+  override fun getItemCount(): Int = listOfAuctions.size
 }

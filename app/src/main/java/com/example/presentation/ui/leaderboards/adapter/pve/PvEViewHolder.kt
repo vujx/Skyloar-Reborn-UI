@@ -4,5 +4,5 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.databinding.ItemPvePlayersBinding
 
 class PvEViewHolder(
-    val itemPvE: ItemPvePlayersBinding
+  val itemPvE: ItemPvePlayersBinding
 ) : RecyclerView.ViewHolder(itemPvE.root)

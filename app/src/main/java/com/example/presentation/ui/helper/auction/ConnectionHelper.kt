@@ -7,27 +7,27 @@ import com.example.presentation.MainActivity
 import com.example.util.ConnectionLiveData
 
 class ConnectionHelper(
-    private var connectionLiveData: ConnectionLiveData,
-    private val activity: MainActivity
+  private var connectionLiveData: ConnectionLiveData,
+  private val activity: MainActivity
 ) : BaseObservable() {
 
-    private var isLoading = false
+  private var isLoading = false
 
-    @Bindable
-    fun isLoading() = isLoading
+  @Bindable
+  fun isLoading() = isLoading
 
-    private fun setLoading(loading: Boolean) {
-        isLoading = loading
-        notifyPropertyChanged(BR.loading)
-    }
+  private fun setLoading(loading: Boolean) {
+    isLoading = loading
+    notifyPropertyChanged(BR.loading)
+  }
 
-    fun observeInternetConnection() {
-        connectionLiveData = ConnectionLiveData(context = activity.applicationContext)
-        connectionLiveData.observe(
-            activity,
-            { isNetworkAvailable ->
-                setLoading(isNetworkAvailable)
-            }
-        )
-    }
+  fun observeInternetConnection() {
+    connectionLiveData = ConnectionLiveData(context = activity.applicationContext)
+    connectionLiveData.observe(
+      activity,
+      { isNetworkAvailable ->
+        setLoading(isNetworkAvailable)
+      }
+    )
+  }
 }

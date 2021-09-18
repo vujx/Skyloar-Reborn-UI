@@ -6,17 +6,17 @@ import retrofit2.Response
 
 interface AuctionNetworkDataSource {
 
-    suspend fun getListOfAuctions(
-        page: Int,
-        number: Int,
-        input: String?,
-        minPrice: Int?,
-        maxPrice: Int?
-    ): Response<List<AuctionEntityItem>>
+  suspend fun getListOfAuctions(
+    page: Int,
+    number: Int,
+    input: String?,
+    minPrice: Int?,
+    maxPrice: Int?
+  ): Response<List<AuctionEntityItem>>
 
-    suspend fun getNumberOfSearchResults(
-        input: String?,
-        minPrice: Int?,
-        maxPrice: Int?
-    ): Response<NumberOfSearchResultsEntity>
+  suspend fun getNumberOfSearchResults(
+    input: String?,
+    minPrice: Int?,
+    maxPrice: Int?
+  ): Response<NumberOfSearchResultsEntity>
 }

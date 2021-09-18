@@ -22,74 +22,74 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StatFragment : Fragment(R.layout.fragment_stat) {
 
-    private lateinit var binding: FragmentStatBinding
+  private lateinit var binding: FragmentStatBinding
 
-    private val adapter: StatAdapter by inject()
-    private val progressBarHelper = ProgressBarHelper()
-    private val viewModelStat: StatViewModel by viewModel()
-    private lateinit var refreshHelper: RefreshHelper
-    private val searchResultHelper = SearchResultHelper()
+  private val adapter: StatAdapter by inject()
+  private val progressBarHelper = ProgressBarHelper()
+  private val viewModelStat: StatViewModel by viewModel()
+  private lateinit var refreshHelper: RefreshHelper
+  private val searchResultHelper = SearchResultHelper()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stat, null, false)
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stat, null, false)
 
-        refreshHelper = RefreshHelper(viewModelStat)
-        setUpRecyclerView()
-        bind()
-        setData()
+    refreshHelper = RefreshHelper(viewModelStat)
+    setUpRecyclerView()
+    bind()
+    setData()
 
-        return binding.root
-    }
+    return binding.root
+  }
 
-    private fun bind() {
-        viewModelStat.statValues.observe(
-            viewLifecycleOwner,
-            { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        progressBarHelper.setLoading(false)
-                        binding.titleCheck = "1"
-                        adapter.setListOfStatValues(result.value)
-                    }
-                    is Resource.Loading -> progressBarHelper.setLoading(true)
-                    is Resource.Failure -> {
-                        progressBarHelper.setLoading(false)
-                        adapter.setListOfStatValues(emptyList())
-                        binding.titleCheck = ""
-                        displayMessage(
-                            result.message,
-                            requireContext()
-                        )
-                    }
-                    else -> {
-                        progressBarHelper.setLoading(false)
-                        binding.titleCheck = ""
-                        displayMessage(
-                            App.getStringResource(R.string.unexpected_error),
-                            requireContext()
-                        )
-                    }
-                }
-            }
-        )
-    }
-
-    private fun setUpRecyclerView() {
-        binding.apply {
-            rvStat.layoutManager = LinearLayoutManager(requireContext())
-            rvStat.adapter = adapter
+  private fun bind() {
+    viewModelStat.statValues.observe(
+      viewLifecycleOwner,
+      { result ->
+        when (result) {
+          is Resource.Success -> {
+            progressBarHelper.setLoading(false)
+            binding.titleCheck = "1"
+            adapter.setListOfStatValues(result.value)
+          }
+          is Resource.Loading -> progressBarHelper.setLoading(true)
+          is Resource.Failure -> {
+            progressBarHelper.setLoading(false)
+            adapter.setListOfStatValues(emptyList())
+            binding.titleCheck = ""
+            displayMessage(
+              result.message,
+              requireContext()
+            )
+          }
+          else -> {
+            progressBarHelper.setLoading(false)
+            binding.titleCheck = ""
+            displayMessage(
+              App.getStringResource(R.string.unexpected_error),
+              requireContext()
+            )
+          }
         }
-    }
+      }
+    )
+  }
 
-    private fun setData() {
-        binding.apply {
-            progressBarHlp = progressBarHelper
-            refresh = refreshHelper
-            searchResult = searchResultHelper
-        }
+  private fun setUpRecyclerView() {
+    binding.apply {
+      rvStat.layoutManager = LinearLayoutManager(requireContext())
+      rvStat.adapter = adapter
     }
+  }
+
+  private fun setData() {
+    binding.apply {
+      progressBarHlp = progressBarHelper
+      refresh = refreshHelper
+      searchResult = searchResultHelper
+    }
+  }
 }

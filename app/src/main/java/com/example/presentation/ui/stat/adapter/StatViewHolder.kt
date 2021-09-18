@@ -4,5 +4,5 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.databinding.ItemStatBinding
 
 class StatViewHolder(
-    val itemStat: ItemStatBinding
+  val itemStat: ItemStatBinding
 ) : RecyclerView.ViewHolder(itemStat.root)

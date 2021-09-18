@@ -6,11 +6,11 @@ import com.example.domain.repository.leaderboard.LeaderboardsNetworkDataSource
 import retrofit2.Response
 
 class DefaultLeaderboardsRepository(private val leaderboardService: LeaderboardService) :
-    LeaderboardsNetworkDataSource {
+  LeaderboardsNetworkDataSource {
 
-    override suspend fun getRange(path: String): Response<List<NameValueEntityItem>> =
-        leaderboardService.getRanges(path)
+  override suspend fun getRange(path: String): Response<List<NameValueEntityItem>> =
+    leaderboardService.getRanges(path)
 
-    override suspend fun getMaps(type: Int): Response<List<NameValueEntityItem>> =
-        leaderboardService.getMapsByType(type)
+  override suspend fun getMaps(type: Int): Response<List<NameValueEntityItem>> =
+    leaderboardService.getMapsByType(type)
 }

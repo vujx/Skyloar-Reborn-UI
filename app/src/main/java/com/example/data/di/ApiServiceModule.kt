@@ -12,29 +12,29 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object ApiServiceModule {
 
-    fun provideAuctionService(retrofit: Retrofit): AuctionStatService {
-        return retrofit.create(AuctionStatService::class.java)
-    }
+  fun provideAuctionService(retrofit: Retrofit): AuctionStatService {
+    return retrofit.create(AuctionStatService::class.java)
+  }
 
-    fun provideLeaderboardService(retrofit: Retrofit): LeaderboardService {
-        return retrofit.create(LeaderboardService::class.java)
-    }
+  fun provideLeaderboardService(retrofit: Retrofit): LeaderboardService {
+    return retrofit.create(LeaderboardService::class.java)
+  }
 
-    fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create().asLenient())
-            .client(client)
-            .build()
-    }
+  fun provideRetrofit(client: OkHttpClient): Retrofit {
+    return Retrofit.Builder()
+      .baseUrl(Constants.BASE_URL)
+      .addConverterFactory(MoshiConverterFactory.create().asLenient())
+      .client(client)
+      .build()
+  }
 
-    fun provideHttpClient(context: Context): OkHttpClient {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+  fun provideHttpClient(context: Context): OkHttpClient {
+    val logging = HttpLoggingInterceptor()
+    logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        return OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .addInterceptor(ChuckInterceptor(context))
-            .build()
-    }
+    return OkHttpClient.Builder()
+      .addInterceptor(logging)
+      .addInterceptor(ChuckInterceptor(context))
+      .build()
+  }
 }

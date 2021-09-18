@@ -6,19 +6,19 @@ import retrofit2.Response
 
 class AuctionRepository(private val auctionDataSource: AuctionNetworkDataSource) {
 
-    suspend fun getListOfAuctions(
-        page: Int,
-        number: Int,
-        input: String?,
-        minPrice: Int?,
-        maxPrice: Int?
-    ): Response<List<AuctionEntityItem>> =
-        auctionDataSource.getListOfAuctions(page, number, input, minPrice, maxPrice)
+  suspend fun getListOfAuctions(
+    page: Int,
+    number: Int,
+    input: String?,
+    minPrice: Int?,
+    maxPrice: Int?
+  ): Response<List<AuctionEntityItem>> =
+    auctionDataSource.getListOfAuctions(page, number, input, minPrice, maxPrice)
 
-    suspend fun getNumberOfSearchResults(
-        input: String?,
-        minPrice: Int?,
-        maxPrice: Int?
-    ): Response<NumberOfSearchResultsEntity> =
-        auctionDataSource.getNumberOfSearchResults(input, minPrice, maxPrice)
+  suspend fun getNumberOfSearchResults(
+    input: String?,
+    minPrice: Int?,
+    maxPrice: Int?
+  ): Response<NumberOfSearchResultsEntity> =
+    auctionDataSource.getNumberOfSearchResults(input, minPrice, maxPrice)
 }

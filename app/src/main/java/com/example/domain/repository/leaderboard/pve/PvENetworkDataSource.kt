@@ -6,19 +6,19 @@ import retrofit2.Response
 
 interface PvENetworkDataSource {
 
-    suspend fun getNumOfPvESearchResult(
-        type: Int,
-        players: Int,
-        map: Int,
-        month: Int
-    ): Response<NumberOfSearchResultsEntity>
+  suspend fun getNumOfPvESearchResult(
+    type: Int,
+    players: Int,
+    map: Int,
+    month: Int
+  ): Response<NumberOfSearchResultsEntity>
 
-    suspend fun getPvEPlayers(
-        type: Int,
-        players: Int,
-        map: Int,
-        month: Int,
-        page: Int,
-        number: Int
-    ): Response<List<PlayerPvEEntityItem>>
+  suspend fun getPvEPlayers(
+    type: Int,
+    players: Int,
+    map: Int,
+    month: Int,
+    page: Int,
+    number: Int
+  ): Response<List<PlayerPvEEntityItem>>
 }

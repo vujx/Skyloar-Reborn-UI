@@ -6,13 +6,13 @@ import com.example.BR
 
 class SearchResultHelper : BaseObservable() {
 
-    private var searchResult: String = ""
+  private var searchResult: String = ""
 
-    @Bindable
-    fun getSearchResult() = searchResult
+  @Bindable
+  fun getSearchResult() = searchResult
 
-    fun setSearchResult(searchResult: String) {
-        this.searchResult = searchResult
-        notifyPropertyChanged(BR.searchResult)
-    }
+  fun setSearchResult(searchResult: String) {
+    this.searchResult = searchResult
+    notifyPropertyChanged(BR.searchResult)
+  }
 }

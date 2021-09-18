@@ -10,26 +10,26 @@ import com.example.domain.model.PvPPlayer
 
 class PvPAdapter : RecyclerView.Adapter<PvPViewHolder>() {
 
-    private val listOfPvPPlayers = mutableListOf<PvPPlayer>()
+  private val listOfPvPPlayers = mutableListOf<PvPPlayer>()
 
-    fun setListOfPvPPlayers(list: List<PvPPlayer>) {
-        listOfPvPPlayers.clear()
-        listOfPvPPlayers.addAll(list)
-        notifyDataSetChanged()
-    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PvPViewHolder {
-        val binding: ItemPvpPlayerBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_pvp_player,
-            parent,
-            false
-        )
-        return PvPViewHolder(binding)
-    }
+  fun setListOfPvPPlayers(list: List<PvPPlayer>) {
+    listOfPvPPlayers.clear()
+    listOfPvPPlayers.addAll(list)
+    notifyDataSetChanged()
+  }
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PvPViewHolder {
+    val binding: ItemPvpPlayerBinding = DataBindingUtil.inflate(
+      LayoutInflater.from(parent.context),
+      R.layout.item_pvp_player,
+      parent,
+      false
+    )
+    return PvPViewHolder(binding)
+  }
 
-    override fun onBindViewHolder(holder: PvPViewHolder, position: Int) {
-        holder.itemPvP.player = listOfPvPPlayers[position]
-    }
+  override fun onBindViewHolder(holder: PvPViewHolder, position: Int) {
+    holder.itemPvP.player = listOfPvPPlayers[position]
+  }
 
-    override fun getItemCount(): Int = listOfPvPPlayers.size
+  override fun getItemCount(): Int = listOfPvPPlayers.size
 }

@@ -11,17 +11,17 @@ import kotlinx.coroutines.launch
 
 class LeaderboardsViewModel(private val useCaseLeaderboards: LeaderBoardsUseCase) : ViewModel() {
 
-    val listOfRanges = MutableLiveData<Map<Int, String>>()
+  val listOfRanges = MutableLiveData<Map<Int, String>>()
 
-    private val exceptionHandler = CoroutineExceptionHandler { ctx, _ ->
-        ctx.cancel()
-    }
+  private val exceptionHandler = CoroutineExceptionHandler { ctx, _ ->
+    ctx.cancel()
+  }
 
-    fun getRange(path: String) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-        listOfRanges.postValue(useCaseLeaderboards.getRanges.execute(path))
-    }
+  fun getRange(path: String) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+    listOfRanges.postValue(useCaseLeaderboards.getRanges.execute(path))
+  }
 
-    fun getMaps(type: Int) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-        useCaseLeaderboards.getMaps.execute(type)
-    }
+  fun getMaps(type: Int) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+    useCaseLeaderboards.getMaps.execute(type)
+  }
 }
