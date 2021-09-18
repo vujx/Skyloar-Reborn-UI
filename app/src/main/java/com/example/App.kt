@@ -21,6 +21,8 @@ import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.repository.stat.StatRepository
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
+import com.example.domain.usecase.leaderboards.GetMaps
+import com.example.domain.usecase.leaderboards.GetRanges
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
@@ -66,6 +68,8 @@ class App : Application() {
     factory { GetListOfAuctions(get()) }
     factory { GetNumberOfSearchResults(get()) }
     factory { GetStatValues(get()) }
+    factory { GetRanges(get()) }
+    factory { GetMaps(get()) }
     factory { providePvP1UseCase(get()) }
     factory { provideLeaderBoardsUseCase(get()) }
     factory { providePvEUseCase(get()) }
@@ -82,7 +86,7 @@ class App : Application() {
       PvPPlayerViewModel(get())
     }
     viewModel {
-      LeaderboardsViewModel(get())
+      LeaderboardsViewModel(get(), get())
     }
     viewModel {
       PvEPlayerViewModel(get())
