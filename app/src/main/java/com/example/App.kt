@@ -9,6 +9,7 @@ import com.example.data.di.ApiServiceModule.provideRetrofit
 import com.example.data.di.UseCaseModule.provideLeaderBoardsUseCase
 import com.example.data.di.UseCaseModule.providePvEUseCase
 import com.example.data.di.UseCaseModule.providePvP1UseCase
+import com.example.data.mapper.PvPPlayerMapper
 import com.example.data.repository.auction.DefaultAuctionRepository
 import com.example.data.repository.leaderboards.DefaultLeaderboardsRepository
 import com.example.data.repository.leaderboards.DefaultPvERepository
@@ -23,6 +24,8 @@ import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
 import com.example.domain.usecase.leaderboards.GetMaps
 import com.example.domain.usecase.leaderboards.GetRanges
+import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
+import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
@@ -51,7 +54,7 @@ class App : Application() {
     factory { DefaultAuctionRepository(get()) }
     factory { AuctionRepository(get<DefaultAuctionRepository>()) }
 
-    factory { DefaultPvPRepository(get()) }
+    factory { DefaultPvPRepository(get(), get()) }
     factory { PvPRepository(get<DefaultPvPRepository>()) }
 
     factory { DefaultStatRepository(get()) }
@@ -64,12 +67,18 @@ class App : Application() {
     factory { PvERepository(get<DefaultPvERepository>()) }
   }
 
+  private val mappersModule = module {
+    factory { PvPPlayerMapper() }
+  }
+
   private val useCaseModule = module {
     factory { GetListOfAuctions(get()) }
     factory { GetNumberOfSearchResults(get()) }
     factory { GetStatValues(get()) }
     factory { GetRanges(get()) }
     factory { GetMaps(get()) }
+    factory { GetPvPPlayers(get()) }
+    factory { GetNumOfPvPSearchResult(get()) }
     factory { providePvP1UseCase(get()) }
     factory { provideLeaderBoardsUseCase(get()) }
     factory { providePvEUseCase(get()) }
@@ -83,7 +92,7 @@ class App : Application() {
       StatViewModel(get())
     }
     viewModel {
-      PvPPlayerViewModel(get())
+      PvPPlayerViewModel(get(), get())
     }
     viewModel {
       LeaderboardsViewModel(get(), get())
@@ -110,6 +119,7 @@ class App : Application() {
         listOf(
           apiModule,
           repoModule,
+          mappersModule,
           useCaseModule,
           viewModelModule,
           adapterModule
