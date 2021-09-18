@@ -12,13 +12,11 @@ class AuctionRepository(private val auctionDataSource: AuctionNetworkDataSource)
     input: String?,
     minPrice: Int?,
     maxPrice: Int?
-  ): Response<List<AuctionEntityItem>> =
-    auctionDataSource.getListOfAuctions(page, number, input, minPrice, maxPrice)
+  ) = auctionDataSource.getListOfAuctions(page, number, input, minPrice, maxPrice)
 
   suspend fun getNumberOfSearchResults(
     input: String?,
     minPrice: Int?,
     maxPrice: Int?
-  ): Response<NumberOfSearchResultsEntity> =
-    auctionDataSource.getNumberOfSearchResults(input, minPrice, maxPrice)
+  ) = auctionDataSource.getNumberOfSearchResults(input, minPrice, maxPrice)
 }
