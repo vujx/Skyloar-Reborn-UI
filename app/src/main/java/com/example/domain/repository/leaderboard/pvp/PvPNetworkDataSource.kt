@@ -1,20 +1,19 @@
 package com.example.domain.repository.leaderboard.pvp
 
 import com.example.data.model.auction.NumberOfSearchResultsEntity
-import com.example.data.model.leaderboards.PlayerPvPEntityItem
-import retrofit2.Response
-
+import com.example.domain.model.PvPPlayer
+import com.example.util.Result
 interface PvPNetworkDataSource {
 
   suspend fun getNumOfPvPSearchResult(
     type: String,
     month: Int
-  ): Response<NumberOfSearchResultsEntity>
+  ): Result<NumberOfSearchResultsEntity>
 
   suspend fun getPvPPlayers(
     type: String,
     month: Int,
     page: Int,
     number: Int
-  ): Response<List<PlayerPvPEntityItem>>
+  ): Result<List<PvPPlayer>?>
 }

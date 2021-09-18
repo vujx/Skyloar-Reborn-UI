@@ -1,5 +1,7 @@
 package com.example.domain.repository.leaderboard.pvp
 
+import com.example.domain.model.PvPPlayer
+import com.example.util.Result
 class PvPRepository(private val pvpData: PvPNetworkDataSource) {
 
   suspend fun getNumOfPvPSearchResult(
@@ -12,5 +14,5 @@ class PvPRepository(private val pvpData: PvPNetworkDataSource) {
     month: Int,
     page: Int,
     number: Int
-  ) = pvpData.getPvPPlayers(type, month, page, number)
+  ): Result<List<PvPPlayer>?> = pvpData.getPvPPlayers(type, month, page, number)
 }
