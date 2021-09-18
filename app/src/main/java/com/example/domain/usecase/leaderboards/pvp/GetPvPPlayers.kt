@@ -8,7 +8,7 @@ import com.example.util.Result
 
 class GetPvPPlayers(
   private val pvpRepo: PvPRepository
-)  {
+) {
 
   suspend operator fun invoke(params: List<Any>): Result<List<PvPPlayer>?> = withContext(Dispatchers.IO) {
     pvpRepo.getPvPPlayers(

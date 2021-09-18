@@ -32,7 +32,7 @@ class PvPPlayerViewModel(private val getPvPPlayers: GetPvPPlayers, private val g
   ) {
     viewModelScope.launch {
       _pvpPlayer.postValue(Resource.Loading())
-      when(val result = getPvPPlayers(listOf(type, month, page, number))) {
+      when (val result = getPvPPlayers(listOf(type, month, page, number))) {
         is Result.Success -> _pvpPlayer.postValue(Resource.Success(result.data))
         is Result.Error -> {
         }
@@ -47,7 +47,7 @@ class PvPPlayerViewModel(private val getPvPPlayers: GetPvPPlayers, private val g
     month: Int,
     page: Int
   ) = viewModelScope.launch {
-    when(val result = getNumOfPvPSearchResult(type, month)) {
+    when (val result = getNumOfPvPSearchResult(type, month)) {
       is Result.Success -> {
         val countSearch = result.data.count
         numOfSearchResult.postValue(countSearch)
@@ -59,7 +59,6 @@ class PvPPlayerViewModel(private val getPvPPlayers: GetPvPPlayers, private val g
         }
       }
       is Result.Error -> {
-
       }
     }
   }

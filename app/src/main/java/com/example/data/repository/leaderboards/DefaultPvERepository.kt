@@ -2,13 +2,11 @@ package com.example.data.repository.leaderboards
 
 import com.example.data.mapper.PvEPlayerMapper
 import com.example.data.model.auction.NumberOfSearchResultsEntity
-import com.example.data.model.leaderboards.PlayerPvEEntityItem
 import com.example.data.network.LeaderboardService
 import com.example.data.network.safeApiCall
 import com.example.domain.model.PvEPlayer
 import com.example.domain.repository.leaderboard.pve.PvENetworkDataSource
 import com.example.util.Result
-import retrofit2.Response
 
 class DefaultPvERepository(
   private val leaderboardService: LeaderboardService,
@@ -49,7 +47,8 @@ class DefaultPvERepository(
           players,
           map,
           month,
-          page, number
+          page,
+          number
         )
         if (response.code() == 401) null
         else response.body()!!.map { pveMapper.mapFromEntity(it) }

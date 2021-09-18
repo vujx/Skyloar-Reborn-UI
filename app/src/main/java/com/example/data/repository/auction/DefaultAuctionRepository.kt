@@ -35,6 +35,4 @@ class DefaultAuctionRepository(private val auctionService: AuctionStatService) :
       }
     )
   }
-
-
 }

@@ -6,9 +6,6 @@ import com.example.data.di.ApiServiceModule.provideAuctionService
 import com.example.data.di.ApiServiceModule.provideHttpClient
 import com.example.data.di.ApiServiceModule.provideLeaderboardService
 import com.example.data.di.ApiServiceModule.provideRetrofit
-import com.example.data.di.UseCaseModule.provideLeaderBoardsUseCase
-import com.example.data.di.UseCaseModule.providePvEUseCase
-import com.example.data.di.UseCaseModule.providePvP1UseCase
 import com.example.data.mapper.PvEPlayerMapper
 import com.example.data.mapper.PvPPlayerMapper
 import com.example.data.repository.auction.DefaultAuctionRepository
@@ -85,9 +82,6 @@ class App : Application() {
     factory { GetNumOfPvPSearchResult(get()) }
     factory { GetPvEPlayers(get()) }
     factory { GetNumOfPvESearchResult(get()) }
-    factory { providePvP1UseCase(get()) }
-    factory { provideLeaderBoardsUseCase(get()) }
-    factory { providePvEUseCase(get()) }
   }
 
   private val viewModelModule = module {

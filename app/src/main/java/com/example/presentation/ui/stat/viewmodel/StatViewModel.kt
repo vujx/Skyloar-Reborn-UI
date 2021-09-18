@@ -4,14 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.App
-import com.example.R
-import com.example.data.usecase.StatUseCase
-import com.example.domain.usecase.BaseUseCase
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.util.Resource
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class StatViewModel(private val getStatValues: GetStatValues) :

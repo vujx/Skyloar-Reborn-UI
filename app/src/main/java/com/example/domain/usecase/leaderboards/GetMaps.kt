@@ -9,7 +9,7 @@ class GetMaps(
   private val leaderboardsRepo: LeaderboardRepository
 ) {
 
-    suspend operator fun invoke(params: Int): Result<MutableMap<Int, String>> = withContext(Dispatchers.IO) {
-      leaderboardsRepo.getMaps(params)
-    }
+  suspend operator fun invoke(params: Int): Result<MutableMap<Int, String>> = withContext(Dispatchers.IO) {
+    leaderboardsRepo.getMaps(params)
+  }
 }
