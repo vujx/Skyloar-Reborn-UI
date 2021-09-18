@@ -12,7 +12,7 @@ class DefaultLeaderboardsRepository(private val leaderboardService: LeaderboardS
     return safeApiCall({
       val map = mutableMapOf<Int, String>()
       leaderboardService.getRanges(path).body()!!.forEach { result ->
-          map[result.value] = result.name
+        map[result.value] = result.name
       }
       map
     })

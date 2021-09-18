@@ -11,8 +11,10 @@ import com.example.util.Resource
 import com.example.util.Result
 import kotlinx.coroutines.launch
 
-class AuctionViewModel(private val getAuctions: GetListOfAuctions,
-private val getNumberOfSearchResults: GetNumberOfSearchResults) :
+class AuctionViewModel(
+  private val getAuctions: GetListOfAuctions,
+  private val getNumberOfSearchResults: GetNumberOfSearchResults
+) :
   ViewModel() {
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
@@ -32,7 +34,7 @@ private val getNumberOfSearchResults: GetNumberOfSearchResults) :
     maxPrice: Int?
   ) = viewModelScope.launch {
     val listOfParams = listOf<Any?>(input, minPrice, maxPrice)
-    when(val result = getNumberOfSearchResults.invoke(listOfParams)) {
+    when (val result = getNumberOfSearchResults.invoke(listOfParams)) {
       is Result.Success -> {
         val countSearch = result.data.count
         numOfSearchResult.postValue(countSearch)
@@ -43,10 +45,8 @@ private val getNumberOfSearchResults: GetNumberOfSearchResults) :
         }
       }
       is Result.Error -> {
-
       }
     }
-
   }
 
   fun getListOfAuctions(
@@ -58,18 +58,21 @@ private val getNumberOfSearchResults: GetNumberOfSearchResults) :
   ) {
     viewModelScope.launch {
       _auctions.postValue(Resource.Loading())
-      when(val result = getAuctions(listOf<Any?>(
-        page,
-        number,
-        input,
-        minPrice,
-        maxPrice
-      ))) {
+      when (
+        val result = getAuctions(
+          listOf<Any?>(
+            page,
+            number,
+            input,
+            minPrice,
+            maxPrice
+          )
+        )
+      ) {
         is Result.Success -> {
-          if(result.data.isEmpty()) _auctions.postValue(Resource.Empty()) else _auctions.postValue(Resource.Success(result.data))
+          if (result.data.isEmpty()) _auctions.postValue(Resource.Empty()) else _auctions.postValue(Resource.Success(result.data))
         }
         is Result.Error -> {
-
         }
       }
     }

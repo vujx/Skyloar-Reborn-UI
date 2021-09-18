@@ -10,14 +10,16 @@ class GetNumberOfSearchResults(
 
   suspend operator fun invoke(params: List<Any?>) =
     withContext(Dispatchers.IO) {
-      auctionRepo.getNumberOfSearchResults(  params[0]?.let {
-        it as String
-      },
+      auctionRepo.getNumberOfSearchResults(
+        params[0]?.let {
+          it as String
+        },
         params[1]?.let {
           it as Int
         },
         params[2]?.let {
           it as Int
-        })
+        }
+      )
     }
 }

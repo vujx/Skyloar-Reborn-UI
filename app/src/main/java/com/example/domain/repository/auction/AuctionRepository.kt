@@ -1,9 +1,5 @@
 package com.example.domain.repository.auction
 
-import com.example.data.model.auction.AuctionEntityItem
-import com.example.data.model.auction.NumberOfSearchResultsEntity
-import retrofit2.Response
-
 class AuctionRepository(private val auctionDataSource: AuctionNetworkDataSource) {
 
   suspend fun getListOfAuctions(

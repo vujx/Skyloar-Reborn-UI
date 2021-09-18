@@ -1,7 +1,6 @@
 package com.example.domain.repository.leaderboard.pve
 
 import com.example.data.model.auction.NumberOfSearchResultsEntity
-import com.example.data.model.leaderboards.PlayerPvEEntityItem
 import com.example.domain.model.PvEPlayer
 import com.example.util.Result
 

@@ -11,7 +11,10 @@ import com.example.util.Resource
 import kotlinx.coroutines.launch
 import com.example.util.Result
 
-class PvEPlayerViewModel(private val getPvPPlayersUseCase: GetPvPPlayers, private val getNumOfPvESearchResult: GetNumOfPvESearchResult) :
+class PvEPlayerViewModel(
+  private val getPvPPlayersUseCase: GetPvPPlayers,
+  private val getNumOfPvESearchResult: GetNumOfPvESearchResult
+) :
   ViewModel() {
 
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
@@ -23,6 +26,7 @@ class PvEPlayerViewModel(private val getPvPPlayersUseCase: GetPvPPlayers, privat
   init {
     getPvEPlayers(1, 1, 9, 0, 1, 20)
   }
+
   fun getPvEPlayers(
     type: Int,
     players: Int,
@@ -33,14 +37,13 @@ class PvEPlayerViewModel(private val getPvPPlayersUseCase: GetPvPPlayers, privat
   ) {
     viewModelScope.launch {
       _pvePlayer.postValue(Resource.Loading())
-      when(val result = getPvPPlayersUseCase(listOf(type, players, map, month, page, number))) {
+      when (val result = getPvPPlayersUseCase(listOf(type, players, map, month, page, number))) {
         is Result.Success -> {
           result.data?.let {
             if (it.isEmpty()) _pvePlayer.postValue(Resource.Empty())
           } ?: _pvePlayer.postValue(Resource.Success(null))
-          }
+        }
         is Result.Error -> {
-          
         }
       }
     }
@@ -54,12 +57,14 @@ class PvEPlayerViewModel(private val getPvPPlayersUseCase: GetPvPPlayers, privat
     month: Int,
     page: Int
   ) = viewModelScope.launch {
-    when(val result = getNumOfPvESearchResult(
-      type,
-      players,
-      map,
-      month
-    )) {
+    when (
+      val result = getNumOfPvESearchResult(
+        type,
+        players,
+        map,
+        month
+      )
+    ) {
       is Result.Success -> {
         val countSearch = result.data.count
         val numOfPage = (countSearch.toDouble() / 20)
@@ -71,7 +76,6 @@ class PvEPlayerViewModel(private val getPvPPlayersUseCase: GetPvPPlayers, privat
         }
       }
       is Result.Error -> {
-
       }
     }
   }

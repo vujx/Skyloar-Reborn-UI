@@ -2,13 +2,11 @@ package com.example.data.repository.leaderboards
 
 import com.example.data.mapper.PvPPlayerMapper
 import com.example.data.model.auction.NumberOfSearchResultsEntity
-import com.example.data.model.leaderboards.PlayerPvPEntityItem
 import com.example.data.network.LeaderboardService
 import com.example.data.network.safeApiCall
 import com.example.domain.model.PvPPlayer
 import com.example.domain.repository.leaderboard.pvp.PvPNetworkDataSource
 import com.example.util.Result
-import retrofit2.Response
 
 class DefaultPvPRepository(
   private val leaderboardService: LeaderboardService,
