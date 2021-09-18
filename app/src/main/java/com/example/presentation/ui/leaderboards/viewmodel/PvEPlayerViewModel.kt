@@ -4,20 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.App
-import com.example.R
-import com.example.data.usecase.leaderboards.PvEUseCase
 import com.example.domain.model.PvEPlayer
-import com.example.domain.usecase.BaseUseCase
+import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
+import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.util.Resource
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import com.example.util.Result
 
-class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) :
-  ViewModel(),
-  BaseUseCase.Callback<List<PvEPlayer>?> {
+class PvEPlayerViewModel(private val getPvPPlayersUseCase: GetPvPPlayers, private val getNumOfPvESearchResult: GetNumOfPvESearchResult) :
+  ViewModel() {
 
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
   val pvePlayer: LiveData<Resource<List<PvEPlayer>?>> = _pvePlayer
@@ -25,11 +20,9 @@ class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) :
   val numOfSearchResult = MutableLiveData<Int>()
   val pageResult = MutableLiveData<String>()
 
-  private val exceptionHandler = CoroutineExceptionHandler { ctx, _ ->
-    onError(App.getStringResource(R.string.unexpected_error))
-    ctx.cancel()
+  init {
+    getPvEPlayers(1, 1, 9, 0, 1, 20)
   }
-
   fun getPvEPlayers(
     type: Int,
     players: Int,
@@ -38,12 +31,18 @@ class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) :
     page: Int,
     number: Int
   ) {
-    viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+    viewModelScope.launch {
       _pvePlayer.postValue(Resource.Loading())
-      useCasePvE.getPvEPlayers.execute(
-        listOf(type, players, map, month, page, number),
-        this@PvEPlayerViewModel
-      )
+      when(val result = getPvPPlayersUseCase(listOf(type, players, map, month, page, number))) {
+        is Result.Success -> {
+          result.data?.let {
+            if (it.isEmpty()) _pvePlayer.postValue(Resource.Empty())
+          } ?: _pvePlayer.postValue(Resource.Success(null))
+          }
+        is Result.Error -> {
+          
+        }
+      }
     }
     getNumOfPvPSearchResult(type, players, map, month, page)
   }
@@ -54,26 +53,26 @@ class PvEPlayerViewModel(private val useCasePvE: PvEUseCase) :
     map: Int,
     month: Int,
     page: Int
-  ) = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-    val countSearch =
-      useCasePvE.getNumOfPvESearchResult.execute(type, players, map, month)
-    val numOfPage = (countSearch.toDouble() / 20)
-    numOfSearchResult.postValue(countSearch)
-    when {
-      countSearch == 0 -> pageResult.postValue("1 / 1")
-      (countSearch.toDouble() / numOfPage) % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / numOfPage))}")
-      else -> pageResult.postValue("$page / ${((countSearch / numOfPage) + 1)}")
+  ) = viewModelScope.launch {
+    when(val result = getNumOfPvESearchResult(
+      type,
+      players,
+      map,
+      month
+    )) {
+      is Result.Success -> {
+        val countSearch = result.data.count
+        val numOfPage = (countSearch.toDouble() / 20)
+        numOfSearchResult.postValue(countSearch)
+        when {
+          countSearch == 0 -> pageResult.postValue("1 / 1")
+          (countSearch.toDouble() / numOfPage) % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / numOfPage))}")
+          else -> pageResult.postValue("$page / ${((countSearch / numOfPage) + 1)}")
+        }
+      }
+      is Result.Error -> {
+
+      }
     }
-  }
-
-  override fun onSuccess(result: List<PvEPlayer>?) {
-    result?.let {
-      if (it.isEmpty()) _pvePlayer.postValue(Resource.Empty())
-      else _pvePlayer.postValue(Resource.Success(it))
-    } ?: _pvePlayer.postValue(Resource.Success(null))
-  }
-
-  override fun onError(errorMessage: String) {
-    _pvePlayer.postValue(Resource.Failure(errorMessage))
   }
 }
