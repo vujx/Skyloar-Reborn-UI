@@ -8,37 +8,26 @@ import com.example.App
 import com.example.R
 import com.example.data.usecase.StatUseCase
 import com.example.domain.usecase.BaseUseCase
+import com.example.domain.usecase.stat.GetStatValues
 import com.example.util.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class StatViewModel(private val statUseCase: StatUseCase) :
-  ViewModel(),
-  BaseUseCase.Callback<List<Long>> {
+class StatViewModel(private val getStatValues: GetStatValues) :
+  ViewModel() {
 
   private val _statValues = MutableLiveData<Resource<List<Long>>>()
   val statValues: LiveData<Resource<List<Long>>> = _statValues
-
-  private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-    onError(App.getStringResource(R.string.unexpected_error))
-  }
 
   init {
     getListOfStatValues()
   }
 
-  fun getListOfStatValues() = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+  fun getListOfStatValues() = viewModelScope.launch {
     _statValues.postValue(Resource.Loading())
-    statUseCase.getListOfStatValues.execute(null, this@StatViewModel)
-  }
-
-  override fun onSuccess(result: List<Long>) {
+    val result = getStatValues()
     if (result.isEmpty()) _statValues.postValue(Resource.Empty())
     else _statValues.postValue(Resource.Success(result))
-  }
-
-  override fun onError(errorMessage: String) {
-    _statValues.postValue(Resource.Failure(errorMessage))
   }
 }
