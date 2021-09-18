@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.model.auction.AuctionEntityItem
-import com.example.domain.usecase.BaseUseCase
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
 import com.example.util.Resource
@@ -14,8 +13,7 @@ import kotlinx.coroutines.launch
 
 class AuctionViewModel(private val getAuctions: GetListOfAuctions,
 private val getNumberOfSearchResults: GetNumberOfSearchResults) :
-  ViewModel(),
-  BaseUseCase.Callback<List<AuctionEntityItem>> {
+  ViewModel() {
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
   val auctions: LiveData<Resource<List<AuctionEntityItem>>> = _auctions
@@ -76,14 +74,5 @@ private val getNumberOfSearchResults: GetNumberOfSearchResults) :
       }
     }
     getNumberOfSearchResults(page, number, input, minPrice, maxPrice)
-  }
-
-  override fun onSuccess(result: List<AuctionEntityItem>) {
-    if (result.isEmpty()) _auctions.postValue(Resource.Empty())
-    else _auctions.postValue(Resource.Success(result))
-  }
-
-  override fun onError(errorMessage: String) {
-    _auctions.postValue(Resource.Failure(errorMessage))
   }
 }

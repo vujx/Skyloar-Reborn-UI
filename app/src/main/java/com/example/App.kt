@@ -6,11 +6,9 @@ import com.example.data.di.ApiServiceModule.provideAuctionService
 import com.example.data.di.ApiServiceModule.provideHttpClient
 import com.example.data.di.ApiServiceModule.provideLeaderboardService
 import com.example.data.di.ApiServiceModule.provideRetrofit
-import com.example.data.di.UseCaseModule.provideAuctionUseCase
 import com.example.data.di.UseCaseModule.provideLeaderBoardsUseCase
 import com.example.data.di.UseCaseModule.providePvEUseCase
 import com.example.data.di.UseCaseModule.providePvP1UseCase
-import com.example.data.di.UseCaseModule.provideStatUseCase
 import com.example.data.repository.auction.DefaultAuctionRepository
 import com.example.data.repository.leaderboards.DefaultLeaderboardsRepository
 import com.example.data.repository.leaderboards.DefaultPvERepository
@@ -23,6 +21,7 @@ import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.repository.stat.StatRepository
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
+import com.example.domain.usecase.stat.GetStatValues
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
@@ -66,7 +65,7 @@ class App : Application() {
   private val useCaseModule = module {
     factory { GetListOfAuctions(get()) }
     factory { GetNumberOfSearchResults(get()) }
-    factory { provideStatUseCase(get()) }
+    factory { GetStatValues(get()) }
     factory { providePvP1UseCase(get()) }
     factory { provideLeaderBoardsUseCase(get()) }
     factory { providePvEUseCase(get()) }

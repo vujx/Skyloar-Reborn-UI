@@ -4,27 +4,20 @@ import com.example.App
 import com.example.R
 import com.example.data.model.stat.StatEntity
 import com.example.domain.repository.stat.StatRepository
-import com.example.domain.usecase.BaseUseCase
-import com.example.util.HandleCallbackError
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import retrofit2.Response
+import com.example.util.Result
+import kotlinx.coroutines.*
 
 class GetStatValues(
   private val statRepo: StatRepository
-) : BaseUseCase<String?, List<Long>> {
+)  {
+  private val listOfResponse = LongArray(39)
 
-  private lateinit var response: Response<StatEntity>
-
-  override suspend fun execute(params: String?, callback: BaseUseCase.Callback<List<Long>>) {
-    val listOfResponse = LongArray(39)
-
-    try {
+  suspend operator fun invoke(): List<Long> {
+    withContext(Dispatchers.IO) {
       (0..38).asyncAll {
         val path = App.getResources.getStringArray(R.array.statPaths)[it]
         if (path.contains("/")) {
-          response = statRepo.getCountWithMultiplePaths(
+          handleResponse(it, statRepo.getCountWithMultiplePaths(
             path.substring(0, path.indexOf('/')),
             path.substring(
               path.substring(
@@ -32,34 +25,27 @@ class GetStatValues(
                 path.indexOf('/')
               ).length + 1
             )
-          )
-          addCountNumberToList(response, listOfResponse, it)
-        } else {
-          response =
-            statRepo.getCount(App.getResources.getStringArray(R.array.statPaths)[it])
-          addCountNumberToList(response, listOfResponse, it)
-        }
+          ))
+        } else handleResponse(it, statRepo.getCount(App.getResources.getStringArray(R.array.statPaths)[it]))
       }
-      callback.onSuccess(listOfResponse.toList())
-    } catch (e: Exception) {
-      HandleCallbackError<List<Long>>().handleOnErrorCallback(e, callback)
+    }
+    return listOfResponse.toList()
+  }
+
+  private fun handleResponse(it: Int, response: Result<StatEntity>) {
+    when(response){
+      is Result.Success -> addCountNumberToList(response.data.count as Double, listOfResponse, it)
+      is Result.Error -> addCountNumberToList(-1.0, listOfResponse, it)
     }
   }
 
   private fun addCountNumberToList(
-    response: Response<StatEntity>,
+    response: Double,
     listOfResponse: LongArray,
     it: Int
   ) {
-    when (response.code()) {
-      200 -> {
-        response.body()?.let { result ->
-          listOfResponse[it] = (result.count as Double).toLong()
-        }
-      }
-      404 -> listOfResponse[it] = -1
+    listOfResponse[it] = response.toLong()
     }
-  }
 
   private suspend fun <T, V> Iterable<T>.asyncAll(coroutine: suspend (T) -> V): Iterable<V> =
     coroutineScope {
