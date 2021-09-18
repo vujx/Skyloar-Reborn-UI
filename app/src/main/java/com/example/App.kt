@@ -9,6 +9,7 @@ import com.example.data.di.ApiServiceModule.provideRetrofit
 import com.example.data.di.UseCaseModule.provideLeaderBoardsUseCase
 import com.example.data.di.UseCaseModule.providePvEUseCase
 import com.example.data.di.UseCaseModule.providePvP1UseCase
+import com.example.data.mapper.PvEPlayerMapper
 import com.example.data.mapper.PvPPlayerMapper
 import com.example.data.repository.auction.DefaultAuctionRepository
 import com.example.data.repository.leaderboards.DefaultLeaderboardsRepository
@@ -24,6 +25,8 @@ import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
 import com.example.domain.usecase.leaderboards.GetMaps
 import com.example.domain.usecase.leaderboards.GetRanges
+import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
+import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
 import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
@@ -63,12 +66,13 @@ class App : Application() {
     factory { DefaultLeaderboardsRepository(get()) }
     factory { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
 
-    factory { DefaultPvERepository(get()) }
+    factory { DefaultPvERepository(get(), get()) }
     factory { PvERepository(get<DefaultPvERepository>()) }
   }
 
   private val mappersModule = module {
     factory { PvPPlayerMapper() }
+    factory { PvEPlayerMapper() }
   }
 
   private val useCaseModule = module {
@@ -79,6 +83,8 @@ class App : Application() {
     factory { GetMaps(get()) }
     factory { GetPvPPlayers(get()) }
     factory { GetNumOfPvPSearchResult(get()) }
+    factory { GetPvEPlayers(get()) }
+    factory { GetNumOfPvESearchResult(get()) }
     factory { providePvP1UseCase(get()) }
     factory { provideLeaderBoardsUseCase(get()) }
     factory { providePvEUseCase(get()) }
@@ -98,7 +104,7 @@ class App : Application() {
       LeaderboardsViewModel(get(), get())
     }
     viewModel {
-      PvEPlayerViewModel(get())
+      PvEPlayerViewModel(get(), get())
     }
   }
 
