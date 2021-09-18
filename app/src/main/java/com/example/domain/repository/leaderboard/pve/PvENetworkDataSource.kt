@@ -2,7 +2,8 @@ package com.example.domain.repository.leaderboard.pve
 
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.model.leaderboards.PlayerPvEEntityItem
-import retrofit2.Response
+import com.example.domain.model.PvEPlayer
+import com.example.util.Result
 
 interface PvENetworkDataSource {
 
@@ -11,7 +12,7 @@ interface PvENetworkDataSource {
     players: Int,
     map: Int,
     month: Int
-  ): Response<NumberOfSearchResultsEntity>
+  ): Result<NumberOfSearchResultsEntity>
 
   suspend fun getPvEPlayers(
     type: Int,
@@ -20,5 +21,5 @@ interface PvENetworkDataSource {
     month: Int,
     page: Int,
     number: Int
-  ): Response<List<PlayerPvEEntityItem>>
+  ): Result<List<PvEPlayer>?>
 }
