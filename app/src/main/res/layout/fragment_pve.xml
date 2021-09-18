@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="progressBarHlp"
+            type="com.example.presentation.ui.helper.auction.ProgressBarHelper" />
+
+        <variable
+            name="searchResult"
+            type="com.example.presentation.ui.helper.auction.SearchResultHelper" />
+
+        <variable
+            name="titleCheck"
+            type="java.lang.String" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.leaderboards.fragments.PvEFragment">
+
+        <Spinner
+            android:id="@+id/spinnerMonth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintEnd_toStartOf="@id/spinnerPlayers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerPlayers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/spinnerMonth"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerMaps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/spinnerMonth"
+            app:layout_constraintTop_toBottomOf="@id/spinnerMonth" />
+
+        <TextView
+            android:id="@+id/tvPlayers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/players"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toStartOf="@id/tvTime"
+            app:layout_constraintHorizontal_weight="7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerMaps" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/time"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/tvPlayers"
+            app:layout_constraintEnd_toStartOf="@id/tvDifficulty"
+            app:layout_constraintHorizontal_weight="2.2"
+            app:layout_constraintStart_toEndOf="@id/tvPlayers"
+            app:layout_constraintTop_toTopOf="@id/tvPlayers" />
+
+
+        <TextView
+            android:id="@+id/tvDifficulty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/tv_border_values"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/difficulty"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/tvPlayers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2.6"
+            app:layout_constraintStart_toEndOf="@id/tvTime"
+            app:layout_constraintTop_toTopOf="@id/tvPlayers" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPVEPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayers"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorLayout"/>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/black"
+                android:gravity="bottom">
+
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <TextView
+            android:id="@+id/tvSearchedResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="@id/tvPage"
+            app:layout_constraintEnd_toStartOf="@id/tvPage"
+            app:layout_constraintTop_toTopOf="@id/tvPage"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/ivForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            app:layout_constraintBottom_toBottomOf="@id/tvPage"
+            app:layout_constraintStart_toEndOf="@id/tvPage"
+            app:layout_constraintTop_toTopOf="@id/tvPage"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+
+        <ImageView
+            android:id="@+id/ivExportBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_baseline_ios_share_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
+            tools:ignore="ContentDescription" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#E53935"
+            android:visibility="@{progressBarHlp.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSearchNoResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="@{searchResult.searchResult}"
+            android:textColor="#F4511E"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

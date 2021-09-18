@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="statTitle"
+            type="java.lang.String" />
+
+        <variable
+            name="statValue"
+            type="java.lang.Long" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvStatTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_borders"
+            android:padding="10dp"
+            android:text="@{statTitle}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvStatValue"
+            app:layout_constraintHorizontal_weight="6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvStatValue"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/tv_borders"
+            android:padding="10dp"
+            android:text="@{String.valueOf(statValue).equals(`-1`) ? @string/not_found_stat_value : String.valueOf(statValue)}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tvStatTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="4"
+            app:layout_constraintStart_toEndOf="@id/tvStatTitle"
+            app:layout_constraintTop_toTopOf="@id/tvStatTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

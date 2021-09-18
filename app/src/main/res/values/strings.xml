@@ -1,3 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SR-UI</string>
+
+    <!-- AuctionFragment-->
+    <string name="min_price">Min. price</string>
+    <string name="max_price">Max. price</string>
+    <string name="results_page">Results page</string>
+    <string name="count_search">Searched: %d</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="enter_card">Card name</string>
+    <string name="search">Search</string>
+    <string name="export">Export</string>
+    <string name="card">Card</string>
+    <string name="start">Start</string>
+    <string name="bid">Bid</string>
+    <string name="buyout">Buyout</string>
+    <string name="end">End</string>
+
+    <!-- Toolbar-->
+    <string name="auctions">Auctions</string>
+    <string name="leaderboard">LeaderBoard</string>
+    <string name="stat">Statistics</string>
+    <string name="navigation">Navigation</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <!-- Errors -->
+    <string name="auction_not_found">Auction not found, try again!</string>
+    <string name="stat_not_found">Statistics not found, try again!</string>
+    <string name="pvp_players_not_found">PvP Players not found, try again!</string>
+    <string name="unexpected_error">Unexpected error. Please try again later.</string>
+    <string name="check_internet">Check you internet connection!</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="unknown_host">There is a problem with loading new data. Please try again later.</string>
+    <string name="cache_data_loading">New data is loading, try again later!</string>
+
+    <!-- Dialogs -->
+    <string name="enter_page_number">Enter page number</string>
+    <string name="page_title">Page Number:</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+
+    <!-- FragmentStat -->
+    <string name="stat_title">Stat</string>
+    <string name="value">Value</string>
+    <string name="statistic_values_not_found_try_again">Statistic values not found, try again!</string>
+    <string name="not_found_stat_value">Not found!</string>
+    <string-array name="statPaths">
+        <item>accounts</item>
+        <item>sessions</item>
+        <item>matches</item>
+        <item>matches/players</item>
+        <item>quests/active</item>
+        <item>quests/completed</item>
+        <item>quests/rerolled</item>
+        <item>auctions</item>
+        <item>boosters</item>
+        <item>boosters/opened</item>
+        <item>boosters/spent</item>
+        <item>cards</item>
+        <item>upgrades</item>
+        <item>decks</item>
+        <item>mails</item>
+        <item>transactions</item>
+        <item>scratch</item>
+        <item>auctions/watchers</item>
+        <item>experience</item>
+        <item>elo</item>
+        <item>gold</item>
+        <item>bfp</item>
+        <item>friendlist</item>
+        <item>mutelist</item>
+        <item>matches/1pve</item>
+        <item>matches/2pve</item>
+        <item>matches/4pve</item>
+        <item>matches/12pve</item>
+        <item>matches/1rpve</item>
+        <item>matches/2rpve</item>
+        <item>matches/4rpve</item>
+        <item>matches/1cpve</item>
+        <item>matches/2cpve</item>
+        <item>matches/4cpve</item>
+        <item>matches/1v1</item>
+        <item>matches/2v2</item>
+        <item>matches/c1v1</item>
+        <item>matches/c2v2</item>
+        <item>matches/c3v3</item>
+    </string-array>
+
+
+    <string-array name="statTitle">
+        <item>Registered accounts</item>
+        <item>Online players</item>
+        <item>Running matches</item>
+        <item>Total players in matches</item>
+        <item>Active quests</item>
+        <item>Completed quests</item>
+        <item>Rerolled quests</item>
+        <item>Live auctions</item>
+        <item>Unopened boosters</item>
+        <item>Opened boosters</item>
+        <item>Total BFP spent on boosters</item>
+        <item>Owned cards</item>
+        <item>Owned card upgrades</item>
+        <item>Unique decks</item>
+        <item>Sent mails</item>
+        <item>Completed game transactions</item>
+        <item>Total scratch codes used</item>
+        <item>Total number of players watching auctions</item>
+        <item>Total experience</item>
+        <item>Total PvP ELO</item>
+        <item>Total gold</item>
+        <item>Total BFP</item>
+        <item>Total number of players in friends lists</item>
+        <item>Total number of players on mute</item>
+        <item>1-player PvE matches won</item>
+        <item>2-player PvE matches won</item>
+        <item>4-player PvE matches won</item>
+        <item>12-player PvE matches won</item>
+        <item>1-player Random PvE matches won</item>
+        <item>2-player Random PvE matches won</item>
+        <item>4-player Random PvE matches won</item>
+        <item>1-player Community PvE matches won</item>
+        <item>2-player Community PvE matches won</item>
+        <item>4-player Community PvE matches won</item>
+        <item>1v1 PvP matches won</item>
+        <item>2v2 PvP matches won</item>
+        <item>1v1 PvP Community matches played</item>
+        <item>2v2 PvP Community matches played</item>
+        <item>3v3 PvP Community matches played</item>
+    </string-array>
+
+    <!-- FragmentPvP1v1 -->
+    <string name="this_month">This month</string>
+    <string name="caching_data">Backend is currently caching new data
+It may take up to 10 minutes for new data to be cached and available.</string>
+    <string name="player">Player</string>
+    <string name="rating">Rating</string>
+    <string name="elo">ELO</string>
+    <string name="activity">Activity</string>
+    <string name="matches">Matches</string>
+    <string name="wins">Wins</string>
+    <string name="losses">Losses</string>
+    <string name="activity_precentage">%d%%</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="players">Players</string>
+    <string name="time">Time</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="pve">PvE</string>
+    <string name="pvp">PvP</string>
 </resources>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="player"
+            type="com.example.domain.model.PvPPlayer" />
+        <import type="android.view.View" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvPlayer"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_borders"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@{player.name}"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/tv_borders"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:text="@{String.valueOf(player.rating)}"
+            android:textColor="@color/white" />
+
+
+        <TextView
+            android:id="@+id/tvELO"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/tv_borders"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@{String.valueOf(player.baseElo)}"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvActivity"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:background="@drawable/tv_borders"
+            android:gravity="center"
+            android:text="@{String.format(@string/activity_precentage, player.activity)}"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvMatches"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/tv_borders"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="@{String.valueOf(player.totalMatches).equals(null) ? View.VISIBLE : View.GONE}"
+            android:text="@{String.valueOf(player.totalMatches)}"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvWins"
+            android:layout_width="70dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/tv_borders"
+            android:gravity="center"
+            android:text="@{String.valueOf(player.winsLimited)}"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvLosses"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/tv_borders"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@{String.valueOf(player.losesLimited)}"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</layout>

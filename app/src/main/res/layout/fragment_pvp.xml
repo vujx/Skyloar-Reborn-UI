@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="progressBarHlp"
+            type="com.example.presentation.ui.helper.auction.ProgressBarHelper" />
+
+        <variable
+            name="searchResult"
+            type="com.example.presentation.ui.helper.auction.SearchResultHelper" />
+
+        <variable
+            name="viewModelPvP1"
+            type="com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel" />
+
+        <variable
+            name="clickListener"
+            type="com.example.presentation.ui.helper.leaderboards.PvPOnClickHelper" />
+
+        <variable
+            name="titleCheck"
+            type="java.lang.String" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".presentation.ui.leaderboards.fragments.PvPFragment">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerPlayers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintEnd_toStartOf="@id/ivSearchBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivSearchBtn"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="#E53935"
+            android:onClick="@{() -> clickListener.onSearchBtnPress(viewModelPvP1, spinnerPlayers.getSelectedItem().toString(),tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
+            android:src="@drawable/ic_baseline_search_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:strokeWidth="1dp"
+            tools:ignore="ContentDescription" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorLayout"
+            app:layout_constraintTop_toBottomOf="@+id/ivSearchBtn">
+
+            <LinearLayout
+                android:id="@+id/ll_main"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}">
+
+                    <TextView
+                        android:id="@+id/tvPlayer"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/player"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvRating"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/rating"
+                        android:textColor="@color/white" />
+
+
+                    <TextView
+                        android:id="@+id/tvELO"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/elo"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvActivity"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/activity"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvMatches"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/matches"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvWins"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/wins"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvLosses"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_border_values"
+                        android:gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="@string/losses"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPvPPlayers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/black"
+                android:gravity="bottom">
+
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <TextView
+            android:id="@+id/tvSearchedResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModelPvP1.numOfSearchResult.equals(null) ? String.format(@string/count_search, 0) : String.format(@string/count_search, viewModelPvP1.numOfSearchResult)}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{() -> clickListener.onBackBtnPress(viewModelPvP1, spinnerPlayers.getSelectedItem().toString(), tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="@id/tvPage"
+            app:layout_constraintEnd_toStartOf="@id/tvPage"
+            app:layout_constraintTop_toTopOf="@id/tvPage"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/ivForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:onClick="@{() -> clickListener.onNextBtnPress(viewModelPvP1, spinnerPlayers.getSelectedItem().toString(),tvPage.getText().toString(), spinner.getSelectedItem().toString())}"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            app:layout_constraintBottom_toBottomOf="@id/tvPage"
+            app:layout_constraintStart_toEndOf="@id/tvPage"
+            app:layout_constraintTop_toTopOf="@id/tvPage"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onPagePress(Integer.parseInt(tvPage.getText().toString().substring(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' ')).length() + 3)))}"
+            android:text="@{viewModelPvP1.pageResult}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout" />
+
+        <ImageView
+            android:id="@+id/ivExportBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> clickListener.onExportPress()}"
+            android:src="@drawable/ic_baseline_ios_share_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
+            tools:ignore="ContentDescription" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#E53935"
+            android:visibility="@{progressBarHlp.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSearchNoResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="@{searchResult.searchResult}"
+            android:textColor="#F4511E"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
