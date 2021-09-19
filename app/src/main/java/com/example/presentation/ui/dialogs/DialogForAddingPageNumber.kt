@@ -11,9 +11,11 @@ import com.example.util.RangeEditText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class DialogForAddingPageNumber(
-  private val listener: DialogPageListener,
-  private val maxPage: Int
+  private val maxPage: Int,
+  private var onClickListener: ((Int) -> Unit)? = null
 ) : DialogFragment() {
+
+
 
   override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
     val inflater = requireActivity().layoutInflater
@@ -27,8 +29,7 @@ class DialogForAddingPageNumber(
       .setMessage(App.getStringResource(R.string.page_title))
       .setPositiveButton(App.getStringResource(R.string.ok)) { _, _ ->
         val etPage = view.findViewById<EditText>(R.id.etPage)
-        if (etPage.text.toString().isNotBlank())
-          listener.getPageNumber(Integer.parseInt(etPage.text.toString()))
+        if (etPage.text.toString().isNotBlank()) onClickListener?.invoke(Integer.parseInt(etPage.text.toString()))
       }.setNegativeButton(App.getStringResource(R.string.cancel)) { _, _ ->
         dialog?.cancel()
       }.create()
