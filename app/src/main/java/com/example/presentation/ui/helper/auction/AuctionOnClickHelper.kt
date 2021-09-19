@@ -1,10 +1,6 @@
 package com.example.presentation.ui.helper.auction
 
-import com.example.presentation.ui.auctions.AuctionFragment
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
-import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
-import com.example.util.Constants
-import com.example.util.exportFile
 
 class AuctionOnClickHelper() {
 

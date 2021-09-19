@@ -15,8 +15,6 @@ class DialogForAddingPageNumber(
   private var onClickListener: ((Int) -> Unit)? = null
 ) : DialogFragment() {
 
-
-
   override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
     val inflater = requireActivity().layoutInflater
     val view = inflater.inflate(R.layout.dialog_edit_page__num, null)

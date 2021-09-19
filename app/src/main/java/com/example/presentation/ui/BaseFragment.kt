@@ -5,7 +5,6 @@ import android.app.DownloadManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.view.Gravity
 import android.widget.Toast
@@ -29,11 +28,11 @@ open class BaseFragment(
   }
 
   @SuppressLint("WrongConstant") fun onExportPress(url: String) {
-   if(checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-     requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
-   } else {
+    if (checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+      requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
+    } else {
       downloadFile(url)
-   }
+    }
   }
 
   fun onPagePress(lastPage: Int) {
