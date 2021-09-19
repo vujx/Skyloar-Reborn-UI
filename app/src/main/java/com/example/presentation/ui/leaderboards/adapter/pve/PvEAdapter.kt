@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.R
 import com.example.databinding.ItemPvePlayersBinding
 import com.example.domain.model.PvEPlayer
+import com.example.presentation.MainActivity
 
-class PvEAdapter(private val difficulties: Map<Int, String>) : RecyclerView.Adapter<PvEViewHolder>() {
+class PvEAdapter : RecyclerView.Adapter<PvEViewHolder>() {
 
   private val listOfPvEPlayer = mutableListOf<PvEPlayer>()
 
@@ -28,9 +29,8 @@ class PvEAdapter(private val difficulties: Map<Int, String>) : RecyclerView.Adap
   }
 
   override fun onBindViewHolder(holder: PvEViewHolder, position: Int) {
-    // nije dobar nacin, obavezno promjenit
     var diff = ""
-    difficulties.forEach {
+    MainActivity.listOfDifficulties?.forEach {
       if (it.key == listOfPvEPlayer[position].difficulty)
         diff = it.value
     }

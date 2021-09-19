@@ -29,6 +29,7 @@ import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
+import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
@@ -106,6 +107,7 @@ class App : Application() {
     factory { AuctionAdapter() }
     factory { StatAdapter() }
     factory { PvPAdapter() }
+    factory { PvEAdapter() }
   }
 
   override fun onCreate() {

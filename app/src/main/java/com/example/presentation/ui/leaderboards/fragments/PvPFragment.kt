@@ -30,7 +30,7 @@ class PvPFragment : Fragment(R.layout.fragment_pvp), DialogPageListener {
   private lateinit var binding: FragmentPvpBinding
 
   private val adapter: PvPAdapter by inject()
-  private val viewModelPvP1vs1: PvPPlayerViewModel by viewModel()
+  private val viewModelPvP: PvPPlayerViewModel by viewModel()
   private val leaderboardsViewModel: LeaderboardsViewModel by viewModel()
 
   private val progressBarHelper = ProgressBarHelper()
@@ -62,7 +62,7 @@ class PvPFragment : Fragment(R.layout.fragment_pvp), DialogPageListener {
   }
 
   private fun bind() {
-    viewModelPvP1vs1.pvpPlayer.observe(
+    viewModelPvP.pvpPlayer.observe(
       viewLifecycleOwner,
       { result ->
         when (result) {
@@ -104,13 +104,13 @@ class PvPFragment : Fragment(R.layout.fragment_pvp), DialogPageListener {
     binding.apply {
       progressBarHlp = progressBarHelper
       searchResult = searchResultHelper
-      viewModelPvP1 = viewModelPvP1vs1
+      viewModelPvP1 = viewModelPvP1
       clickListener = clickListeners
     }
   }
 
   override fun getPageNumber(pageNum: Int) {
-    viewModelPvP1vs1.getPvPPlayers(
+    viewModelPvP.getPvPPlayers(
       getTypePvP(binding.spinnerPlayers.selectedItem.toString()),
       getMonthValueByName(binding.spinner.selectedItem.toString()),
       pageNum,
