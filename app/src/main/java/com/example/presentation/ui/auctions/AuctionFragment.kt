@@ -19,7 +19,6 @@ import com.example.presentation.ui.helper.auction.ProgressBarHelper
 import com.example.presentation.ui.helper.auction.RefreshAuctionsHelper
 import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.helper.leaderboards.CallbackPvP
-import com.example.util.Constants
 import com.example.util.RangeEditText
 import com.example.util.Resource
 import com.example.util.checkIfInputIsEmpty
@@ -99,7 +98,6 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
             searchResultHelper.setSearchResult(getString(R.string.auction_not_found))
             binding.titleCheck = ""
             binding.auctionHelper = auctionHelper
-
           }
         }
         hideKeyBoard()

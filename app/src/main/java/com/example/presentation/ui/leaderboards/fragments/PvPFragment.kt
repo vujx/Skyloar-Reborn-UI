@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.R
 import com.example.databinding.FragmentPvpBinding
 import com.example.presentation.MainActivity.Companion.listOfMonth
 import com.example.presentation.ui.BaseFragment
-import com.example.presentation.ui.dialogs.DialogPageListener
 import com.example.presentation.ui.helper.auction.ProgressBarHelper
 import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.helper.leaderboards.CallbackPvP
@@ -21,7 +18,6 @@ import com.example.presentation.ui.helper.leaderboards.PvPOnClickHelper
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
-import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.displayMessage
 import com.example.util.getMonthValueByName
