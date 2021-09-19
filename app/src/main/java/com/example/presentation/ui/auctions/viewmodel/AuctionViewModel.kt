@@ -7,13 +7,15 @@ import com.example.data.model.auction.AuctionEntityItem
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
 import com.example.presentation.ui.BaseViewModel
+import com.example.presentation.ui.HandleError
 import com.example.util.Resource
 import com.example.util.Result
 import kotlinx.coroutines.launch
 
 class AuctionViewModel(
   private val getAuctions: GetListOfAuctions,
-  private val getNumberOfSearchResults: GetNumberOfSearchResults
+  private val getNumberOfSearchResults: GetNumberOfSearchResults,
+  private val handleError: HandleError
 ) : BaseViewModel() {
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
@@ -55,6 +57,7 @@ class AuctionViewModel(
           )
         }
         is Result.Error -> {
+          _auctions.postValue(Resource.Failure(handleError.bind(result.error)))
         }
       }
       getNumOfSearchResult(
