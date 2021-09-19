@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentStatBinding
+import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.helper.auction.ProgressBarHelper
 import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.helper.stat.RefreshHelper
 import com.example.presentation.ui.stat.adapter.StatAdapter
 import com.example.presentation.ui.stat.viewmodel.StatViewModel
 import com.example.util.Resource
-import com.example.util.displayMessage
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class StatFragment : Fragment(R.layout.fragment_stat) {
+class StatFragment : BaseFragment(R.layout.fragment_stat) {
 
   private lateinit var binding: FragmentStatBinding
 
@@ -59,18 +58,12 @@ class StatFragment : Fragment(R.layout.fragment_stat) {
             progressBarHelper.setLoading(false)
             adapter.setListOfStatValues(emptyList())
             binding.titleCheck = ""
-            displayMessage(
-              result.message,
-              requireContext()
-            )
+            displayMessage(result.message)
           }
           else -> {
             progressBarHelper.setLoading(false)
             binding.titleCheck = ""
-            displayMessage(
-              getString(R.string.unexpected_error),
-              requireContext()
-            )
+            displayMessage(getString(R.string.unexpected_error))
           }
         }
       }

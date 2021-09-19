@@ -19,7 +19,6 @@ import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
 import com.example.util.Resource
-import com.example.util.displayMessage
 import com.example.util.getMonthValueByName
 import com.example.util.getTypePvP
 import org.koin.android.ext.android.inject
@@ -90,7 +89,7 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
             binding.titleCheck = ""
             searchResultHelper.setSearchResult(resources.getString(R.string.pvp_players_not_found))
             adapter.setListOfPvPPlayers(emptyList())
-            displayMessage(result.message, requireContext())
+            displayMessage(result.message)
           }
           is Resource.Loading -> {
             progressBarHelper.setLoading(true)

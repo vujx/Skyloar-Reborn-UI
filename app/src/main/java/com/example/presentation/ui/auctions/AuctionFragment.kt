@@ -21,8 +21,6 @@ import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.helper.leaderboards.CallbackPvP
 import com.example.util.RangeEditText
 import com.example.util.Resource
-import com.example.util.checkIfInputIsEmpty
-import com.example.util.displayMessage
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -83,7 +81,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
             progressBarHelper.setLoading(false)
             searchResultHelper.setSearchResult(getString(R.string.auction_not_found))
             adapter.setListOfAuctions(emptyList())
-            displayMessage(result.message, requireContext())
+            displayMessage(result.message)
             binding.titleCheck = ""
             binding.auctionHelper = auctionHelper
           }
@@ -140,4 +138,10 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
       imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
   }
+
+  fun checkIfInputIsEmpty(input: String): Int? =
+    if (input.isBlank())
+      null
+    else
+      Integer.parseInt(input)
 }

@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentPveBinding
+import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.helper.auction.ProgressBarHelper
 import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Resource
-import com.example.util.displayMessage
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PvEFragment : Fragment(R.layout.fragment_pve) {
+class PvEFragment : BaseFragment(R.layout.fragment_pve) {
 
   private lateinit var binding: FragmentPveBinding
 
@@ -75,7 +75,7 @@ class PvEFragment : Fragment(R.layout.fragment_pve) {
             progressBarHelper.setLoading(false)
             binding.titleCheck = ""
             searchResultHelper.setSearchResult("")
-            displayMessage(result.message, requireContext())
+            displayMessage(result.message)
           }
           is Resource.Loading -> {
             progressBarHelper.setLoading(true)
