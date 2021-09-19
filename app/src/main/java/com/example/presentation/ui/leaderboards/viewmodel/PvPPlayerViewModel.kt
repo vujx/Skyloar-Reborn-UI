@@ -7,13 +7,15 @@ import com.example.domain.model.PvPPlayer
 import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
 import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.presentation.ui.BaseViewModel
+import com.example.presentation.ui.HandleError
 import com.example.util.Resource
 import kotlinx.coroutines.launch
 import com.example.util.Result
 
 class PvPPlayerViewModel(
   private val getPvPPlayers: GetPvPPlayers,
-  private val getNumOfPvPSearchResult: GetNumOfPvPSearchResult
+  private val getNumOfPvPSearchResult: GetNumOfPvPSearchResult,
+  private val handleError: HandleError
 ) : BaseViewModel() {
 
   private val _pvpPlayer = MutableLiveData<Resource<List<PvPPlayer>?>>()
@@ -38,8 +40,7 @@ class PvPPlayerViewModel(
       _pvpPlayer.postValue(Resource.Loading())
       when (val result = getPvPPlayers(listOf(type, month, page, number))) {
         is Result.Success -> _pvpPlayer.postValue(Resource.Success(result.data))
-        is Result.Error -> {
-        }
+        is Result.Error -> _pvpPlayer.postValue(Resource.Failure(handleError.bind(result.error)))
       }
       getNumOfSearchResult(getNumOfPvPSearchResult(type, month), page)
     }
