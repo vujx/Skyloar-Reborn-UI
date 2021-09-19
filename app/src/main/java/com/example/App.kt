@@ -1,7 +1,6 @@
 package com.example
 
 import android.app.Application
-import android.content.res.Resources
 import com.example.data.di.ApiServiceModule.provideAuctionService
 import com.example.data.di.ApiServiceModule.provideHttpClient
 import com.example.data.di.ApiServiceModule.provideLeaderboardService
@@ -110,9 +109,12 @@ class App : Application() {
     factory { PvEAdapter() }
   }
 
+  private val dictionaryModule = module {
+    factory { Dictionary(applicationContext) }
+  }
+
   override fun onCreate() {
     super.onCreate()
-    getResources = resources
 
     startKoin {
       androidLogger()
@@ -124,15 +126,10 @@ class App : Application() {
           mappersModule,
           useCaseModule,
           viewModelModule,
+          dictionaryModule,
           adapterModule
         )
       )
     }
-  }
-
-  companion object {
-    lateinit var getResources: Resources
-    private fun getResource() = getResources
-    fun getStringResource(id: Int) = getResource().getString(id)
   }
 }

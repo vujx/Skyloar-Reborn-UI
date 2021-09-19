@@ -1,6 +1,6 @@
 package com.example.domain.usecase.stat
 
-import com.example.App
+import com.example.Dictionary
 import com.example.R
 import com.example.data.model.stat.StatEntity
 import com.example.domain.repository.stat.StatRepository
@@ -10,17 +10,20 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class GetStatValues(
   private val statRepo: StatRepository
-) {
+) : KoinComponent {
 
   private val listOfResponse = LongArray(39)
+  private val dictionary: Dictionary by inject()
 
   suspend operator fun invoke(): List<Long> {
     withContext(Dispatchers.IO) {
       (0..38).asyncAll {
-        val path = App.getResources.getStringArray(R.array.statPaths)[it]
+        val path = dictionary.getStringArray(R.array.statPaths)[it]
         if (path.contains("/")) {
           handleResponse(
             it,
@@ -36,7 +39,7 @@ class GetStatValues(
           )
         } else handleResponse(
           it,
-          statRepo.getCount(App.getResources.getStringArray(R.array.statPaths)[it])
+          statRepo.getCount(dictionary.getStringArray(R.array.statPaths)[it])
         )
       }
     }

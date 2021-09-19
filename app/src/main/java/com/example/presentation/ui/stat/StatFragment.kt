@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.App
 import com.example.R
 import com.example.databinding.FragmentStatBinding
 import com.example.presentation.ui.helper.auction.ProgressBarHelper
@@ -69,7 +68,7 @@ class StatFragment : Fragment(R.layout.fragment_stat) {
             progressBarHelper.setLoading(false)
             binding.titleCheck = ""
             displayMessage(
-              App.getStringResource(R.string.unexpected_error),
+              getString(R.string.unexpected_error),
               requireContext()
             )
           }

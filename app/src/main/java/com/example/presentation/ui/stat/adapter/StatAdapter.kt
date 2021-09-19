@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.App
+import com.example.Dictionary
 import com.example.R
 import com.example.databinding.ItemStatBinding
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
+class StatAdapter : RecyclerView.Adapter<StatViewHolder>(), KoinComponent {
 
   private val listOfStatValue = mutableListOf<Long>()
+  private val dictionary: Dictionary by inject()
 
   fun setListOfStatValues(list: List<Long>) {
     listOfStatValue.clear()
@@ -30,7 +33,7 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
 
   override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
     holder.itemStat.statTitle =
-      App.getResources.getStringArray(R.array.statTitle)[position].toString()
+      dictionary.getStringArray(R.array.statTitle)[position].toString()
     holder.itemStat.statValue = listOfStatValue[position]
   }
 
