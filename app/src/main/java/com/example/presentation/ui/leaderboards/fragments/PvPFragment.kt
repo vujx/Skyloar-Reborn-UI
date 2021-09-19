@@ -8,16 +8,20 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.R
 import com.example.databinding.FragmentPvpBinding
 import com.example.presentation.MainActivity.Companion.listOfMonth
+import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.dialogs.DialogPageListener
 import com.example.presentation.ui.helper.auction.ProgressBarHelper
 import com.example.presentation.ui.helper.auction.SearchResultHelper
+import com.example.presentation.ui.helper.leaderboards.CallbackPvP
 import com.example.presentation.ui.helper.leaderboards.PvPOnClickHelper
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
+import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.displayMessage
 import com.example.util.getMonthValueByName
@@ -25,7 +29,7 @@ import com.example.util.getTypePvP
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PvPFragment : Fragment(R.layout.fragment_pvp), DialogPageListener {
+class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
 
   private lateinit var binding: FragmentPvpBinding
 
@@ -46,6 +50,14 @@ class PvPFragment : Fragment(R.layout.fragment_pvp), DialogPageListener {
       DataBindingUtil.inflate(inflater, R.layout.fragment_pvp, container, false)
     binding.lifecycleOwner = viewLifecycleOwner
 
+    onPageClickListener = {
+      viewModelPvP.getPvPPlayers(
+        getTypePvP(binding.spinnerPlayers.selectedItem.toString()),
+        getMonthValueByName(binding.spinner.selectedItem.toString()),
+        it,
+        20
+      )
+    }
     setUpRecylerView()
     bind()
     setData()
@@ -100,22 +112,21 @@ class PvPFragment : Fragment(R.layout.fragment_pvp), DialogPageListener {
   }
 
   private fun setData() {
-    clickListeners = PvPOnClickHelper(this)
+    clickListeners = PvPOnClickHelper()
     binding.apply {
       progressBarHlp = progressBarHelper
       searchResult = searchResultHelper
-      viewModelPvP1 = viewModelPvP1
+      viewModelPvP1 = viewModelPvP
       clickListener = clickListeners
+      callbackPvP = CallbackPvP(
+        onExportBtnClick = {
+          onExportPress("")
+        },
+        onPageClick = {
+          onPagePress(it)
+        }
+      )
     }
-  }
-
-  override fun getPageNumber(pageNum: Int) {
-    viewModelPvP.getPvPPlayers(
-      getTypePvP(binding.spinnerPlayers.selectedItem.toString()),
-      getMonthValueByName(binding.spinner.selectedItem.toString()),
-      pageNum,
-      20
-    )
   }
 
   private fun getMonths() {

@@ -6,7 +6,7 @@ import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
 import com.example.util.Constants
 import com.example.util.exportFile
 
-class AuctionOnClickHelper(private val frg: AuctionFragment) {
+class AuctionOnClickHelper() {
 
   fun onBackBtnPress(
     viewModelAuction: AuctionViewModel,
@@ -39,14 +39,5 @@ class AuctionOnClickHelper(private val frg: AuctionFragment) {
       viewModelAuction.getListOfAuctions(1, number, input, minPrice, maxPrice)
     else
       viewModelAuction.getListOfAuctions(numOfPage + 1, number, input, minPrice, maxPrice)
-  }
-
-  fun onPagePress(lastPage: Int) {
-    val dialog = DialogForAddingPageNumber(frg, lastPage)
-    dialog.show(frg.requireActivity().supportFragmentManager, "PageNumberChange")
-  }
-
-  fun onExportPress() {
-    exportFile(frg, Constants.BASE_URL_EXPORT_AUCTIONS)
   }
 }

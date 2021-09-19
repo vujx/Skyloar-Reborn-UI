@@ -33,6 +33,12 @@
             name="refresh"
             type="com.example.presentation.ui.helper.auction.RefreshAuctionsHelper" />
 
+        <variable
+            name="callback"
+            type="com.example.presentation.ui.helper.leaderboards.CallbackPvP"/>
+
+        <import type="com.example.util.Constants"/>
+
         <import type="android.view.View" />
     </data>
 
@@ -190,7 +196,7 @@
             android:id="@+id/tvPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.onPagePress(Integer.parseInt(tvPage.getText().toString().substring(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' ')).length() + 3)))}"
+            android:onClick="@{() -> callback.onPageTVClick(Integer.parseInt(tvPage.getText().toString().substring(tvPage.getText().toString().substring(0, tvPage.getText().toString().indexOf(' ')).length() + 3)))}"
             android:text="@{viewModelAuction.pageResult}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -203,7 +209,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:onClick="@{() -> clickListener.onExportPress()}"
+            android:onClick="@{() -> callback.onExportClick(Constants.BASE_URL_EXPORT_AUCTIONS)}"
             android:src="@drawable/ic_baseline_ios_share_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
