@@ -5,15 +5,19 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.App
+import com.example.Dictionary
 import com.example.R
 import com.example.util.RangeEditText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinComponent
 
 class DialogForAddingPageNumber(
   private val maxPage: Int,
-  private var onClickListener: ((Int) -> Unit)? = null
-) : DialogFragment() {
+  private var onClickListener: ((Int) -> Unit)? = null,
+) : DialogFragment(), KoinComponent {
+
+  private val dictionary: Dictionary by inject()
 
   override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
     val inflater = requireActivity().layoutInflater
@@ -24,11 +28,11 @@ class DialogForAddingPageNumber(
       requireActivity(),
       R.style.MaterialAlertDialog_OK_color
     ).setView(view)
-      .setMessage(App.getStringResource(R.string.page_title))
-      .setPositiveButton(App.getStringResource(R.string.ok)) { _, _ ->
+      .setMessage(dictionary.getStringRes(R.string.page_title))
+      .setPositiveButton(dictionary.getStringRes(R.string.ok)) { _, _ ->
         val etPage = view.findViewById<EditText>(R.id.etPage)
         if (etPage.text.toString().isNotBlank()) onClickListener?.invoke(Integer.parseInt(etPage.text.toString()))
-      }.setNegativeButton(App.getStringResource(R.string.cancel)) { _, _ ->
+      }.setNegativeButton(dictionary.getStringRes(R.string.cancel)) { _, _ ->
         dialog?.cancel()
       }.create()
   }

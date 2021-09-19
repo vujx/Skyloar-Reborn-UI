@@ -11,14 +11,12 @@ import android.widget.Toast
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
-import java.util.jar.Manifest
 
 open class BaseFragment(
   layoutId: Int
 ) : Fragment(layoutId) {
 
   private val STORAGE_PERMISSION_CODE: Int = 1000
-
   var onPageClickListener: ((Int) -> Unit)? = null
 
   fun displayMessage(message: String) {
