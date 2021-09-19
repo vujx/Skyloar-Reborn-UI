@@ -16,8 +16,6 @@ class LeaderboardsViewModel(private val getMapsUseCase: GetMaps, private val get
     viewModelScope.launch {
       when (val result = getRanges(path)) {
         is Result.Success -> listOfRanges.postValue(result.data!!)
-        is Result.Error -> {
-        }
       }
     }
   }
@@ -27,8 +25,6 @@ class LeaderboardsViewModel(private val getMapsUseCase: GetMaps, private val get
     viewModelScope.launch {
       when (val result = getMapsUseCase(type)) {
         is Result.Success -> map = result.data
-        is Result.Error -> {
-        }
       }
     }
     return map
