@@ -16,6 +16,7 @@ import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Resource
 import com.example.util.displayMessage
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PvEFragment : Fragment(R.layout.fragment_pve) {
@@ -28,7 +29,7 @@ class PvEFragment : Fragment(R.layout.fragment_pve) {
   private val progressBarHelper = ProgressBarHelper()
   private val searchResultHelper = SearchResultHelper()
 
-  lateinit var adapter: PvEAdapter
+  private val adapter: PvEAdapter by inject()
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -40,6 +41,7 @@ class PvEFragment : Fragment(R.layout.fragment_pve) {
     binding.lifecycleOwner = viewLifecycleOwner
     viewModelLeaderboards.getRange("difficulties")
 
+    setUpRecyclerView()
     bind()
     setData()
 
