@@ -75,13 +75,17 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
         when (result) {
           is Resource.Success -> {
             progressBarHelper.setLoading(false)
-            binding.titleCheck = "1"
             if (result.value == null) {
               adapter.setListOfPvPPlayers(emptyList())
+              binding.titleCheck = ""
               searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
             } else {
+              if(getTypePvP(binding.spinnerPlayers.selectedItem.toString()) == "1v1") {
+                binding.tvMatches.visibility = View.VISIBLE
+              } else binding.tvMatches.visibility = View.GONE
               result.value.let { adapter.setListOfPvPPlayers(it) }
               searchResultHelper.setSearchResult("")
+              binding.titleCheck = "1"
             }
           }
           is Resource.Failure -> {
@@ -118,7 +122,7 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
           onExportPress("")
         },
         onPageClick = {
-          onPagePress(it)
+          onPagePress(it, binding.tvPage.text.toString().substring(0, binding.tvPage.text.toString().indexOf(' ')).toInt())
         }
       )
     }

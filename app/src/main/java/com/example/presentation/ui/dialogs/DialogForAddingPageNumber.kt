@@ -15,6 +15,7 @@ import org.koin.core.component.KoinComponent
 class DialogForAddingPageNumber(
   private val maxPage: Int,
   private var onClickListener: ((Int) -> Unit)? = null,
+  private val currentPage: Int
 ) : DialogFragment(), KoinComponent {
 
   private val dictionary: Dictionary by inject()
@@ -31,7 +32,7 @@ class DialogForAddingPageNumber(
       .setMessage(dictionary.getStringRes(R.string.page_title))
       .setPositiveButton(dictionary.getStringRes(R.string.ok)) { _, _ ->
         val etPage = view.findViewById<EditText>(R.id.etPage)
-        if (etPage.text.toString().isNotBlank()) onClickListener?.invoke(Integer.parseInt(etPage.text.toString()))
+        if (etPage.text.toString().isNotBlank() || etPage.text.toString() == currentPage.toString()) onClickListener?.invoke(Integer.parseInt(etPage.text.toString()))
       }.setNegativeButton(dictionary.getStringRes(R.string.cancel)) { _, _ ->
         dialog?.cancel()
       }.create()
