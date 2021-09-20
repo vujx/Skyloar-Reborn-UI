@@ -33,8 +33,8 @@ open class BaseFragment(
     }
   }
 
-  fun onPagePress(lastPage: Int) {
-    val dialog = DialogForAddingPageNumber(lastPage, onPageClickListener)
+  fun onPagePress(lastPage: Int, currentPage: Int) {
+    val dialog = DialogForAddingPageNumber(lastPage, onPageClickListener, currentPage)
     dialog.show(requireActivity().supportFragmentManager, "PageNumberChange")
   }
 

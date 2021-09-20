@@ -125,7 +125,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
           onExportPress(it)
         },
         onPageClick = {
-          onPagePress(it)
+          onPagePress(it, binding.tvPage.text.toString().substring(0, binding.tvPage.text.toString().indexOf(' ')).toInt())
         }
       )
     }
