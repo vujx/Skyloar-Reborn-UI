@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tvPlayer"
-            android:layout_width="150dp"
+            android:layout_width="162dp"
             android:layout_height="wrap_content"
             android:background="@drawable/tv_borders"
             android:gravity="center"
@@ -68,7 +68,6 @@
             android:gravity="center"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:visibility="@{String.valueOf(player.totalMatches).equals(null) ? View.VISIBLE : View.GONE}"
             android:text="@{String.valueOf(player.totalMatches)}"
             android:textColor="@color/white" />
 
