@@ -75,13 +75,17 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
         when (result) {
           is Resource.Success -> {
             progressBarHelper.setLoading(false)
-            binding.titleCheck = "1"
             if (result.value == null) {
               adapter.setListOfPvPPlayers(emptyList())
+              binding.titleCheck = ""
               searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
             } else {
+              if(getTypePvP(binding.spinnerPlayers.selectedItem.toString()) == "1vs1") {
+                binding.type = ""
+              } else binding.type = "1"
               result.value.let { adapter.setListOfPvPPlayers(it) }
               searchResultHelper.setSearchResult("")
+              binding.titleCheck = "1"
             }
           }
           is Resource.Failure -> {

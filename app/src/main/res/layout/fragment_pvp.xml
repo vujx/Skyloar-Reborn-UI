@@ -26,6 +26,10 @@
             type="java.lang.String" />
 
         <variable
+            name="type"
+            type="java.lang.String"/>
+
+        <variable
             name="callbackPvP"
             type="com.example.presentation.ui.helper.leaderboards.CallbackPvP"/>
 
@@ -155,6 +159,7 @@
                         android:background="@drawable/tv_border_values"
                         android:gravity="center"
                         android:paddingTop="16dp"
+                        android:visibility="@{type.isEmpty() ? View.VISIBLE : View.GONE}"
                         android:paddingBottom="16dp"
                         android:text="@string/matches"
                         android:textColor="@color/white" />

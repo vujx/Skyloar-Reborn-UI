@@ -12,13 +12,16 @@ class AuctionOnClickHelper() {
     minPrice: Int?,
     maxPrice: Int?
   ) {
-    val numOfPage = page.substring(0, page.indexOf(' ')).toInt()
-    val lastPage = page.substring(numOfPage.toString().length + 3).toInt()
-    if (numOfPage == 1)
-      viewModelAuction.getListOfAuctions(lastPage, number, input, minPrice, maxPrice)
-    else
-      viewModelAuction.getListOfAuctions(numOfPage - 1, number, input, minPrice, maxPrice)
-  }
+    if(page == "1 / 1") {
+      val numOfPage = page.substring(0, page.indexOf(' ')).toInt()
+      val lastPage = page.substring(numOfPage.toString().length + 3).toInt()
+      if (numOfPage == 1)
+        viewModelAuction.getListOfAuctions(lastPage, number, input, minPrice, maxPrice)
+      else
+        viewModelAuction.getListOfAuctions(numOfPage - 1, number, input, minPrice, maxPrice)
+
+    }
+ }
 
   fun onNextBtnPress(
     viewModelAuction: AuctionViewModel,
@@ -28,12 +31,14 @@ class AuctionOnClickHelper() {
     minPrice: Int?,
     maxPrice: Int?
   ) {
-    val numOfPage = page.substring(0, page.indexOf(' ')).toInt()
-    val lastPage = page.substring(numOfPage.toString().length + 3).toInt()
+    if(page == "1 / 1") {
+      val numOfPage = page.substring(0, page.indexOf(' ')).toInt()
+      val lastPage = page.substring(numOfPage.toString().length + 3).toInt()
 
-    if (numOfPage == lastPage)
-      viewModelAuction.getListOfAuctions(1, number, input, minPrice, maxPrice)
-    else
-      viewModelAuction.getListOfAuctions(numOfPage + 1, number, input, minPrice, maxPrice)
-  }
+      if (numOfPage == lastPage)
+        viewModelAuction.getListOfAuctions(1, number, input, minPrice, maxPrice)
+      else
+        viewModelAuction.getListOfAuctions(numOfPage + 1, number, input, minPrice, maxPrice)
+    }
+ }
 }
