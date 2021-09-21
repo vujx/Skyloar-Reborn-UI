@@ -12,10 +12,10 @@ import org.koin.core.component.inject
 
 class StatAdapter : RecyclerView.Adapter<StatViewHolder>(), KoinComponent {
 
-  private val listOfStatValue = mutableListOf<Long>()
+  private val listOfStatValue = mutableListOf<Long?>()
   private val dictionary: Dictionary by inject()
 
-  fun setListOfStatValues(list: List<Long>) {
+  fun setListOfStatValues(list: List<Long?>) {
     listOfStatValue.clear()
     listOfStatValue.addAll(list)
     notifyDataSetChanged()

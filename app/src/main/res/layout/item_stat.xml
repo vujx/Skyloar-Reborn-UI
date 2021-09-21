@@ -37,7 +37,7 @@
             android:layout_height="0dp"
             android:background="@drawable/tv_borders"
             android:padding="10dp"
-            android:text="@{String.valueOf(statValue).equals(`-1`) ? @string/not_found_stat_value : String.valueOf(statValue)}"
+            android:text="@{statValue.equals(null) ? @string/not_found_stat_value : String.valueOf(statValue)}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tvStatTitle"
             app:layout_constraintEnd_toEndOf="parent"

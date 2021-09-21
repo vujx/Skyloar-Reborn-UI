@@ -77,7 +77,7 @@ class App : Application() {
   private val useCaseModule = module {
     factory { GetListOfAuctions(get()) }
     factory { GetNumberOfSearchResults(get()) }
-    factory { GetStatValues(get()) }
+    factory { GetStatValues(get(), get()) }
     factory { GetRanges(get()) }
     factory { GetMaps(get()) }
     factory { GetPvPPlayers(get()) }
