@@ -8,25 +8,18 @@ import com.example.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class GetStatValues(
-  private val statRepo: StatRepository
-) : KoinComponent {
+  private val statRepo: StatRepository,
+  private val dictionary: Dictionary
+) {
 
-  private val listOfResponse = LongArray(39)
-  private val dictionary: Dictionary by inject()
-
-  suspend operator fun invoke(): List<Long> {
+  suspend operator fun invoke(): List<Result<StatEntity>> =
     withContext(Dispatchers.IO) {
-      (0..38).asyncAll {
-        val path = dictionary.getStringArray(R.array.statPaths)[it]
+      dictionary.getStringArray(R.array.statPaths).map { path ->
         if (path.contains("/")) {
-          handleResponse(
-            it,
+          async {
             statRepo.getCountWithMultiplePaths(
               path.substring(0, path.indexOf('/')),
               path.substring(
@@ -36,33 +29,8 @@ class GetStatValues(
                 ).length + 1
               )
             )
-          )
-        } else handleResponse(
-          it,
-          statRepo.getCount(dictionary.getStringArray(R.array.statPaths)[it])
-        )
-      }
-    }
-    return listOfResponse.toList()
-  }
-
-  private fun handleResponse(it: Int, response: Result<StatEntity>) {
-    when (response) {
-      is Result.Success -> addCountNumberToList(response.data.count as Double, listOfResponse, it)
-      is Result.Error -> addCountNumberToList(-1.0, listOfResponse, it)
-    }
-  }
-
-  private fun addCountNumberToList(
-    response: Double,
-    listOfResponse: LongArray,
-    it: Int
-  ) {
-    listOfResponse[it] = response.toLong()
-  }
-
-  private suspend fun <T, V> Iterable<T>.asyncAll(coroutine: suspend (T) -> V): Iterable<V> =
-    coroutineScope {
-      this@asyncAll.map { async { coroutine(it) } }.awaitAll()
+          }
+        } else async { statRepo.getCount(path) }
+      }.awaitAll()
     }
 }
