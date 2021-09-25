@@ -48,7 +48,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
 
   private fun clickListeners() {
     onPageClickListener = {
-      getAuctions(it)
+      getAuctions(it, false)
     }
 
     binding.ivSearchBtn.setOnClickListener {
@@ -58,9 +58,9 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     binding.ivBack.setOnClickListener {
       if (binding.tvPage.text.toString() != "1 / 1") {
         if (getFirstPage(binding.tvPage.text.toString()) == 1) {
-          getAuctions(getLastPage(binding.tvPage.text.toString()))
+          getAuctions(getLastPage(binding.tvPage.text.toString()), false)
         } else {
-          getAuctions(getFirstPage(binding.tvPage.text.toString()) - 1)
+          getAuctions(getFirstPage(binding.tvPage.text.toString()) - 1, false)
         }
       }
     }
@@ -68,8 +68,8 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     binding.ivForward.setOnClickListener {
       if (binding.tvPage.text.toString() != "1 / 1") {
         if (getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
-          getAuctions(1)
-        } else getAuctions(getFirstPage(binding.tvPage.text.toString()) + 1)
+          getAuctions(1, false)
+        } else getAuctions(getFirstPage(binding.tvPage.text.toString()) + 1, false)
       }
     }
 
@@ -82,6 +82,11 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
         getLastPage(binding.tvPage.text.toString()),
         getFirstPage(binding.tvPage.text.toString()),
       )
+    }
+
+
+    binding.swipeRefresh.setOnRefreshListener {
+      getAuctions(getFirstPage(binding.tvPage.text.toString()))
     }
   }
 
@@ -138,16 +143,30 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     binding.progressBar.visible(visibilityProgressBar)
     binding.tvSearchNoResult.text = searchResult
     binding.rootTitles.visible(visibilityTitles)
+    binding.swipeRefresh.isRefreshing = false
   }
 
-  private fun getAuctions(page: Int) {
-    viewModelAuction.getListOfAuctions(
-      page,
-      20,
-      binding.etSearchCardName.text.toString(),
-      checkIfInputIsEmpty(binding.etMinPrice.text.toString()),
-      checkIfInputIsEmpty(binding.etMaxPrice.text.toString()),
-    )
+  private fun getAuctions(page: Int, searchSwipe: Boolean = true) {
+    if(searchSwipe) {
+      cardName = binding.etSearchCardName.text.toString()
+      minPrice = checkIfInputIsEmpty(binding.etMinPrice.text.toString())
+      maxPrice = checkIfInputIsEmpty(binding.etMaxPrice.text.toString())
+      viewModelAuction.getListOfAuctions(
+        page,
+        20,
+        cardName,
+        minPrice,
+        maxPrice,
+      )
+    } else {
+      viewModelAuction.getListOfAuctions(
+        page,
+        20,
+        cardName,
+        minPrice,
+        maxPrice,
+      )
+    }
   }
 
   private fun setUpRecyclerView() {
