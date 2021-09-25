@@ -1,11 +1,7 @@
 package com.example.presentation.ui.leaderboards.adapter.pve
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.R
-import com.example.databinding.ItemPvePlayersBinding
 import com.example.domain.model.PvEPlayer
 import com.example.presentation.MainActivity
 

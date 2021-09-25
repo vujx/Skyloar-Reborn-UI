@@ -10,7 +10,6 @@ import com.example.domain.error.ErrorEntity.NotFound
 import com.example.domain.error.ErrorEntity.ServiceUnavailable
 import com.example.domain.error.ErrorEntity.Unknown
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class HandleError(private val dictionary: Dictionary) : KoinComponent {
 

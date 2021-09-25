@@ -26,12 +26,17 @@ open class BaseFragment(
     toast.show()
   }
 
-  @SuppressLint("WrongConstant") fun onExportPress(url: String) {
-    if (checkSelfPermission(requireContext(),
-        android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+  @SuppressLint("WrongConstant")
+  fun onExportPress(url: String) {
+    if (checkSelfPermission(
+        requireContext(),
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+      ) == PackageManager.PERMISSION_DENIED
     ) {
-      requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-        STORAGE_PERMISSION_CODE)
+      requestPermissions(
+        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        STORAGE_PERMISSION_CODE
+      )
     } else {
       downloadFile(url)
     }
@@ -79,5 +84,4 @@ open class BaseFragment(
 
   fun getLastPage(page: String) =
     page.substring(getFirstPage(page).toString().length + 3).toInt()
-
 }

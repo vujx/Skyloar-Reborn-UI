@@ -101,12 +101,15 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
     )
 
     viewModelPvP.numOfSearchResult.observe(
-      viewLifecycleOwner, {
+      viewLifecycleOwner,
+      {
         binding.tvSearchedResults.text = "Searched: $it"
-      })
+      }
+    )
 
     viewModelPvP.pageResult.observe(
-      viewLifecycleOwner, {
+      viewLifecycleOwner,
+      {
         binding.tvPage.text = it
       }
     )

@@ -25,12 +25,12 @@ class StatViewModel(private val getStatValues: GetStatValues) :
     if (result.isEmpty()) _statValues.postValue(Resource.Empty())
     else {
       val resultStat = result.map {
-        when(it) {
+        when (it) {
           is Result.Success -> (it.data.count as Double).toLong()
           is Result.Error -> null
         }
       }
-      if(resultStat.all { it == null }) _statValues.postValue(Resource.Failure("Refresh all!")) else _statValues.postValue(Resource.Success(resultStat))
+      if (resultStat.all { it == null }) _statValues.postValue(Resource.Failure("Refresh all!")) else _statValues.postValue(Resource.Success(resultStat))
     }
   }
 }

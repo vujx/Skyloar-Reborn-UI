@@ -15,7 +15,7 @@ class StatItem @JvmOverloads constructor(
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr),
-    KoinComponent{
+  KoinComponent {
 
   private val dictionary: Dictionary by inject()
 

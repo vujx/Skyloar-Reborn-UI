@@ -58,14 +58,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.nav_auction -> supportFragmentManager.beginTransaction()
-        .replace(R.id.frg, AuctionFragment()).commit()
-      R.id.nav_stat -> supportFragmentManager.beginTransaction()
-        .replace(R.id.frg, StatFragment()).commit()
-      R.id.nav_leaderPvE -> supportFragmentManager.beginTransaction()
-        .replace(R.id.frg, PvEFragment()).commit()
-      R.id.nav_leaderPvP -> supportFragmentManager.beginTransaction()
-        .replace(R.id.frg, PvPFragment()).commit()
+      R.id.nav_auction ->
+        supportFragmentManager.beginTransaction()
+          .replace(R.id.frg, AuctionFragment()).commit()
+      R.id.nav_stat ->
+        supportFragmentManager.beginTransaction()
+          .replace(R.id.frg, StatFragment()).commit()
+      R.id.nav_leaderPvE ->
+        supportFragmentManager.beginTransaction()
+          .replace(R.id.frg, PvEFragment()).commit()
+      R.id.nav_leaderPvP ->
+        supportFragmentManager.beginTransaction()
+          .replace(R.id.frg, PvPFragment()).commit()
     }
     binding.drawerLayout.closeDrawer(GravityCompat.START)
     return true
@@ -73,9 +77,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   private fun setDataValues() {
     connectionLiveData = ConnectionLiveData(context = this)
-    connectionLiveData.observe(this, {
-      binding.textViewNetworkBanner.visible(!it)
-    })
+    connectionLiveData.observe(
+      this,
+      {
+        binding.textViewNetworkBanner.visible(!it)
+      }
+    )
   }
 
   private fun setToolbar() {

@@ -56,8 +56,8 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     }
 
     binding.ivBack.setOnClickListener {
-      if(binding.tvPage.text.toString() != "1 / 1") {
-        if(getFirstPage(binding.tvPage.text.toString()) == 1){
+      if (binding.tvPage.text.toString() != "1 / 1") {
+        if (getFirstPage(binding.tvPage.text.toString()) == 1) {
           getAuctions(getLastPage(binding.tvPage.text.toString()))
         } else {
           getAuctions(getFirstPage(binding.tvPage.text.toString()) - 1)
@@ -66,8 +66,8 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     }
 
     binding.ivForward.setOnClickListener {
-      if(binding.tvPage.text.toString() != "1 / 1") {
-        if(getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
+      if (binding.tvPage.text.toString() != "1 / 1") {
+        if (getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
           getAuctions(1)
         } else getAuctions(getFirstPage(binding.tvPage.text.toString()) + 1)
       }
@@ -106,7 +106,8 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
           }
           is Resource.Empty -> {
             setProgressBarAndSearchResult(
-              searchResult = dictionary.getStringRes(R.string.auction_not_found))
+              searchResult = dictionary.getStringRes(R.string.auction_not_found)
+            )
             adapter.setListOfAuctions(emptyList())
           }
         }
@@ -115,12 +116,15 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     )
 
     viewModelAuction.numOfSearchResult.observe(
-      viewLifecycleOwner, {
+      viewLifecycleOwner,
+      {
         binding.tvSearchedResults.text = "Searched: $it"
-    })
+      }
+    )
 
     viewModelAuction.pageResult.observe(
-      viewLifecycleOwner, {
+      viewLifecycleOwner,
+      {
         binding.tvPage.text = it
       }
     )
