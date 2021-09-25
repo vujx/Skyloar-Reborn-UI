@@ -1,19 +1,11 @@
 package com.example.presentation.ui.stat.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.Dictionary
-import com.example.R
-import com.example.databinding.ItemStatBinding
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class StatAdapter : RecyclerView.Adapter<StatViewHolder>(), KoinComponent {
+class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
 
   private val listOfStatValue = mutableListOf<Long?>()
-  private val dictionary: Dictionary by inject()
 
   fun setListOfStatValues(list: List<Long?>) {
     listOfStatValue.clear()
@@ -22,19 +14,12 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>(), KoinComponent {
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatViewHolder {
-    val binding: ItemStatBinding = DataBindingUtil.inflate(
-      LayoutInflater.from(parent.context),
-      R.layout.item_stat,
-      parent,
-      false
-    )
-    return StatViewHolder(binding)
+    val statView = StatItem(parent.context)
+    return StatViewHolder(statView)
   }
 
   override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
-    holder.itemStat.statTitle =
-      dictionary.getStringArray(R.array.statTitle)[position].toString()
-    holder.itemStat.statValue = listOfStatValue[position]
+    holder.bind(listOfStatValue[position], position)
   }
 
   override fun getItemCount(): Int = listOfStatValue.size

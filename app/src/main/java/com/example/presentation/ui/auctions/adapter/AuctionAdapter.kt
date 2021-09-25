@@ -15,7 +15,7 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewHolder>() {
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionViewHolder {
-    val auctionView = AuctionItem(parent.context, null)
+    val auctionView = AuctionItem(parent.context)
     return AuctionViewHolder(auctionView)
   }
 
