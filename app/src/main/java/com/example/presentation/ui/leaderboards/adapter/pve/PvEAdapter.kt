@@ -19,13 +19,8 @@ class PvEAdapter : RecyclerView.Adapter<PvEViewHolder>() {
     notifyDataSetChanged()
   }
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PvEViewHolder {
-    val binding: ItemPvePlayersBinding = DataBindingUtil.inflate(
-      LayoutInflater.from(parent.context),
-      R.layout.item_pve_players,
-      parent,
-      false
-    )
-    return PvEViewHolder(binding)
+    val pveItem = PvEItem(parent.context)
+    return PvEViewHolder(pveItem)
   }
 
   override fun onBindViewHolder(holder: PvEViewHolder, position: Int) {
@@ -34,8 +29,7 @@ class PvEAdapter : RecyclerView.Adapter<PvEViewHolder>() {
       if (it.key == listOfPvEPlayer[position].difficulty)
         diff = it.value
     }
-    holder.itemPvE.difficulty = diff
-    holder.itemPvE.pvePlayer = listOfPvEPlayer[position]
+    holder.bind(listOfPvEPlayer[position], diff)
   }
 
   override fun getItemCount(): Int = listOfPvEPlayer.size
