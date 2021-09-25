@@ -1,106 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.stat.StatFragment"
+    >
 
-    <data>
+  <ProgressBar
+      android:id="@+id/progressBar"
+      android:layout_width="70dp"
+      android:layout_height="wrap_content"
+      android:indeterminateTint="#E53935"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
-        <variable
-            name="progressBarHlp"
-            type="com.example.presentation.ui.helper.auction.ProgressBarHelper" />
+  <TextView
+      android:id="@+id/tvValue"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/tv_border_values"
+      android:padding="12dp"
+      android:text="@string/value"
+      android:textColor="@color/white"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_weight="4"
+      app:layout_constraintStart_toEndOf="@id/tvStat"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
-        <variable
-            name="refresh"
-            type="com.example.presentation.ui.helper.stat.RefreshHelper" />
+  <TextView
+      android:id="@+id/tvStat"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/tv_border_values"
+      android:padding="12dp"
+      android:text="@string/stat_title"
+      android:textColor="@color/white"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toStartOf="@id/tvValue"
+      app:layout_constraintHorizontal_weight="6"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
-        <variable
-            name="titleCheck"
-            type="java.lang.String" />
+  <TextView
+      android:id="@+id/tvSearchNoResult"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/statistic_values_not_found_try_again"
+      android:textColor="#F4511E"
+      android:textSize="16sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
-        <variable
-            name="searchResult"
-            type="com.example.presentation.ui.helper.auction.SearchResultHelper" />
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/swipeRefresh"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tvStat"
+      >
 
-        <import type="android.view.View" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".presentation.ui.stat.StatFragment">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStat"
+        />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStat"
-            app:onRefreshListener="@{() -> refresh.refreshList()}"
-            app:refreshing="@{refresh.isLoading}">
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvStat"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvStat" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <TextView
-            android:id="@+id/tvStat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_border_values"
-            android:padding="12dp"
-            android:text="@string/stat_title"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toStartOf="@id/tvValue"
-            app:layout_constraintHorizontal_weight="6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvValue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_border_values"
-            android:padding="12dp"
-            android:text="@string/value"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="@{titleCheck.isEmpty() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="4"
-            app:layout_constraintStart_toEndOf="@id/tvStat"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="#E53935"
-            android:visibility="@{progressBarHlp.isLoading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvSearchNoResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/statistic_values_not_found_try_again"
-            android:textColor="#F4511E"
-            android:textSize="16sp"
-            android:visibility="@{titleCheck.isEmpty() ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
