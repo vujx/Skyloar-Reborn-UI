@@ -7,13 +7,14 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
 import android.view.Gravity
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
 
 open class BaseFragment(
-  layoutId: Int
+  layoutId: Int,
 ) : Fragment(layoutId) {
 
   private val STORAGE_PERMISSION_CODE: Int = 1000
@@ -25,9 +26,17 @@ open class BaseFragment(
     toast.show()
   }
 
-  @SuppressLint("WrongConstant") fun onExportPress(url: String) {
-    if (checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
+  @SuppressLint("WrongConstant")
+  fun onExportPress(url: String) {
+    if (checkSelfPermission(
+        requireContext(),
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+      ) == PackageManager.PERMISSION_DENIED
+    ) {
+      requestPermissions(
+        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        STORAGE_PERMISSION_CODE
+      )
     } else {
       downloadFile(url)
     }
@@ -55,4 +64,24 @@ open class BaseFragment(
     val manager = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     manager.enqueue(request)
   }
+
+  fun checkIfInputIsEmpty(input: String): Int? =
+    if (input.isBlank())
+      null
+    else
+      Integer.parseInt(input)
+
+  fun hideKeyBoard() {
+    requireActivity().currentFocus?.let { view ->
+      val imm =
+        requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+      imm?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+  }
+
+  fun getFirstPage(page: String) =
+    page.substring(0, page.indexOf(' ')).toInt()
+
+  fun getLastPage(page: String) =
+    page.substring(getFirstPage(page).toString().length + 3).toInt()
 }

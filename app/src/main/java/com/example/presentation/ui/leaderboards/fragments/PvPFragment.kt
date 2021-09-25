@@ -1,131 +1,176 @@
 package com.example.presentation.ui.leaderboards.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentPvpBinding
 import com.example.presentation.MainActivity.Companion.listOfMonth
 import com.example.presentation.ui.BaseFragment
-import com.example.presentation.ui.helper.auction.ProgressBarHelper
-import com.example.presentation.ui.helper.auction.SearchResultHelper
-import com.example.presentation.ui.helper.leaderboards.CallbackPvP
-import com.example.presentation.ui.helper.leaderboards.PvPOnClickHelper
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
+import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.getMonthValueByName
 import com.example.util.getTypePvP
+import com.example.util.visible
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
 
-  private lateinit var binding: FragmentPvpBinding
-
   private val adapter: PvPAdapter by inject()
   private val viewModelPvP: PvPPlayerViewModel by viewModel()
   private val leaderboardsViewModel: LeaderboardsViewModel by viewModel()
+  private val dictionary: Dictionary by inject()
 
-  private val progressBarHelper = ProgressBarHelper()
-  private val searchResultHelper = SearchResultHelper()
-  private lateinit var clickListeners: PvPOnClickHelper
+  private var _binding: FragmentPvpBinding? = null
+  private val binding get() = _binding!!
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
-    savedInstanceState: Bundle?
+    savedInstanceState: Bundle?,
   ): View {
-    binding =
-      DataBindingUtil.inflate(inflater, R.layout.fragment_pvp, container, false)
-    binding.lifecycleOwner = viewLifecycleOwner
+    _binding = FragmentPvpBinding.inflate(inflater, container, false)
 
-    onPageClickListener = {
-      viewModelPvP.getPvPPlayers(
-        getTypePvP(binding.spinnerPlayers.selectedItem.toString()),
-        getMonthValueByName(binding.spinner.selectedItem.toString()),
-        it,
-        20
-      )
-    }
-    setUpRecylerView()
+    setUpRecyclerView()
     bind()
-    setData()
     getMonths()
+    clickListeners()
 
     return binding.root
   }
 
-  private fun setUpRecylerView() {
+  override fun onDestroy() {
+    super.onDestroy()
+    _binding = null
+  }
+
+  private fun setUpRecyclerView() {
     binding.apply {
       rvPvPPlayers.layoutManager = LinearLayoutManager(requireContext())
       rvPvPPlayers.adapter = adapter
     }
   }
 
+  @SuppressLint("SetTextI18n")
   private fun bind() {
     viewModelPvP.pvpPlayer.observe(
       viewLifecycleOwner,
       { result ->
         when (result) {
           is Resource.Success -> {
-            progressBarHelper.setLoading(false)
             if (result.value == null) {
               adapter.setListOfPvPPlayers(emptyList())
-              binding.titleCheck = ""
-              searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
+              setProgressBarAndSearchResult(searchResult = resources.getString(R.string.caching_data))
             } else {
-              if(getTypePvP(binding.spinnerPlayers.selectedItem.toString()) == "1v1") {
-                binding.tvMatches.visibility = View.VISIBLE
-              } else binding.tvMatches.visibility = View.GONE
+              if (getTypePvP(binding.spinnerPlayers.selectedItem.toString()) == "2v2")
+                binding.tvMatches.visible(false)
+              else binding.tvMatches.visible(true)
               result.value.let { adapter.setListOfPvPPlayers(it) }
-              searchResultHelper.setSearchResult("")
-              binding.titleCheck = "1"
+              setProgressBarAndSearchResult(visibilityTitles = true)
             }
           }
           is Resource.Failure -> {
-            progressBarHelper.setLoading(false)
-            binding.titleCheck = ""
-            searchResultHelper.setSearchResult(resources.getString(R.string.pvp_players_not_found))
+            setProgressBarAndSearchResult(
+              searchResult = dictionary.getStringRes(R.string.pvp_players_not_found)
+            )
             adapter.setListOfPvPPlayers(emptyList())
             displayMessage(result.message)
           }
           is Resource.Loading -> {
-            progressBarHelper.setLoading(true)
+            setProgressBarAndSearchResult(visibilityProgressBar = true)
             adapter.setListOfPvPPlayers(emptyList())
           }
           is Resource.Empty -> {
-            binding.titleCheck = ""
-            progressBarHelper.setLoading(false)
+            setProgressBarAndSearchResult(
+              searchResult = dictionary.getStringRes(R.string.pvp_players_not_found)
+            )
             adapter.setListOfPvPPlayers(emptyList())
-            searchResultHelper.setSearchResult(getString(R.string.pvp_players_not_found))
           }
         }
+        hideKeyBoard()
+      }
+    )
+
+    viewModelPvP.numOfSearchResult.observe(
+      viewLifecycleOwner,
+      {
+        binding.tvSearchedResults.text = "Searched: $it"
+      }
+    )
+
+    viewModelPvP.pageResult.observe(
+      viewLifecycleOwner,
+      {
+        binding.tvPage.text = it
       }
     )
   }
 
-  private fun setData() {
-    clickListeners = PvPOnClickHelper()
-    binding.apply {
-      progressBarHlp = progressBarHelper
-      searchResult = searchResultHelper
-      viewModelPvP1 = viewModelPvP
-      clickListener = clickListeners
-      callbackPvP = CallbackPvP(
-        onExportBtnClick = {
-          onExportPress("")
-        },
-        onPageClick = {
-          onPagePress(it, binding.tvPage.text.toString().substring(0, binding.tvPage.text.toString().indexOf(' ')).toInt())
+  private fun clickListeners() {
+    onPageClickListener = {
+      getPvPPlayers(it)
+    }
+
+    binding.ivSearchBtn.setOnClickListener {
+      getPvPPlayers(1)
+    }
+
+    binding.ivBack.setOnClickListener {
+      if (binding.tvPage.text.toString() != "1 / 1") {
+        if (getFirstPage(binding.tvPage.text.toString()) == 1) {
+          getPvPPlayers(getLastPage(binding.tvPage.text.toString()))
+        } else {
+          getPvPPlayers(getFirstPage(binding.tvPage.text.toString()) - 1)
         }
+      }
+    }
+
+    binding.ivForward.setOnClickListener {
+      if (binding.tvPage.text.toString() != "1 / 1") {
+        if (getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
+          getPvPPlayers(1)
+        } else getPvPPlayers(getFirstPage(binding.tvPage.text.toString()) + 1)
+      }
+    }
+
+    binding.tvPage.setOnClickListener {
+      onPagePress(
+        getLastPage(binding.tvPage.text.toString()),
+        getFirstPage(binding.tvPage.text.toString()),
       )
     }
+
+    binding.ivExportBtn.setOnClickListener {
+      onExportPress(Constants.BASE_URL_EXPORT_PVP)
+    }
+  }
+
+  private fun getPvPPlayers(page: Int) {
+    viewModelPvP.getPvPPlayers(
+      getTypePvP(binding.spinnerPlayers.selectedItem.toString()),
+      getMonthValueByName(binding.spinner.selectedItem.toString()),
+      page,
+      20,
+    )
+  }
+
+  private fun setProgressBarAndSearchResult(
+    visibilityProgressBar: Boolean = false,
+    searchResult: String = "",
+    visibilityTitles: Boolean = false,
+  ) {
+    binding.progressBar.visible(visibilityProgressBar)
+    binding.tvSearchNoResult.text = searchResult
+    binding.rootTitles.visible(visibilityTitles)
   }
 
   private fun getMonths() {

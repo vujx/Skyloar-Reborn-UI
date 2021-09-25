@@ -4,48 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentPveBinding
 import com.example.presentation.ui.BaseFragment
-import com.example.presentation.ui.helper.auction.ProgressBarHelper
-import com.example.presentation.ui.helper.auction.SearchResultHelper
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Resource
+import com.example.util.visible
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PvEFragment : BaseFragment(R.layout.fragment_pve) {
 
-  private lateinit var binding: FragmentPveBinding
-
   private val viewModelLeaderboards: LeaderboardsViewModel by viewModel()
   private val viewModelPvE: PvEPlayerViewModel by viewModel()
-
-  private val progressBarHelper = ProgressBarHelper()
-  private val searchResultHelper = SearchResultHelper()
-
   private val adapter: PvEAdapter by inject()
+  private val dictionary: Dictionary by inject()
+
+  private var _binding: FragmentPveBinding? = null
+  private val binding get() = _binding!!
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    binding =
-      DataBindingUtil.inflate(inflater, R.layout.fragment_pve, container, false)
-    binding.lifecycleOwner = viewLifecycleOwner
+    _binding = FragmentPveBinding.inflate(inflater, container, false)
     viewModelLeaderboards.getRange("difficulties")
 
     setUpRecyclerView()
     bind()
-    setData()
 
     return binding.root
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    _binding = null
   }
 
   private fun setUpRecyclerView() {
@@ -61,42 +59,36 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
       { result ->
         when (result) {
           is Resource.Success -> {
-            progressBarHelper.setLoading(false)
-            binding.titleCheck = "1"
             if (result.value == null) {
               adapter.setList(emptyList())
-              searchResultHelper.setSearchResult(resources.getString(R.string.caching_data))
+              setProgressBarAndSearchResult(searchResult = dictionary.getStringRes(R.string.caching_data))
             } else {
               result.value.let { adapter.setList(it) }
-              searchResultHelper.setSearchResult("")
+              setProgressBarAndSearchResult()
             }
           }
           is Resource.Failure -> {
-            progressBarHelper.setLoading(false)
-            binding.titleCheck = ""
-            searchResultHelper.setSearchResult("")
+            setProgressBarAndSearchResult()
             displayMessage(result.message)
           }
           is Resource.Loading -> {
-            progressBarHelper.setLoading(true)
-            binding.titleCheck = ""
+            setProgressBarAndSearchResult(visibilityProgressBar = true)
             adapter.setList(emptyList())
           }
           is Resource.Empty -> {
-            binding.titleCheck = ""
-            progressBarHelper.setLoading(false)
+            setProgressBarAndSearchResult(searchResult = dictionary.getStringRes(R.string.pvp_players_not_found))
             adapter.setList(emptyList())
-            searchResultHelper.setSearchResult(getString(R.string.pvp_players_not_found))
           }
         }
       }
     )
   }
 
-  private fun setData() {
-    binding.apply {
-      progressBarHlp = progressBarHelper
-      searchResult = searchResultHelper
-    }
+  private fun setProgressBarAndSearchResult(
+    visibilityProgressBar: Boolean = false,
+    searchResult: String = "",
+  ) {
+    binding.progressBar.visible(visibilityProgressBar)
+    binding.tvSearchNoResult.text = searchResult
   }
 }
