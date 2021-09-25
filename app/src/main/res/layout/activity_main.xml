@@ -31,15 +31,6 @@
       app:title="@string/app_name"
       />
 
-  <fragment
-      android:id="@+id/frg"
-      android:name="androidx.navigation.fragment.NavHostFragment"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/text_view_network_banner"
-      />
-
   <androidx.drawerlayout.widget.DrawerLayout
       android:id="@+id/drawerLayout"
       android:layout_width="match_parent"
@@ -47,6 +38,15 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toBottomOf="@id/text_view_network_banner"
       >
+
+    <fragment
+        android:id="@+id/frg"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_network_banner"
+        />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationDrawer"

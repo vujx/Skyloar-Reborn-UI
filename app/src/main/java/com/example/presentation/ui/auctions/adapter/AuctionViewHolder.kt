@@ -1,8 +1,13 @@
 package com.example.presentation.ui.auctions.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.databinding.ItemAuctionBinding
+import com.example.data.model.auction.AuctionEntityItem
 
 class AuctionViewHolder(
-  val itemAuction: ItemAuctionBinding
-) : RecyclerView.ViewHolder(itemAuction.root)
+  private val itemAuction: AuctionItem
+) : RecyclerView.ViewHolder(itemAuction) {
+
+  fun bind(auction: AuctionEntityItem) {
+    itemAuction.bind(auction)
+  }
+}
