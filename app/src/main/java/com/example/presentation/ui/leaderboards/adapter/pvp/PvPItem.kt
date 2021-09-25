@@ -28,6 +28,7 @@ class PvPItem @JvmOverloads constructor(
   @SuppressLint("SetTextI18n")
   fun bind(pvpPlayer: PvPPlayer) {
     pvpPlayer.totalMatches?.let {
+      binding.tvMatches.visible(true)
       binding.tvMatches.text = it.toString()
     } ?: binding.tvMatches.visible(false)
     binding.tvPlayer.text = pvpPlayer.name
