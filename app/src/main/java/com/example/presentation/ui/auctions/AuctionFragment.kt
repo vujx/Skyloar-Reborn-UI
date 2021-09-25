@@ -1,105 +1,148 @@
 package com.example.presentation.ui.auctions
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
-import com.example.presentation.ui.helper.auction.AuctionHelper
-import com.example.presentation.ui.helper.auction.AuctionOnClickHelper
-import com.example.presentation.ui.helper.auction.ProgressBarHelper
-import com.example.presentation.ui.helper.auction.RefreshAuctionsHelper
-import com.example.presentation.ui.helper.auction.SearchResultHelper
-import com.example.presentation.ui.helper.leaderboards.CallbackPvP
-import com.example.util.RangeEditText
+import com.example.util.Constants
 import com.example.util.Resource
+import com.example.util.visible
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
 
-  private lateinit var binding: FragmentAuctionBinding
-
   private val adapter: AuctionAdapter by inject()
   private val viewModelAuction: AuctionViewModel by viewModel()
+  private val dictionary: Dictionary by inject()
 
-  private val progressBarHelper = ProgressBarHelper()
-  private val searchResultHelper = SearchResultHelper()
-  private val onClickHelper = AuctionOnClickHelper()
-  private val auctionHelper = AuctionHelper(null, null, null)
-  private val auctionRefreshHelper = RefreshAuctionsHelper()
+  private var _binding: FragmentAuctionBinding? = null
+  private val binding get() = _binding!!
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
-    savedInstanceState: Bundle?
+    savedInstanceState: Bundle?,
   ): View {
-    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auction, null, false)
-    binding.lifecycleOwner = viewLifecycleOwner
+    _binding = FragmentAuctionBinding.inflate(inflater, container, false)
 
-    onPageClickListener = {
-      viewModelAuction.getListOfAuctions(
-        it,
-        20,
-        binding.etSearchCardName.text.toString(),
-        checkIfInputIsEmpty(binding.etMinPrice.text.toString()),
-        checkIfInputIsEmpty(binding.etMaxPrice.text.toString())
-      )
-    }
-    setData()
     setUpRecyclerView()
     bind()
+    clickListeners()
 
     return binding.root
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    _binding = null
+  }
+
+  private fun clickListeners() {
+    onPageClickListener = {
+      getAuctions(it)
+    }
+
+    binding.ivSearchBtn.setOnClickListener {
+      getAuctions(1)
+    }
+
+    binding.ivBack.setOnClickListener {
+      if(binding.tvPage.text.toString() != "1 / 1") {
+        if(getFirstPage(binding.tvPage.text.toString()) == 1){
+          getAuctions(getLastPage(binding.tvPage.text.toString()))
+        } else {
+          getAuctions(getFirstPage(binding.tvPage.text.toString()) - 1)
+        }
+      }
+    }
+
+    binding.ivForward.setOnClickListener {
+      if(binding.tvPage.text.toString() != "1 / 1") {
+        if(getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
+          getAuctions(1)
+        } else getAuctions(getFirstPage(binding.tvPage.text.toString()) + 1)
+      }
+    }
+
+    binding.ivExportBtn.setOnClickListener {
+      onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS)
+    }
+
+    binding.tvPage.setOnClickListener {
+      onPagePress(
+        getLastPage(binding.tvPage.text.toString()),
+        getFirstPage(binding.tvPage.text.toString()),
+      )
+    }
+  }
+
+  @SuppressLint("SetTextI18n")
   private fun bind() {
     viewModelAuction.auctions.observe(
       viewLifecycleOwner,
       { result ->
         when (result) {
           is Resource.Success -> {
-            progressBarHelper.setLoading(false)
-            searchResultHelper.setSearchResult("")
+            setProgressBarAndSearchResult(visibilityTitles = true)
             adapter.setListOfAuctions(result.value)
-            binding.titleCheck = "1"
-            binding.auctionHelper = AuctionHelper(
-              binding.etSearchCardName.text.toString(),
-              checkIfInputIsEmpty(binding.etMinPrice.text.toString()),
-              checkIfInputIsEmpty(binding.etMaxPrice.text.toString())
-            )
           }
           is Resource.Failure -> {
-            progressBarHelper.setLoading(false)
-            searchResultHelper.setSearchResult(getString(R.string.auction_not_found))
+            setProgressBarAndSearchResult()
             adapter.setListOfAuctions(emptyList())
             displayMessage(result.message)
-            binding.titleCheck = ""
-            binding.auctionHelper = auctionHelper
           }
           is Resource.Loading -> {
-            progressBarHelper.setLoading(true)
-            binding.titleCheck = ""
+            setProgressBarAndSearchResult(visibilityProgressBar = true)
             adapter.setListOfAuctions(emptyList())
           }
           is Resource.Empty -> {
-            progressBarHelper.setLoading(false)
+            setProgressBarAndSearchResult(
+              searchResult = dictionary.getStringRes(R.string.auction_not_found))
             adapter.setListOfAuctions(emptyList())
-            searchResultHelper.setSearchResult(getString(R.string.auction_not_found))
-            binding.titleCheck = ""
-            binding.auctionHelper = auctionHelper
           }
         }
         hideKeyBoard()
       }
+    )
+
+    viewModelAuction.numOfSearchResult.observe(
+      viewLifecycleOwner, {
+        binding.tvSearchedResults.text = "Searched: $it"
+    })
+
+    viewModelAuction.pageResult.observe(
+      viewLifecycleOwner, {
+        binding.tvPage.text = it
+      }
+    )
+  }
+
+  private fun setProgressBarAndSearchResult(
+    visibilityProgressBar: Boolean = false,
+    searchResult: String = "",
+    visibilityTitles: Boolean = false,
+  ) {
+    binding.progressBar.visible(visibilityProgressBar)
+    binding.tvSearchNoResult.text = searchResult
+    binding.rootTitles.visible(visibilityTitles)
+  }
+
+  private fun getAuctions(page: Int) {
+    viewModelAuction.getListOfAuctions(
+      page,
+      20,
+      binding.etSearchCardName.text.toString(),
+      checkIfInputIsEmpty(binding.etMinPrice.text.toString()),
+      checkIfInputIsEmpty(binding.etMaxPrice.text.toString()),
     )
   }
 
@@ -109,39 +152,4 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
       rvAuction.adapter = adapter
     }
   }
-
-  private fun setData() {
-    binding.apply {
-      progressBarHlp = progressBarHelper
-      searchResult = searchResultHelper
-      viewModelAuction = this@AuctionFragment.viewModelAuction
-      clickListener = onClickHelper
-      etMinPrice.filters = arrayOf(RangeEditText(1, 2147483647))
-      etMaxPrice.filters = arrayOf(RangeEditText(1, 2147483647))
-      auctionHelper = this@AuctionFragment.auctionHelper
-      refresh = auctionRefreshHelper
-      callback = CallbackPvP(
-        onExportBtnClick = {
-          onExportPress(it)
-        },
-        onPageClick = {
-          onPagePress(it, binding.tvPage.text.toString().substring(0, binding.tvPage.text.toString().indexOf(' ')).toInt())
-        }
-      )
-    }
-  }
-
-  private fun hideKeyBoard() {
-    requireActivity().currentFocus?.let { view ->
-      val imm =
-        requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-      imm?.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-  }
-
-  fun checkIfInputIsEmpty(input: String): Int? =
-    if (input.isBlank())
-      null
-    else
-      Integer.parseInt(input)
 }
