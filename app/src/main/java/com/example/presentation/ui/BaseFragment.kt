@@ -24,6 +24,9 @@ open class BaseFragment(
   var maxPrice: Int? = 0
   var cardName: String? = ""
 
+
+  var sada = "sda"
+
   fun displayMessage(message: String) {
     val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
     toast.setGravity(Gravity.CENTER, 0, 0)
