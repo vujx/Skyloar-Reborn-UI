@@ -77,6 +77,8 @@ class AuctionViewModel(
         }
         is Result.Error -> {
           _auctions.postValue(Resource.Failure(handleError.bind(result.error)))
+
+
         }
       }
     }
