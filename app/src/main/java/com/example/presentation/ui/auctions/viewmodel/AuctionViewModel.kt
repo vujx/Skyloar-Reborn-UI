@@ -69,16 +69,13 @@ class AuctionViewModel(
         }
       ).awaitAll()
 
-      when (val result = resultAuctions!!) {
-        is Result.Success -> {
-          if (result.data.isEmpty()) _auctions.postValue(Resource.Empty())
-          else _auctions.postValue(Resource.Success(result.data))
-          getNumOfSearchResult(numberOfResult!!, page)
-        }
-        is Result.Error -> {
-          _auctions.postValue(Resource.Failure(handleError.bind(result.error)))
-        }
-      }
+      sada()
+      //sadsaddsaads
     }
+  }
+
+
+  private fun sada() {
+
   }
 }
