@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.data.model.auction.AuctionEntityItem
+import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
 import com.example.presentation.ui.BaseViewModel
 import com.example.presentation.ui.HandleError
 import com.example.util.Resource
 import com.example.util.Result
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class AuctionViewModel(
@@ -17,6 +20,9 @@ class AuctionViewModel(
   private val getNumberOfSearchResults: GetNumberOfSearchResults,
   private val handleError: HandleError
 ) : BaseViewModel() {
+
+  private var resultAuctions: Result<List<AuctionEntityItem>>? = null
+  private var numberOfResult: Result<NumberOfSearchResultsEntity>? = null
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
   val auctions: LiveData<Resource<List<AuctionEntityItem>>> = _auctions
@@ -27,7 +33,7 @@ class AuctionViewModel(
       20,
       null,
       null,
-      null
+      null,
     )
   }
 
@@ -40,36 +46,39 @@ class AuctionViewModel(
   ) {
     viewModelScope.launch {
       _auctions.postValue(Resource.Loading())
-      when (
-        val result = getAuctions(
-          listOf<Any?>(
-            page,
-            number,
-            input,
-            minPrice,
-            maxPrice
+      listOf(
+        async {
+          resultAuctions = getAuctions(
+            listOf<Any?>(
+              page,
+              number,
+              input,
+              minPrice,
+              maxPrice,
+            )
           )
-        )
-      ) {
+        },
+        async {
+          numberOfResult = getNumberOfSearchResults(
+            listOf<Any?>(
+              input,
+              minPrice,
+              maxPrice,
+            )
+          )
+        }
+      ).awaitAll()
+
+      when (val result = resultAuctions!!) {
         is Result.Success -> {
-          if (result.data.isEmpty()) _auctions.postValue(Resource.Empty()) else _auctions.postValue(
-            Resource.Success(result.data)
-          )
+          if (result.data.isEmpty()) _auctions.postValue(Resource.Empty())
+          else _auctions.postValue(Resource.Success(result.data))
+          getNumOfSearchResult(numberOfResult!!, page)
         }
         is Result.Error -> {
           _auctions.postValue(Resource.Failure(handleError.bind(result.error)))
         }
       }
-      getNumOfSearchResult(
-        getNumberOfSearchResults(
-          listOf<Any?>(
-            input,
-            minPrice,
-            maxPrice
-          )
-        ),
-        page
-      )
     }
   }
 }
