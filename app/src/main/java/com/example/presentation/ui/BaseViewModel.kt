@@ -23,7 +23,10 @@ open class BaseViewModel : ViewModel() {
         val numOfPage = (countSearch.toDouble() / 20)
         when {
           countSearch == 0 || (numOfPage < 1 && countSearch != 0) -> pageResult.postValue("1 / 1")
+          //asddsaads
           numOfPage % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / 20))}")
+
+
           else -> pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
         }
       }
