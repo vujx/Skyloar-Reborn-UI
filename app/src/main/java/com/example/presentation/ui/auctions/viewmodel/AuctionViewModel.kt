@@ -18,11 +18,8 @@ import kotlinx.coroutines.launch
 class AuctionViewModel(
   private val getAuctions: GetListOfAuctions,
   private val getNumberOfSearchResults: GetNumberOfSearchResults,
-  private val handleError: HandleError
+  private val handleError: HandleError,
 ) : BaseViewModel() {
-
-  private var resultAuctions: Result<List<AuctionEntityItem>>? = null
-  private var numberOfResult: Result<NumberOfSearchResultsEntity>? = null
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
   val auctions: LiveData<Resource<List<AuctionEntityItem>>> = _auctions
@@ -42,43 +39,28 @@ class AuctionViewModel(
     number: Int,
     input: String?,
     minPrice: Int?,
-    maxPrice: Int?
+    maxPrice: Int?,
   ) {
     viewModelScope.launch {
       _auctions.postValue(Resource.Loading())
-      listOf(
-        async {
-          resultAuctions = getAuctions(
-            listOf<Any?>(
-              page,
-              number,
-              input,
-              minPrice,
-              maxPrice,
-            )
-          )
-        },
-        async {
-          numberOfResult = getNumberOfSearchResults(
-            listOf<Any?>(
-              input,
-              minPrice,
-              maxPrice,
-            )
-          )
-        }
-      ).awaitAll()
-
-      when (val result = resultAuctions!!) {
+      val result = getAuctions(
+        listOf<Any?>(
+          page,
+          number,
+          input,
+          minPrice,
+          maxPrice,
+        )
+      )
+      when(result) {
         is Result.Success -> {
-          if (result.data.isEmpty()) _auctions.postValue(Resource.Empty())
-          else _auctions.postValue(Resource.Success(result.data))
-          getNumOfSearchResult(numberOfResult!!, page)
+          if (result.data.auctions.isEmpty()) _auctions.postValue(Resource.Empty())
+          else _auctions.postValue(Resource.Success(result.data.auctions))
+          getNumOfSearchResult(result.data.numberOfSearch.count, page)
         }
         is Result.Error -> {
+          getNumOfSearchResult(-1, page)
           _auctions.postValue(Resource.Failure(handleError.bind(result.error)))
-
-
         }
       }
     }

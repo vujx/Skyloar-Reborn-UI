@@ -13,25 +13,21 @@ open class BaseViewModel : ViewModel() {
   val pageResult = MutableLiveData<String>()
 
   fun getNumOfSearchResult(
-    result: Result<NumberOfSearchResultsEntity>,
-    page: Int
+    countSearch: Int,
+    page: Int,
   ) = viewModelScope.launch {
-    when (result) {
-      is Result.Success -> {
-        //dsadsaasd
-        val countSearch = result.data.count
-        numOfSearchResult.postValue(countSearch)
-        val numOfPage = (countSearch.toDouble() / 20)
-        when {
-          countSearch == 0 || (numOfPage < 1 && countSearch != 0) -> pageResult.postValue("1 / 1")
-          numOfPage % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / 20))}")
-          else -> pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
-        }
+    if (countSearch != -1) {
+      numOfSearchResult.postValue(countSearch)
+      val numOfPage = (countSearch.toDouble() / 20)
+      when {
+        countSearch == 0 || (numOfPage < 1 && countSearch != 0) -> pageResult.postValue("1 / 1")
+        numOfPage % 1 == 0.0 -> pageResult.postValue("$page / ${((countSearch / 20))}")
+        else -> pageResult.postValue("$page / ${((countSearch / 20) + 1)}")
       }
-      is Result.Error -> {
-        numOfSearchResult.postValue(0)
-        pageResult.postValue("1 / 1")
-      }
+    } else {
+      numOfSearchResult.postValue(0)
+      pageResult.postValue("1 / 1")
     }
   }
 }
+
