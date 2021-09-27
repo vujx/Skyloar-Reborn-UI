@@ -62,6 +62,25 @@ open class BaseFragment(
     request.allowScanningByMediaScanner()
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     request.setDestinationInExternalPublicDir(
       Environment.DIRECTORY_DOWNLOADS,
       "${System.currentTimeMillis()}"
