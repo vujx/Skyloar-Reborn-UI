@@ -45,7 +45,6 @@ open class BaseFragment(
     } else {
       downloadFile(url)
       Log.d("sddsa", "dsadsa")
-      Log.d("dsad", "dsadas")
     }
   }
 
