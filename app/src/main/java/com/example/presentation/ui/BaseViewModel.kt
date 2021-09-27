@@ -18,6 +18,7 @@ open class BaseViewModel : ViewModel() {
   ) = viewModelScope.launch {
     when (result) {
       is Result.Success -> {
+        //dsadsaasd
         val countSearch = result.data.count
         numOfSearchResult.postValue(countSearch)
         val numOfPage = (countSearch.toDouble() / 20)
