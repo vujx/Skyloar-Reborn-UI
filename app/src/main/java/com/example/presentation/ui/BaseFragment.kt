@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -43,6 +44,7 @@ open class BaseFragment(
       )
     } else {
       downloadFile(url)
+      Log.d("sddsa", "dsadsa")
     }
   }
 
