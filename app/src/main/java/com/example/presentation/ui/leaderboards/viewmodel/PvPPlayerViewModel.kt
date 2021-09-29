@@ -37,7 +37,7 @@ class PvPPlayerViewModel(
     number: Int
   ) {
     viewModelScope.launch {
-      getNumOfSearchResult(getNumOfPvPSearchResult(type, month), page)
+      getNumOfSearchResult(1, page)
       _pvpPlayer.postValue(Resource.Loading())
       when (val result = getPvPPlayers(listOf(type, month, page, number))) {
         is Result.Success -> _pvpPlayer.postValue(Resource.Success(result.data))

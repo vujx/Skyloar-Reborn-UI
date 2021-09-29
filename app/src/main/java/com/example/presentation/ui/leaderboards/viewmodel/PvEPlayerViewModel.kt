@@ -51,12 +51,7 @@ class PvEPlayerViewModel(
         is Result.Error -> _pvePlayer.postValue(Resource.Failure(handleError.bind(result.error)))
       }
       getNumOfSearchResult(
-        getNumOfPvESearchResult(
-          type,
-          players,
-          map,
-          month
-        ),
+        1,
         page
       )
     }
