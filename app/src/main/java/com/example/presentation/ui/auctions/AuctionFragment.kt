@@ -140,8 +140,8 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     searchResult: String = "",
     visibilityTitles: Boolean = false,
   ) {
-    binding.progressBar.visible(visibilityProgressBar)
-    binding.tvSearchNoResult.text = searchResult
+    binding.prgSearch.showProgressBar(visibilityProgressBar)
+    binding.prgSearch.showNoSearchResult(searchResult)
     binding.rootTitles.visible(visibilityTitles)
     binding.swipeRefresh.isRefreshing = false
   }

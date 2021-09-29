@@ -252,17 +252,6 @@
       tools:ignore="ContentDescription"
       />
 
-  <ProgressBar
-      android:id="@+id/progressBar"
-      android:layout_width="70dp"
-      android:layout_height="wrap_content"
-      android:indeterminateTint="#E53935"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-
   <TextView
       android:id="@+id/tvSearchedResults"
       android:layout_width="wrap_content"
@@ -284,17 +273,16 @@
       app:layout_constraintTop_toTopOf="@id/coordinatorLayout"
       />
 
-  <TextView
-      android:id="@+id/tvSearchNoResult"
+  <com.example.presentation.ui.customview.ProgressBarSearchView
+      android:id="@+id/prgSearch"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="#F4511E"
-      android:textSize="16sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
