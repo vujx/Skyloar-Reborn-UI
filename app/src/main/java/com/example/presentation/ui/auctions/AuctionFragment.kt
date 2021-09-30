@@ -37,6 +37,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     setUpRecyclerView()
     bind()
     clickListeners()
+    binding.bottomPage.clickListeners()
 
     return binding.root
   }
@@ -47,46 +48,45 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
   }
 
   private fun clickListeners() {
-    onPageClickListener = {
-      getAuctions(it, false)
+    onPageClickListener = { page ->
+      getAuctions(page, false)
+    }
+
+    binding.bottomPage.onNextPress = {
+      if (binding.bottomPage.getPage() != "1 / 1") {
+        if (binding.bottomPage.getFirstPage() == binding.bottomPage.getLastPage()) {
+          getAuctions(1, false)
+        } else getAuctions(binding.bottomPage.getFirstPage() + 1, false)
+      }
+    }
+
+    binding.bottomPage.onPreviousPress = {
+      if (binding.bottomPage.getPage() != "1 / 1") {
+        if (binding.bottomPage.getFirstPage() == 1) {
+          getAuctions(binding.bottomPage.getLastPage(), false)
+        } else {
+          getAuctions(binding.bottomPage.getFirstPage() - 1, false)
+        }
+      }
     }
 
     binding.ivSearchBtn.setOnClickListener {
       getAuctions(1)
     }
 
-    binding.ivBack.setOnClickListener {
-      if (binding.tvPage.text.toString() != "1 / 1") {
-        if (getFirstPage(binding.tvPage.text.toString()) == 1) {
-          getAuctions(getLastPage(binding.tvPage.text.toString()), false)
-        } else {
-          getAuctions(getFirstPage(binding.tvPage.text.toString()) - 1, false)
-        }
-      }
-    }
-
-    binding.ivForward.setOnClickListener {
-      if (binding.tvPage.text.toString() != "1 / 1") {
-        if (getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
-          getAuctions(1, false)
-        } else getAuctions(getFirstPage(binding.tvPage.text.toString()) + 1, false)
-      }
-    }
-
-    binding.ivExportBtn.setOnClickListener {
-      onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS)
-    }
-
-    binding.tvPage.setOnClickListener {
+    binding.bottomPage.onPagePress = {
       onPagePress(
-        getLastPage(binding.tvPage.text.toString()),
-        getFirstPage(binding.tvPage.text.toString()),
+        getLastPage(binding.bottomPage.getPage()),
+        getFirstPage(binding.bottomPage.getPage()),
       )
     }
 
+    binding.bottomPage.onExportPress = {
+      onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS)
+    }
 
     binding.swipeRefresh.setOnRefreshListener {
-      getAuctions(getFirstPage(binding.tvPage.text.toString()))
+      getAuctions(binding.bottomPage.getFirstPage())
     }
   }
 
@@ -123,14 +123,14 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     viewModelAuction.numOfSearchResult.observe(
       viewLifecycleOwner,
       {
-        binding.tvSearchedResults.text = "Searched: $it"
+        binding.bottomPage.setSearch("Searched: $it")
       }
     )
 
     viewModelAuction.pageResult.observe(
       viewLifecycleOwner,
       {
-        binding.tvPage.text = it
+        binding.bottomPage.setPage(it)
       }
     )
   }

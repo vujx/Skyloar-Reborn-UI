@@ -3,43 +3,64 @@ package com.example.presentation.ui.customview
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.Dictionary
 import com.example.databinding.PageNavigationBinding
-import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class BottomPageNavigationView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr), KoinComponent {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-  private val resources: Dictionary by inject()
+   var onNextPress: ((Unit) -> Unit) = {}
+   var onPreviousPress: ((Unit) -> Unit) = {}
+   var onPagePress: ((Unit) -> Unit) = {}
+   var onExportPress: ((Unit) -> Unit) = {}
 
-  private val binding: PageNavigationBinding =
+  private var binding: PageNavigationBinding =
     PageNavigationBinding.inflate(LayoutInflater.from(context), this)
 
-  fun nextPageAction(
-    action: ((Unit) -> Unit)
-  ) {
-    binding.ivForward.setOnClickListener {
-      if (binding.tvPage.text.toString() != "1 / 1") {
-        if (getFirstPage(binding.tvPage.text.toString()) == getLastPage(binding.tvPage.text.toString())) {
+  init {
+    layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+  }
 
-        } else getAuctions(getFirstPage(binding.tvPage.text.toString()) + 1)
-      }
+  fun clickListeners() {
+    binding.ivForward.setOnClickListener {
+      onNextPress(Unit)
+    }
+
+    binding.ivBack.setOnClickListener {
+      onPreviousPress(Unit)
+    }
+
+    binding.tvPage.setOnClickListener {
+      onPagePress(Unit)
+    }
+
+    binding.ivExportBtn.setOnClickListener {
+      onExportPress(Unit)
     }
   }
 
-  private fun getAuctions(page: Int) {
-
+  fun setSearch(searchCount: String) {
+    binding.tvSearchedResults.text = searchCount
   }
-  private fun getFirstPage(page: String) =
-    page.substring(0, page.indexOf(' ')).toInt()
 
-  private fun getLastPage(page: String) =
-    page.substring(getFirstPage(page).toString().length + 3).toInt()
+  fun setPage(page: String) {
+    binding.tvPage.text = page
+  }
+
+  fun getPage() = binding.tvPage.text.toString()
+
+
+  fun getFirstPage(): Int {
+    val page = getPage()
+    return page.substring(0, page.indexOf(' ')).toInt()
+  }
+
+
+  fun getLastPage(): Int {
+    val page = getPage()
+    return page.substring(getFirstPage().toString().length + 3).toInt()
+  }
 }
