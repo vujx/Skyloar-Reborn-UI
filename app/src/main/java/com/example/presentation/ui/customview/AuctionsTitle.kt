@@ -1,4 +1,4 @@
-package com.example.presentation.ui.auctions.adapter
+package com.example.presentation.ui.customview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.Dictionary
 import com.example.R
-import com.example.data.model.auction.AuctionEntityItem
 import com.example.databinding.ItemAuctionInfoBinding
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AuctionItem @JvmOverloads constructor(
+class AuctionsTitle @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0,
@@ -27,17 +26,15 @@ class AuctionItem @JvmOverloads constructor(
 
   init {
     layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+    binding.root.setBackgroundColor(dictionary.getColorRes(R.color.darkred))
+    bindTitle()
   }
 
-  fun bind(auction: AuctionEntityItem, position: Int) {
-    if(position % 2 == 0)
-      binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey_lighter))
-    else
-      binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey))
-    binding.tvPlayer.text = auction.cardName
-    binding.tvRating.text = auction.startingPrice.toString()
-    binding.tvELO.text = auction.currentPrice.toString()
-    binding.tvActivity.text = auction.buyoutPrice.toString()
-    binding.tvMatches.text = auction.endingOn
+  fun bindTitle() {
+    binding.tvPlayer.text = dictionary.getStringRes(R.string.player)
+    binding.tvRating.text = dictionary.getStringRes(R.string.rating)
+    binding.tvELO.text = dictionary.getStringRes(R.string.elo)
+    binding.tvActivity.text = dictionary.getStringRes(R.string.buyout)
+    binding.tvMatches.text = dictionary.getStringRes(R.string.end)
   }
 }

@@ -7,107 +7,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
     tools:context=".presentation.ui.auctions.AuctionFragment"
     >
-
-  <com.google.android.material.imageview.ShapeableImageView
-      android:id="@+id/ivSearchBtn"
-      android:layout_width="52dp"
-      android:layout_height="52dp"
-      android:layout_marginEnd="2dp"
-      android:layout_marginTop="2dp"
-      android:background="#E53935"
-      android:src="@drawable/ic_baseline_search_24"
-      app:layout_constraintBottom_toBottomOf="@id/tlSearchCard"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tlMinPrice"
-      app:shapeAppearanceOverlay="@style/roundedImageView"
-      app:strokeWidth="1dp"
-      tools:ignore="ContentDescription"
-      />
-
-  <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/tlSearchCard"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_margin="2dp"
-      app:layout_constraintEnd_toStartOf="@id/ivSearchBtn"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/tlMinPrice"
-      style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-      >
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etSearchCardName"
-        android:layout_width="376dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_card"
-        android:inputType="text"
-        />
-
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/tlMinPrice"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_margin="2dp"
-      app:layout_constraintEnd_toStartOf="@id/tlMaxPrice"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      >
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etMinPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/min_price"
-        android:inputType="number"
-        android:maxLength="8"
-        />
-
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/tlMaxPrice"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_margin="2dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@id/tlMinPrice"
-      app:layout_constraintTop_toTopOf="parent"
-      style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      >
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etMaxPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/max_price"
-        android:inputType="number"
-        />
-
-  </com.google.android.material.textfield.TextInputLayout>
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/rootTitles"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
       android:background="@color/white"
+      android:backgroundTint="#52E53935"
       app:layout_constraintBottom_toTopOf="@id/swipeRefresh"
-      app:layout_constraintTop_toBottomOf="@id/tlSearchCard"
+      app:layout_constraintTop_toTopOf="parent"
       >
 
     <TextView
         android:id="@+id/tvCardTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/tv_border_values"
         android:gravity="center"
-        android:padding="8dp"
+        android:textSize="16sp"
         android:text="@string/card"
+        android:padding="4dp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,9 +42,9 @@
         android:id="@+id/tvStartTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/tv_border_values"
         android:gravity="center"
-        android:padding="8dp"
+        android:textSize="16sp"
+        android:padding="4dp"
         android:text="@string/start"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -136,10 +58,10 @@
         android:id="@+id/tvBidTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/tv_border_values"
         android:gravity="center"
-        android:padding="8dp"
+        android:textSize="16sp"
         android:text="@string/bid"
+        android:padding="4dp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvBuyoutTitle"
@@ -151,10 +73,10 @@
         android:id="@+id/tvBuyoutTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/tv_border_values"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="4dp"
         android:text="@string/buyout"
+        android:textSize="16sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvEndTitle"
@@ -166,10 +88,10 @@
         android:id="@+id/tvEndTitle"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/tv_border_values"
         android:gravity="center"
-        android:padding="8dp"
+        android:textSize="16sp"
         android:text="@string/end"
+        android:padding="4dp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -184,6 +106,7 @@
       android:layout_height="0dp"
       app:layout_constraintBottom_toTopOf="@+id/bottomPage"
       app:layout_constraintTop_toBottomOf="@id/rootTitles"
+      tools:layout_editor_absoluteX="137dp"
       >
 
     <androidx.recyclerview.widget.RecyclerView
@@ -199,7 +122,7 @@
   <com.example.presentation.ui.customview.BottomPageNavigationView
       android:id="@+id/bottomPage"
       android:layout_width="match_parent"
-      android:padding="8dp"
+      android:padding="10dp"
       android:layout_height="wrap_content"
       app:layout_constraintBottom_toBottomOf="parent"
     />

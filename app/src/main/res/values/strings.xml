@@ -10,7 +10,6 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="enter_card">Card name</string>
-    <string name="search">Search</string>
     <string name="export">Export</string>
     <string name="card">Card</string>
     <string name="start">Start</string>
@@ -151,4 +150,6 @@ It may take up to 10 minutes for new data to be cached and available.</string>
     <string name="difficulty">Difficulty</string>
     <string name="pve">PvE</string>
     <string name="pvp">PvP</string>
+  <string name="search">Search</string>
+    <string name="search_by">Search by</string>
 </resources>

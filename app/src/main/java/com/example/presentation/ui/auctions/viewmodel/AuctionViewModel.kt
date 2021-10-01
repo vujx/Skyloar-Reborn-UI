@@ -1,5 +1,6 @@
 package com.example.presentation.ui.auctions.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -85,16 +86,16 @@ class AuctionViewModel(
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
         getListOfAuctions(1, number, input, minPrice, maxPrice)
-      } else getListOfAuctions(getFirstPage(page), number, input, minPrice, maxPrice)
+      } else getListOfAuctions(getFirstPage(page) + 1, number, input, minPrice, maxPrice)
     }
   }
 
-  fun getFirstPage(page: String): Int {
+  private fun getFirstPage(page: String): Int {
     return page.substring(0, page.indexOf(' ')).toInt()
   }
 
 
-  fun getLastPage(page: String): Int {
+  private fun getLastPage(page: String): Int {
     return page.substring(getFirstPage(page).toString().length + 3).toInt()
   }
 }

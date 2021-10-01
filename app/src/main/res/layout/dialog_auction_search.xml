@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/search_by"
+      android:textSize="22sp"
+      android:layout_marginTop="8dp"
+      android:layout_marginStart="8dp"
+      android:textColor="@color/black"
+      android:layout_marginBottom="16dp"
+      />
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tlSearchCard"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      style="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etSearchCardName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_card"
+        android:inputType="text"
+        />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tlMinPrice"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etMinPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/min_price"
+        android:inputType="number"
+        android:maxLength="8"
+        />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tlMaxPrice"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etMaxPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/max_price"
+        android:inputType="number"
+        />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+
+</LinearLayout>
