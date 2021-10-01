@@ -7,7 +7,7 @@ class AuctionViewHolder(
   private val itemAuction: AuctionItem
 ) : RecyclerView.ViewHolder(itemAuction) {
 
-  fun bind(auction: AuctionEntityItem) {
-    itemAuction.bind(auction)
+  fun bind(auction: AuctionEntityItem, position: Int) {
+    itemAuction.bind(auction, position)
   }
 }

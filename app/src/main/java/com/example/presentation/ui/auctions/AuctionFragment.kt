@@ -3,6 +3,9 @@ package com.example.presentation.ui.auctions
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +15,14 @@ import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
+import com.example.presentation.ui.dialogs.AuctionSearchDialog
 import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.visible
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
+class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDialog.Listener {
 
   private val adapter: AuctionAdapter by inject()
   private val viewModelAuction: AuctionViewModel by viewModel()
@@ -26,6 +30,11 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
 
   private var _binding: FragmentAuctionBinding? = null
   private val binding get() = _binding!!
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -47,8 +56,24 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     _binding = null
   }
 
+  override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+    menuInflater.inflate(R.menu.toolbar_menu, menu)
+    return super.onCreateOptionsMenu(menu, menuInflater)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when(item.itemId) {
+      R.id.searchIcon -> {
+        val dialog = AuctionSearchDialog(this)
+        activity?.supportFragmentManager?.let { dialog.show(it, "dsada") }
+        true
+      }
+      else -> true
+    }
+  }
+
   private fun clickListeners() {
-    onPageClickListener = { page -> getAuctions(page, false) }
+    onPageClickListener = { page -> getAuctions(page) }
     binding.bottomPage.onNextPress = {
       viewModelAuction.onNextPress(binding.bottomPage.getPage(),
         20,
@@ -63,10 +88,12 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
         minPrice,
         maxPrice)
     }
-    binding.ivSearchBtn.setOnClickListener { getAuctions(1) }
+
     binding.bottomPage.onPagePress = {
-      onPagePress(getLastPage(binding.bottomPage.getPage()),
-        getFirstPage(binding.bottomPage.getPage()))
+      onPagePress(
+        getLastPage(binding.bottomPage.getPage()),
+        getFirstPage(binding.bottomPage.getPage())
+      )
     }
     binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS) }
     binding.swipeRefresh.setOnRefreshListener { getAuctions(binding.bottomPage.getFirstPage()) }
@@ -128,11 +155,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
     binding.swipeRefresh.isRefreshing = false
   }
 
-  private fun getAuctions(page: Int, searchSwipe: Boolean = true) {
-    if (searchSwipe) {
-      cardName = binding.etSearchCardName.text.toString()
-      minPrice = checkIfInputIsEmpty(binding.etMinPrice.text.toString())
-      maxPrice = checkIfInputIsEmpty(binding.etMaxPrice.text.toString())
+  private fun getAuctions(page: Int) {
       viewModelAuction.getListOfAuctions(
         page,
         20,
@@ -140,15 +163,6 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
         minPrice,
         maxPrice,
       )
-    } else {
-      viewModelAuction.getListOfAuctions(
-        page,
-        20,
-        cardName,
-        minPrice,
-        maxPrice,
-      )
-    }
   }
 
   private fun setUpRecyclerView() {
@@ -156,5 +170,12 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
       rvAuction.layoutManager = LinearLayoutManager(requireContext())
       rvAuction.adapter = adapter
     }
+  }
+
+  override fun onSubmit(searchCard: String?, minPrice: Int?, maxPrice: Int?) {
+    cardName = searchCard
+    this.minPrice = minPrice
+    this.maxPrice = maxPrice
+    getAuctions(1)
   }
 }
