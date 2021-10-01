@@ -48,46 +48,28 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
   }
 
   private fun clickListeners() {
-    onPageClickListener = { page ->
-      getAuctions(page, false)
-    }
-
+    onPageClickListener = { page -> getAuctions(page, false) }
     binding.bottomPage.onNextPress = {
-      if (binding.bottomPage.getPage() != "1 / 1") {
-        if (binding.bottomPage.getFirstPage() == binding.bottomPage.getLastPage()) {
-          getAuctions(1, false)
-        } else getAuctions(binding.bottomPage.getFirstPage() + 1, false)
-      }
+      viewModelAuction.onNextPress(binding.bottomPage.getPage(),
+        20,
+        cardName,
+        minPrice,
+        maxPrice)
     }
-
     binding.bottomPage.onPreviousPress = {
-      if (binding.bottomPage.getPage() != "1 / 1") {
-        if (binding.bottomPage.getFirstPage() == 1) {
-          getAuctions(binding.bottomPage.getLastPage(), false)
-        } else {
-          getAuctions(binding.bottomPage.getFirstPage() - 1, false)
-        }
-      }
+      viewModelAuction.onPreviousPress(binding.bottomPage.getPage(),
+        20,
+        cardName,
+        minPrice,
+        maxPrice)
     }
-
-    binding.ivSearchBtn.setOnClickListener {
-      getAuctions(1)
-    }
-
+    binding.ivSearchBtn.setOnClickListener { getAuctions(1) }
     binding.bottomPage.onPagePress = {
-      onPagePress(
-        getLastPage(binding.bottomPage.getPage()),
-        getFirstPage(binding.bottomPage.getPage()),
-      )
+      onPagePress(getLastPage(binding.bottomPage.getPage()),
+        getFirstPage(binding.bottomPage.getPage()))
     }
-
-    binding.bottomPage.onExportPress = {
-      onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS)
-    }
-
-    binding.swipeRefresh.setOnRefreshListener {
-      getAuctions(binding.bottomPage.getFirstPage())
-    }
+    binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS) }
+    binding.swipeRefresh.setOnRefreshListener { getAuctions(binding.bottomPage.getFirstPage()) }
   }
 
   @SuppressLint("SetTextI18n")
@@ -147,7 +129,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction) {
   }
 
   private fun getAuctions(page: Int, searchSwipe: Boolean = true) {
-    if(searchSwipe) {
+    if (searchSwipe) {
       cardName = binding.etSearchCardName.text.toString()
       minPrice = checkIfInputIsEmpty(binding.etMinPrice.text.toString())
       maxPrice = checkIfInputIsEmpty(binding.etMaxPrice.text.toString())

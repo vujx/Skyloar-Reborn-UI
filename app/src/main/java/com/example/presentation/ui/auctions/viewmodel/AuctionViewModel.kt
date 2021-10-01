@@ -60,4 +60,41 @@ class AuctionViewModel(
       }
     }
   }
+
+  fun onPreviousPress(
+    page: String,
+    number: Int,
+    input: String?,
+    minPrice: Int?,
+    maxPrice: Int?,) {
+    if (page != "1 / 1") {
+      if (getFirstPage(page) == 1) {
+        getListOfAuctions(getLastPage(page), number, input, minPrice, maxPrice)
+      } else {
+        getListOfAuctions(getFirstPage(page) - 1, number, input, minPrice, maxPrice)
+      }
+    }
+  }
+
+  fun onNextPress(
+    page: String,
+    number: Int,
+    input: String?,
+    minPrice: Int?,
+    maxPrice: Int?,) {
+    if (page != "1 / 1") {
+      if (getFirstPage(page) == getLastPage(page)) {
+        getListOfAuctions(1, number, input, minPrice, maxPrice)
+      } else getListOfAuctions(getFirstPage(page), number, input, minPrice, maxPrice)
+    }
+  }
+
+  fun getFirstPage(page: String): Int {
+    return page.substring(0, page.indexOf(' ')).toInt()
+  }
+
+
+  fun getLastPage(page: String): Int {
+    return page.substring(getFirstPage(page).toString().length + 3).toInt()
+  }
 }
