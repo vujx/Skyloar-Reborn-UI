@@ -88,7 +88,7 @@ class App : Application() {
 
   private val viewModelModule = module {
     viewModel {
-      AuctionViewModel(get(), get(), get())
+      AuctionViewModel(get(), get())
     }
     viewModel {
       StatViewModel(get())
