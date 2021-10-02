@@ -69,7 +69,6 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
           }
           is Resource.Failure -> {
             setProgressBarAndSearchResult()
-            displayMessage(result.message)
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)

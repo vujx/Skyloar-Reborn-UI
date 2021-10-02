@@ -1,20 +1,17 @@
 package com.example.presentation.ui.auctions.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.presentation.ui.BaseViewModel
-import com.example.presentation.ui.HandleError
 import com.example.util.Resource
 import com.example.util.Result
 import kotlinx.coroutines.launch
 
 class AuctionViewModel(
   private val getAuctions: GetListOfAuctions,
-  private val handleError: HandleError,
 ) : BaseViewModel() {
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
@@ -56,7 +53,7 @@ class AuctionViewModel(
         }
         is Result.Error -> {
           getNumOfSearchResult(-1, page)
-          _auctions.postValue(Resource.Failure(handleError.bind(result.error)))
+          _auctions.postValue(Resource.Failure(result.error))
         }
       }
     }

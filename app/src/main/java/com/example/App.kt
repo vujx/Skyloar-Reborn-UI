@@ -26,7 +26,6 @@ import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
 import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
-import com.example.presentation.ui.HandleError
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
@@ -71,7 +70,6 @@ class App : Application() {
   private val mappersModule = module {
     factory { PvPPlayerMapper() }
     factory { PvEPlayerMapper() }
-    factory { HandleError(get()) }
   }
 
   private val useCaseModule = module {
@@ -88,19 +86,19 @@ class App : Application() {
 
   private val viewModelModule = module {
     viewModel {
-      AuctionViewModel(get(), get())
+      AuctionViewModel(get())
     }
     viewModel {
       StatViewModel(get())
     }
     viewModel {
-      PvPPlayerViewModel(get(), get(), get())
+      PvPPlayerViewModel(get(), get())
     }
     viewModel {
       LeaderboardsViewModel(get(), get())
     }
     viewModel {
-      PvEPlayerViewModel(get(), get(), get())
+      PvEPlayerViewModel(get(), get())
     }
   }
 

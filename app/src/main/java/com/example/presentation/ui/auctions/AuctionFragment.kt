@@ -108,11 +108,17 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
           is Resource.Success -> {
             setProgressBarAndSearchResult(visibilityTitles = true)
             adapter.setListOfAuctions(result.value)
+            binding.errorView.visible(false)
+            binding.bottomPage.visible(true)
           }
           is Resource.Failure -> {
             setProgressBarAndSearchResult()
             adapter.setListOfAuctions(emptyList())
-            displayMessage(result.message)
+            binding.errorView.onRetryClick = {
+              getAuctions(binding.bottomPage.getFirstPage())
+            }
+            binding.errorView.showError(result.error)
+            binding.bottomPage.visible(false)
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)

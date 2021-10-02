@@ -19,6 +19,7 @@
       />
 
   <TextView
+      android:id="@+id/tvErrorMessage"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
@@ -28,10 +29,12 @@
       />
 
   <com.google.android.material.button.MaterialButton
+      android:id="@+id/btnRetry"
       android:layout_width="wrap_content"
       app:cornerRadius="8dp"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
+      android:layout_marginTop="16dp"
       android:text="@string/retry"
       android:backgroundTint="@color/red"
       />

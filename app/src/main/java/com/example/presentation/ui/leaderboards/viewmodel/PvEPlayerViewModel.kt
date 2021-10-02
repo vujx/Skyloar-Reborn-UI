@@ -7,7 +7,6 @@ import com.example.domain.model.PvEPlayer
 import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
 import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.presentation.ui.BaseViewModel
-import com.example.presentation.ui.HandleError
 import com.example.util.Resource
 import kotlinx.coroutines.launch
 import com.example.util.Result
@@ -15,7 +14,6 @@ import com.example.util.Result
 class PvEPlayerViewModel(
   private val getPvEPlayersUseCase: GetPvEPlayers,
   private val getNumOfPvESearchResult: GetNumOfPvESearchResult,
-  private val handleError: HandleError
 ) : BaseViewModel() {
 
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
@@ -48,7 +46,7 @@ class PvEPlayerViewModel(
             if (it.isEmpty()) _pvePlayer.postValue(Resource.Empty())
           } ?: _pvePlayer.postValue(Resource.Success(null))
         }
-        is Result.Error -> _pvePlayer.postValue(Resource.Failure(handleError.bind(result.error)))
+        is Result.Error -> _pvePlayer.postValue(Resource.Failure(result.error))
       }
       getNumOfSearchResult(
         1,

@@ -54,7 +54,6 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
           is Resource.Failure -> {
             setProgressBarAndSearchResult(visibilitySearchRes = true)
             adapter.setListOfStatValues(emptyList())
-            displayMessage(result.message)
           }
           else -> {
             setProgressBarAndSearchResult(visibilitySearchRes = true)
