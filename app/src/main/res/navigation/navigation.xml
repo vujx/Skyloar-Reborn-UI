@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/homeFragment">
+
+  <fragment
+      android:id="@+id/homeFragment"
+      android:name="com.example.presentation.ui.home.HomeFragment"
+      android:label="fragment_home"
+      tools:layout="@layout/fragment_home" />
+  <fragment
+      android:id="@+id/auctionFragment"
+      android:name="com.example.presentation.ui.auctions.AuctionFragment"
+      android:label="fragment_auction"
+      tools:layout="@layout/fragment_auction" />
+  <fragment
+      android:id="@+id/statFragment"
+      android:name="com.example.presentation.ui.stat.StatFragment"
+      android:label="fragment_stat"
+      tools:layout="@layout/fragment_stat" />
+  <fragment
+      android:id="@+id/leaderboardsFragment"
+      android:name="com.example.presentation.ui.leaderboards.fragments.PvPFragment"
+      android:label="fragment_pvp"
+      tools:layout="@layout/fragment_pvp" />
+  <fragment
+      android:id="@+id/docFragment"
+      android:name="com.example.presentation.ui.doc.DocFragment"
+      android:label="fragment_doc"
+      tools:layout="@layout/fragment_doc" />
+</navigation>

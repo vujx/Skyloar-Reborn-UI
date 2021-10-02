@@ -12,10 +12,10 @@ class BottomPageNavigationView @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-   var onNextPress: ((Unit) -> Unit) = {}
-   var onPreviousPress: ((Unit) -> Unit) = {}
-   var onPagePress: ((Unit) -> Unit) = {}
-   var onExportPress: ((Unit) -> Unit) = {}
+  var onNextPress: ((Unit) -> Unit) = {}
+  var onPreviousPress: ((Unit) -> Unit) = {}
+  var onPagePress: ((Unit) -> Unit) = {}
+  var onExportPress: ((Unit) -> Unit) = {}
 
   private var binding: PageNavigationBinding =
     PageNavigationBinding.inflate(LayoutInflater.from(context), this)
@@ -52,12 +52,10 @@ class BottomPageNavigationView @JvmOverloads constructor(
 
   fun getPage() = binding.tvPage.text.toString()
 
-
   fun getFirstPage(): Int {
     val page = getPage()
     return page.substring(0, page.indexOf(' ')).toInt()
   }
-
 
   fun getLastPage(): Int {
     val page = getPage()

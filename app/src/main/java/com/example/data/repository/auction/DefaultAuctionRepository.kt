@@ -10,7 +10,7 @@ import com.example.util.Result
 class DefaultAuctionRepository(
   private val auctionService: AuctionStatService,
   private val networkResponseHelper: NetworkResponseHelper
-  ) :
+) :
   AuctionNetworkDataSource {
 
   override suspend fun getListOfAuctions(

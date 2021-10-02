@@ -1,6 +1,5 @@
 package com.example.data.network
 
-import com.example.domain.error.ErrorEntity
 import com.example.domain.error.ErrorMapper
 import com.example.util.Result
 
@@ -18,4 +17,3 @@ class NetworkResponseHelper(private val errorMapper: ErrorMapper) {
     }
   }
 }
-
