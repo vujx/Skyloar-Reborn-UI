@@ -1,23 +1,15 @@
 package com.example.presentation
 
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.R
 import com.example.databinding.ActivityMainBinding
-import com.example.presentation.ui.auctions.AuctionFragment
-import com.example.presentation.ui.leaderboards.fragments.PvEFragment
-import com.example.presentation.ui.leaderboards.fragments.PvPFragment
-import com.example.presentation.ui.stat.StatFragment
 import com.example.util.ConnectionLiveData
 import com.example.util.visible
-import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     setDataValues()
     setNavHost()
-
   }
 
   private fun setDataValues() {

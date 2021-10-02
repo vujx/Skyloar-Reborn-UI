@@ -60,7 +60,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    return when(item.itemId) {
+    return when (item.itemId) {
       R.id.searchIcon -> {
         val dialog = AuctionSearchDialog(this)
         activity?.supportFragmentManager?.let { dialog.show(it, "dsada") }
@@ -73,18 +73,22 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
   private fun clickListeners() {
     onPageClickListener = { page -> getAuctions(page) }
     binding.bottomPage.onNextPress = {
-      viewModelAuction.onNextPress(binding.bottomPage.getPage(),
+      viewModelAuction.onNextPress(
+        binding.bottomPage.getPage(),
         20,
         cardName,
         minPrice,
-        maxPrice)
+        maxPrice
+      )
     }
     binding.bottomPage.onPreviousPress = {
-      viewModelAuction.onPreviousPress(binding.bottomPage.getPage(),
+      viewModelAuction.onPreviousPress(
+        binding.bottomPage.getPage(),
         20,
         cardName,
         minPrice,
-        maxPrice)
+        maxPrice
+      )
     }
 
     binding.bottomPage.onPagePress = {
@@ -106,7 +110,6 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
           is Resource.Success -> {
             setProgressBarAndSearchResult(visibilityTitles = true, visibilityBottomPage = true)
             adapter.setListOfAuctions(result.value)
-
           }
           is Resource.Failure -> {
             setProgressBarAndSearchResult(visibilityErrorView = true)
@@ -115,15 +118,13 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
               getAuctions(binding.bottomPage.getFirstPage())
             }
             binding.errorView.showError(result.error)
-
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
             adapter.setListOfAuctions(emptyList())
           }
           is Resource.Empty -> {
-            setProgressBarAndSearchResult(
-            )
+            setProgressBarAndSearchResult()
             adapter.setListOfAuctions(emptyList())
           }
         }
@@ -156,17 +157,17 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
     binding.rootTitles.visible(visibilityTitles)
     binding.swipeRefresh.isRefreshing = false
     binding.bottomPage.visible(visibilityBottomPage)
-    if(!visibilityErrorView) binding.errorView.visible(false)
+    if (!visibilityErrorView) binding.errorView.visible(false)
   }
 
   private fun getAuctions(page: Int) {
-      viewModelAuction.getListOfAuctions(
-        page,
-        20,
-        cardName,
-        minPrice,
-        maxPrice,
-      )
+    viewModelAuction.getListOfAuctions(
+      page,
+      20,
+      cardName,
+      minPrice,
+      maxPrice,
+    )
   }
 
   private fun setUpRecyclerView() {

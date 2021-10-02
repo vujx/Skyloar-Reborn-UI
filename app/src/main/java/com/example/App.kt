@@ -94,7 +94,7 @@ class App : Application() {
     viewModel { StatViewModel(get()) }
     viewModel { PvPPlayerViewModel(get(), get()) }
     viewModel { LeaderboardsViewModel(get(), get()) }
-    viewModel { PvEPlayerViewModel(get(), get())  }
+    viewModel { PvEPlayerViewModel(get(), get()) }
   }
 
   private val adapterModule = module {

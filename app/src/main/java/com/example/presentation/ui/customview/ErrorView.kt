@@ -2,7 +2,6 @@ package com.example.presentation.ui.customview
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.example.R
@@ -32,7 +31,7 @@ class ErrorView @JvmOverloads constructor(
 
   init {
     layoutParams =
-      LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT )
+      LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     binding.root.setBackgroundColor(dictionary.getColorRes(R.color.black))
     orientation = VERTICAL
     hideError()
@@ -41,7 +40,7 @@ class ErrorView @JvmOverloads constructor(
   fun showError(data: ErrorEntity) {
     binding.root.visible(true)
     binding.btnRetry.visible(true)
-    val errorMessage =  when (data) {
+    val errorMessage = when (data) {
       Network -> dictionary.getStringRes(string.check_internet)
       NotFound -> dictionary.getStringRes(string.unexpected_error)
       AccessDenied -> dictionary.getStringRes(string.unknown_host)

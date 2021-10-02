@@ -45,7 +45,7 @@ class AuctionViewModel(
           maxPrice,
         )
       )
-      when(result) {
+      when (result) {
         is Result.Success -> {
           if (result.data.auctions.isEmpty()) _auctions.postValue(Resource.Empty())
           else _auctions.postValue(Resource.Success(result.data.auctions))
@@ -64,7 +64,8 @@ class AuctionViewModel(
     number: Int,
     input: String?,
     minPrice: Int?,
-    maxPrice: Int?,) {
+    maxPrice: Int?,
+  ) {
     if (page != "1 / 1") {
       if (getFirstPage(page) == 1) {
         getListOfAuctions(getLastPage(page), number, input, minPrice, maxPrice)
@@ -79,7 +80,8 @@ class AuctionViewModel(
     number: Int,
     input: String?,
     minPrice: Int?,
-    maxPrice: Int?,) {
+    maxPrice: Int?,
+  ) {
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
         getListOfAuctions(1, number, input, minPrice, maxPrice)
@@ -90,7 +92,6 @@ class AuctionViewModel(
   private fun getFirstPage(page: String): Int {
     return page.substring(0, page.indexOf(' ')).toInt()
   }
-
 
   private fun getLastPage(page: String): Int {
     return page.substring(getFirstPage(page).toString().length + 3).toInt()

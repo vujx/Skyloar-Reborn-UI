@@ -3,8 +3,6 @@ package com.example.presentation.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.model.auction.NumberOfSearchResultsEntity
-import com.example.util.Result
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
@@ -30,4 +28,3 @@ open class BaseViewModel : ViewModel() {
     }
   }
 }
-

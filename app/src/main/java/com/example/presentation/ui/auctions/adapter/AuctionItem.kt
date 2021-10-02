@@ -30,7 +30,7 @@ class AuctionItem @JvmOverloads constructor(
   }
 
   fun bind(auction: AuctionEntityItem, position: Int) {
-    if(position % 2 == 0)
+    if (position % 2 == 0)
       binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey_lighter))
     else
       binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey))
