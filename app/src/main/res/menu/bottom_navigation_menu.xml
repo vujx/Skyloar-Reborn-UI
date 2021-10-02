@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+      android:id="@+id/homeFragment"
+      android:enabled="true"
+      android:icon="@drawable/ic_baseline_home_24"
+      android:title="@string/home" />
+  <item
+      android:id="@+id/auctionFragment"
+      android:enabled="true"
+      android:icon="@drawable/auction_icon"
+      android:title="@string/auctions" />
+
+  <item
+      android:id="@+id/statFragment"
+      android:enabled="true"
+      android:icon="@drawable/stat_icon"
+      android:title="@string/statistics" />
+
+  <item
+      android:id="@+id/leaderboardsFragment"
+      android:enabled="true"
+      android:icon="@drawable/ic_baseline_leaderboard_24"
+      android:title="@string/leaderboards" />
+
+  <item
+      android:id="@+id/docFragment"
+      android:enabled="true"
+      android:icon="@drawable/ic_baseline_insert_drive_file_24"
+      android:title="@string/documentations" />
+</menu>
