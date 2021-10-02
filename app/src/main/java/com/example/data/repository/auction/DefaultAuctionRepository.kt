@@ -1,14 +1,16 @@
 package com.example.data.repository.auction
 
-import android.util.Log
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.network.AuctionStatService
-import com.example.data.network.safeApiCall
+import com.example.data.network.NetworkResponseHelper
 import com.example.domain.repository.auction.AuctionNetworkDataSource
 import com.example.util.Result
 
-class DefaultAuctionRepository(private val auctionService: AuctionStatService) :
+class DefaultAuctionRepository(
+  private val auctionService: AuctionStatService,
+  private val networkResponseHelper: NetworkResponseHelper
+  ) :
   AuctionNetworkDataSource {
 
   override suspend fun getListOfAuctions(
@@ -18,12 +20,9 @@ class DefaultAuctionRepository(private val auctionService: AuctionStatService) :
     minPrice: Int?,
     maxPrice: Int?
   ): Result<List<AuctionEntityItem>> {
-    return safeApiCall(
+    return networkResponseHelper.safeApiCall(
       {
-        val response = auctionService.getListOfAuctions(page, number, input, minPrice, maxPrice)
-        Log.d("ispis", response.code().toString())
-        if(response.code() == 400) emptyList<AuctionEntityItem>()
-        else response.body()!!
+        auctionService.getListOfAuctions(page, number, input, minPrice, maxPrice).body()!!
       }
     )
   }
@@ -33,7 +32,7 @@ class DefaultAuctionRepository(private val auctionService: AuctionStatService) :
     minPrice: Int?,
     maxPrice: Int?
   ): Result<NumberOfSearchResultsEntity> {
-    return safeApiCall(
+    return networkResponseHelper.safeApiCall(
       {
         auctionService.getNumberOfSearchResults(input, minPrice, maxPrice).body()!!
       }

@@ -3,14 +3,15 @@ package com.example.data.repository.leaderboards
 import com.example.data.mapper.PvEPlayerMapper
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.network.LeaderboardService
-import com.example.data.network.safeApiCall
+import com.example.data.network.NetworkResponseHelper
 import com.example.domain.model.PvEPlayer
 import com.example.domain.repository.leaderboard.pve.PvENetworkDataSource
 import com.example.util.Result
 
 class DefaultPvERepository(
   private val leaderboardService: LeaderboardService,
-  private val pveMapper: PvEPlayerMapper
+  private val pveMapper: PvEPlayerMapper,
+  private val networkResponseHelper: NetworkResponseHelper,
 ) :
   PvENetworkDataSource {
 
@@ -20,7 +21,7 @@ class DefaultPvERepository(
     map: Int,
     month: Int
   ): Result<NumberOfSearchResultsEntity> {
-    return safeApiCall(
+    return networkResponseHelper.safeApiCall(
       {
         leaderboardService.getPvECount(
           type,
@@ -40,7 +41,7 @@ class DefaultPvERepository(
     page: Int,
     number: Int
   ): Result<List<PvEPlayer>?> {
-    return safeApiCall(
+    return networkResponseHelper.safeApiCall(
       {
         val response = leaderboardService.getListOfPvEPlayers(
           type,
