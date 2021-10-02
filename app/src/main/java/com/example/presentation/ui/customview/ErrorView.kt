@@ -3,9 +3,7 @@ package com.example.presentation.ui.customview
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.LinearLayout.LayoutParams
 import com.example.R
 import com.example.R.string
 import com.example.databinding.ErrorHandleBinding
@@ -47,7 +45,7 @@ class ErrorView @JvmOverloads constructor(
       AccessDenied -> dictionary.getStringRes(string.unknown_host)
       ServiceUnavailable -> dictionary.getStringRes(string.unexpected_error)
       Unknown -> dictionary.getStringRes(string.no_internet_connection)
-      is Custom<*> -> data.errorModel.toString()
+      is Custom<*> -> dictionary.getStringRes(string.unexpected_error)
     }
     binding.tvErrorMessage.text = errorMessage
     binding.btnRetry.setOnClickListener {

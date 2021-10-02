@@ -12,6 +12,7 @@
 
   <com.example.presentation.ui.customview.AuctionsTitle
       android:id="@+id/rootTitles"
+      android:visibility="invisible"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:paddingTop="2dp"
@@ -44,7 +45,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
     />
 
-  <com.example.presentation.ui.customview.ProgressBarSearchView
+  <com.example.presentation.ui.customview.ProgressBarView
       android:id="@+id/prgSearch"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

@@ -40,7 +40,7 @@ class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), Ko
     }
 
   private fun checkIfInputIsEmpty(input: String): Int? =
-    if (input.isBlank())
+    if (input.isBlank() || input == "0")
       null
     else
       Integer.parseInt(input)

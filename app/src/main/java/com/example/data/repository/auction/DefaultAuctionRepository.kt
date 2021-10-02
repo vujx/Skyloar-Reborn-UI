@@ -1,5 +1,6 @@
 package com.example.data.repository.auction
 
+import android.util.Log
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.data.network.AuctionStatService
@@ -19,7 +20,10 @@ class DefaultAuctionRepository(private val auctionService: AuctionStatService) :
   ): Result<List<AuctionEntityItem>> {
     return safeApiCall(
       {
-        auctionService.getListOfAuctions(page, number, input, minPrice, maxPrice).body()!!
+        val response = auctionService.getListOfAuctions(page, number, input, minPrice, maxPrice)
+        Log.d("ispis", response.code().toString())
+        if(response.code() == 400) emptyList<AuctionEntityItem>()
+        else response.body()!!
       }
     )
   }
