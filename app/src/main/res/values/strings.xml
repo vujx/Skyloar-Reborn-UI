@@ -152,4 +152,5 @@ It may take up to 10 minutes for new data to be cached and available.</string>
     <string name="pvp">PvP</string>
   <string name="search">Search</string>
     <string name="search_by">Search by</string>
+    <string name="retry">Retry</string>
 </resources>
