@@ -30,7 +30,7 @@ class AuctionsTitle @JvmOverloads constructor(
     bindTitle()
   }
 
-  fun bindTitle() {
+  private fun bindTitle() {
     binding.tvPlayer.text = dictionary.getStringRes(R.string.player)
     binding.tvRating.text = dictionary.getStringRes(R.string.rating)
     binding.tvELO.text = dictionary.getStringRes(R.string.elo)

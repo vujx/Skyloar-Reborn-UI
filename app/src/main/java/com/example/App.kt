@@ -7,6 +7,7 @@ import com.example.data.di.ApiServiceModule.provideLeaderboardService
 import com.example.data.di.ApiServiceModule.provideRetrofit
 import com.example.data.mapper.PvEPlayerMapper
 import com.example.data.mapper.PvPPlayerMapper
+import com.example.data.network.NetworkResponseHelper
 import com.example.data.repository.auction.DefaultAuctionRepository
 import com.example.data.repository.leaderboards.DefaultLeaderboardsRepository
 import com.example.data.repository.leaderboards.DefaultPvERepository
@@ -26,7 +27,6 @@ import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.domain.usecase.leaderboards.pvp.GetNumOfPvPSearchResult
 import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
-import com.example.presentation.ui.HandleError
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
@@ -36,6 +36,7 @@ import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
 import com.example.presentation.ui.stat.adapter.StatAdapter
 import com.example.presentation.ui.stat.viewmodel.StatViewModel
+import com.example.util.NetworkErrorMapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -52,26 +53,28 @@ class App : Application() {
   }
 
   private val repoModule = module {
-    factory { DefaultAuctionRepository(get()) }
+
+    single { NetworkResponseHelper(get<NetworkErrorMapper>()) }
+    factory { NetworkErrorMapper() }
+    factory { DefaultAuctionRepository(get(), get()) }
     factory { AuctionRepository(get<DefaultAuctionRepository>()) }
 
-    factory { DefaultPvPRepository(get(), get()) }
+    factory { DefaultPvPRepository(get(), get(), get()) }
     factory { PvPRepository(get<DefaultPvPRepository>()) }
 
-    factory { DefaultStatRepository(get()) }
+    factory { DefaultStatRepository(get(), get()) }
     factory { StatRepository(get<DefaultStatRepository>()) }
 
-    factory { DefaultLeaderboardsRepository(get()) }
+    factory { DefaultLeaderboardsRepository(get(), get()) }
     factory { LeaderboardRepository(get<DefaultLeaderboardsRepository>()) }
 
-    factory { DefaultPvERepository(get(), get()) }
+    factory { DefaultPvERepository(get(), get(), get()) }
     factory { PvERepository(get<DefaultPvERepository>()) }
   }
 
   private val mappersModule = module {
     factory { PvPPlayerMapper() }
     factory { PvEPlayerMapper() }
-    factory { HandleError(get()) }
   }
 
   private val useCaseModule = module {
@@ -87,21 +90,11 @@ class App : Application() {
   }
 
   private val viewModelModule = module {
-    viewModel {
-      AuctionViewModel(get(), get())
-    }
-    viewModel {
-      StatViewModel(get())
-    }
-    viewModel {
-      PvPPlayerViewModel(get(), get(), get())
-    }
-    viewModel {
-      LeaderboardsViewModel(get(), get())
-    }
-    viewModel {
-      PvEPlayerViewModel(get(), get(), get())
-    }
+    viewModel { AuctionViewModel(get()) }
+    viewModel { StatViewModel(get()) }
+    viewModel { PvPPlayerViewModel(get(), get()) }
+    viewModel { LeaderboardsViewModel(get(), get()) }
+    viewModel { PvEPlayerViewModel(get(), get())  }
   }
 
   private val adapterModule = module {

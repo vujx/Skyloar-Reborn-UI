@@ -83,7 +83,6 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
               searchResult = dictionary.getStringRes(R.string.pvp_players_not_found)
             )
             adapter.setListOfPvPPlayers(emptyList())
-            displayMessage(result.message)
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)

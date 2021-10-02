@@ -21,9 +21,9 @@ open class BaseFragment(
   private val STORAGE_PERMISSION_CODE: Int = 1000
   var onPageClickListener: ((Int) -> Unit)? = null
 
-  var minPrice: Int? = 0
-  var maxPrice: Int? = 0
-  var cardName: String? = ""
+  var minPrice: Int? = null
+  var maxPrice: Int? = null
+  var cardName: String? = null
 
   fun displayMessage(message: String) {
     val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)

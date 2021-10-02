@@ -16,17 +16,17 @@ interface AuctionStatService {
   suspend fun getListOfAuctions(
     @Query("page") page: Int,
     @Query("number") number: Int,
-    @Query("input") input: String?,
-    @Query("minPrice") minPrice: Int?,
-    @Query("maxPrice") maxPrice: Int?
+    @Query("cardName") cardName: String?,
+    @Query("min") minPrice: Int?,
+    @Query("max") maxPrice: Int?
   ): Response<List<AuctionEntityItem>>
 
   @Keep
   @GET("/api/auctions/count")
   suspend fun getNumberOfSearchResults(
-    @Query("input") input: String?,
-    @Query("minPrice") minPrice: Int?,
-    @Query("maxPrice") maxPrice: Int?
+    @Query("cardName") input: String?,
+    @Query("min") minPrice: Int?,
+    @Query("max") maxPrice: Int?
   ): Response<NumberOfSearchResultsEntity>
 
   @Keep

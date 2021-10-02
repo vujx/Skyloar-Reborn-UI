@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.BaseFragment
@@ -26,7 +25,6 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
 
   private val adapter: AuctionAdapter by inject()
   private val viewModelAuction: AuctionViewModel by viewModel()
-  private val dictionary: Dictionary by inject()
 
   private var _binding: FragmentAuctionBinding? = null
   private val binding get() = _binding!!
@@ -106,13 +104,18 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
       { result ->
         when (result) {
           is Resource.Success -> {
-            setProgressBarAndSearchResult(visibilityTitles = true)
+            setProgressBarAndSearchResult(visibilityTitles = true, visibilityBottomPage = true)
             adapter.setListOfAuctions(result.value)
+
           }
           is Resource.Failure -> {
-            setProgressBarAndSearchResult()
+            setProgressBarAndSearchResult(visibilityErrorView = true)
             adapter.setListOfAuctions(emptyList())
-            displayMessage(result.message)
+            binding.errorView.onRetryClick = {
+              getAuctions(binding.bottomPage.getFirstPage())
+            }
+            binding.errorView.showError(result.error)
+
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
@@ -120,7 +123,6 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
           }
           is Resource.Empty -> {
             setProgressBarAndSearchResult(
-              searchResult = dictionary.getStringRes(R.string.auction_not_found)
             )
             adapter.setListOfAuctions(emptyList())
           }
@@ -146,13 +148,15 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
 
   private fun setProgressBarAndSearchResult(
     visibilityProgressBar: Boolean = false,
-    searchResult: String = "",
     visibilityTitles: Boolean = false,
+    visibilityBottomPage: Boolean = false,
+    visibilityErrorView: Boolean = false
   ) {
     binding.prgSearch.showProgressBar(visibilityProgressBar)
-    binding.prgSearch.showNoSearchResult(searchResult)
     binding.rootTitles.visible(visibilityTitles)
     binding.swipeRefresh.isRefreshing = false
+    binding.bottomPage.visible(visibilityBottomPage)
+    if(!visibilityErrorView) binding.errorView.visible(false)
   }
 
   private fun getAuctions(page: Int) {

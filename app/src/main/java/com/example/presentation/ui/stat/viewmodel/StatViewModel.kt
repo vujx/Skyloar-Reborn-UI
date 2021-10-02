@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.error.ErrorEntity
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.util.Resource
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class StatViewModel(private val getStatValues: GetStatValues) :
     getListOfStatValues()
   }
 
-  fun getListOfStatValues() = viewModelScope.launch {
+  private fun getListOfStatValues() = viewModelScope.launch {
     _statValues.postValue(Resource.Loading())
     val result = getStatValues()
     if (result.isEmpty()) _statValues.postValue(Resource.Empty())
@@ -30,7 +31,7 @@ class StatViewModel(private val getStatValues: GetStatValues) :
           is Result.Error -> null
         }
       }
-      if (resultStat.all { it == null }) _statValues.postValue(Resource.Failure("Refresh all!")) else _statValues.postValue(Resource.Success(resultStat))
+      if (resultStat.all { it == null }) _statValues.postValue(Resource.Failure(ErrorEntity.ServiceUnavailable)) else _statValues.postValue(Resource.Success(resultStat))
     }
   }
 }
