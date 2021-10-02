@@ -26,7 +26,7 @@
     <string name="close">Close</string>
 
     <!-- Errors -->
-    <string name="auction_not_found">Auction not found, try again!</string>
+    <string name="auction_not_found">Auction not found, please search again!</string>
     <string name="stat_not_found">Statistics not found, try again!</string>
     <string name="pvp_players_not_found">PvP Players not found, try again!</string>
     <string name="unexpected_error">Unexpected error. Please try again later.</string>

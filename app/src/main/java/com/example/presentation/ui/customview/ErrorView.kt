@@ -40,13 +40,16 @@ class ErrorView @JvmOverloads constructor(
 
   fun showError(data: ErrorEntity) {
     binding.root.visible(true)
-    Log.d("ispis", data.toString())
+    binding.btnRetry.visible(true)
     val errorMessage =  when (data) {
       Network -> dictionary.getStringRes(string.check_internet)
       NotFound -> dictionary.getStringRes(string.unexpected_error)
       AccessDenied -> dictionary.getStringRes(string.unknown_host)
       ServiceUnavailable -> dictionary.getStringRes(string.unexpected_error)
-      Unknown -> dictionary.getStringRes(string.auction_not_found)
+      Unknown -> {
+        binding.btnRetry.visible(false)
+        dictionary.getStringRes(string.auction_not_found)
+      }
       is Custom<*> -> dictionary.getStringRes(string.unexpected_error)
     }
     binding.tvErrorMessage.text = errorMessage
