@@ -20,7 +20,7 @@ class StatViewModel(private val getStatValues: GetStatValues) :
     getListOfStatValues()
   }
 
-  private fun getListOfStatValues() = viewModelScope.launch {
+  fun getListOfStatValues() = viewModelScope.launch {
     _statValues.postValue(Resource.Loading())
     val result = getStatValues()
     if (result.isEmpty()) _statValues.postValue(Resource.Empty())

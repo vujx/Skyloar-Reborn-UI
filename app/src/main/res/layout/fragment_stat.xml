@@ -35,19 +35,6 @@
       />
 
   <TextView
-      android:id="@+id/tvSearchNoResult"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/statistic_values_not_found_try_again"
-      android:textColor="#F4511E"
-      android:textSize="16sp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-
-  <TextView
       android:id="@+id/tvValue"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -79,5 +66,11 @@
         />
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <com.example.presentation.ui.customview.ErrorView
+      android:id="@+id/errorView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

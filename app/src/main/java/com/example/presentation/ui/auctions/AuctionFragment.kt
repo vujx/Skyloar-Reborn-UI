@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentAuctionBinding
 import com.example.presentation.ui.BaseFragment
@@ -23,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDialog.Listener {
 
+  private val dictionary: Dictionary by inject()
   private val adapter: AuctionAdapter by inject()
   private val viewModelAuction: AuctionViewModel by viewModel()
 
@@ -117,7 +119,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
             binding.errorView.onRetryClick = {
               getAuctions(binding.bottomPage.getFirstPage())
             }
-            binding.errorView.showError(result.error)
+            binding.errorView.showError(result.error, dictionary.getStringRes(R.string.auction_not_found))
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)

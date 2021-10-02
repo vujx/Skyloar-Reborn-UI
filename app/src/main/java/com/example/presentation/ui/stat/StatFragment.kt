@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentStatBinding
 import com.example.presentation.ui.BaseFragment
@@ -17,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StatFragment : BaseFragment(R.layout.fragment_stat) {
 
+  private val dictionary: Dictionary by inject()
   private val adapter: StatAdapter by inject()
   private val viewModelStat: StatViewModel by viewModel()
 
@@ -52,13 +54,13 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
           }
           is Resource.Loading -> setProgressBarAndSearchResult(visibilityProgressBar = true)
           is Resource.Failure -> {
-            setProgressBarAndSearchResult(visibilitySearchRes = true)
-            adapter.setListOfStatValues(emptyList())
+            setProgressBarAndSearchResult(visibilityErrorView = true)
+            binding.errorView.onRetryClick = {
+              viewModelStat.getListOfStatValues()
+            }
+            binding.errorView.showError(result.error, dictionary.getStringRes(R.string.auction_not_found))
           }
-          else -> {
-            setProgressBarAndSearchResult(visibilitySearchRes = true)
-            displayMessage(getString(R.string.unexpected_error))
-          }
+          else -> setProgressBarAndSearchResult()
         }
       }
     )
@@ -66,13 +68,13 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
 
   private fun setProgressBarAndSearchResult(
     visibilityProgressBar: Boolean = false,
-    visibilitySearchRes: Boolean = false,
+    visibilityErrorView: Boolean = false,
     visibilityValue: Boolean = false,
   ) {
     binding.progressBar.visible(visibilityProgressBar)
-    binding.tvSearchNoResult.visible(visibilitySearchRes)
     binding.tvStat.visible(visibilityValue)
     binding.tvValue.visible(visibilityValue)
+    if (!visibilityErrorView) binding.errorView.visible(false)
   }
 
   private fun setUpRecyclerView() {
