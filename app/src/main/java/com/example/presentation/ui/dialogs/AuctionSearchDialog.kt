@@ -1,7 +1,6 @@
 package com.example.presentation.ui.dialogs
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.Dictionary
@@ -34,12 +33,13 @@ class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), Ko
             checkIfInputIsEmpty(minPrice.text.toString()),
             checkIfInputIsEmpty(maxPrice.text.toString())
           )
+          dialog?.cancel()
         }.setNegativeButton(dictionary.getStringRes(R.string.cancel)) { _, _ ->
           dialog?.cancel()
         }.create()
     }
 
-  fun checkIfInputIsEmpty(input: String): Int? =
+  private fun checkIfInputIsEmpty(input: String): Int? =
     if (input.isBlank())
       null
     else
