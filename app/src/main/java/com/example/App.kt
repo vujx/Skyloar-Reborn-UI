@@ -16,7 +16,6 @@ import com.example.data.repository.leaderboards.DefaultPvERepository
 import com.example.data.repository.leaderboards.DefaultPvPRepository
 import com.example.data.repository.stat.DefaultStatRepository
 import com.example.domain.repository.auction.AuctionRepository
-import com.example.domain.repository.home.HomeNetworkDataSource
 import com.example.domain.repository.leaderboard.LeaderboardRepository
 import com.example.domain.repository.leaderboard.pve.PvERepository
 import com.example.domain.repository.leaderboard.pvp.PvPRepository
@@ -77,7 +76,7 @@ class App : Application() {
     factory { DefaultPvERepository(get(), get(), get()) }
     factory { PvERepository(get<DefaultPvERepository>()) }
 
-    factory {DefaultHomeImpl(get(), get()) }
+    factory { DefaultHomeImpl(get(), get()) }
   }
 
   private val mappersModule = module {

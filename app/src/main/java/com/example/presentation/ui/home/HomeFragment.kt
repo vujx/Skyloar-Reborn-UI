@@ -1,6 +1,5 @@
 package com.example.presentation.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.example.Dictionary
 import com.example.R.string
 import com.example.databinding.FragmentHomeBinding
-import com.example.presentation.MainActivity
 import com.example.presentation.ui.home.viewmodel.HomeViewModel
 import com.example.util.Resource
 import com.example.util.visible
@@ -46,20 +44,23 @@ class HomeFragment : Fragment() {
     binding.errorView.onRetryClick = {
       homeViewModel.getIntroText()
     }
-    homeViewModel.getIntroText.observe(viewLifecycleOwner, { result ->
-      when(result) {
-        is Resource.Success -> {
-          binding.errorView.visible(false)
-          binding.prgSearch.visible(false)
-          val markWon = Markwon.create(requireContext())
-          markWon.setMarkdown(binding.tvIntroText, result.value)
+    homeViewModel.getIntroText.observe(
+      viewLifecycleOwner,
+      { result ->
+        when (result) {
+          is Resource.Success -> {
+            binding.errorView.visible(false)
+            binding.prgSearch.visible(false)
+            val markWon = Markwon.create(requireContext())
+            markWon.setMarkdown(binding.tvIntroText, result.value)
+          }
+          is Resource.Failure -> {
+            binding.errorView.showError(result.error, dictionary.getStringRes(string.check_internet))
+            binding.prgSearch.visible(false)
+          }
+          is Resource.Loading -> binding.prgSearch.visible(true)
         }
-        is Resource.Failure -> {
-          binding.errorView.showError(result.error, dictionary.getStringRes(string.check_internet))
-          binding.prgSearch.visible(false)
-        }
-        is Resource.Loading -> binding.prgSearch.visible(true)
       }
-    })
+    )
   }
 }

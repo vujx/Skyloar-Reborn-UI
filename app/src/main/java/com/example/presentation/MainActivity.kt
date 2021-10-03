@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     connectionLiveData.observe(
       this,
       {
-
       }
     )
   }
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     )
 
     navController.addOnDestinationChangedListener { _, _, _ ->
-        binding.toolbar.navigationIcon = null
+      binding.toolbar.navigationIcon = null
     }
   }
 }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
   private val homeIntroText: GetHomeIntroText
-): ViewModel() {
+) : ViewModel() {
 
   val getIntroText: SingleLiveEvent<Resource<String>> = SingleLiveEvent()
 
@@ -22,8 +22,8 @@ class HomeViewModel(
   fun getIntroText() {
     viewModelScope.launch {
       getIntroText.postValue(Resource.Loading())
-      if(MainActivity.homeIntroText.isEmpty()) {
-        when(val result = homeIntroText()) {
+      if (MainActivity.homeIntroText.isEmpty()) {
+        when (val result = homeIntroText()) {
           is Result.Success -> {
             getIntroText.postValue(Resource.Success(result.data))
             MainActivity.homeIntroText = result.data
