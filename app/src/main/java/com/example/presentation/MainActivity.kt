@@ -9,7 +9,6 @@ import androidx.navigation.ui.NavigationUI
 import com.example.R
 import com.example.databinding.ActivityMainBinding
 import com.example.util.ConnectionLiveData
-import com.example.util.visible
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     connectionLiveData.observe(
       this,
       {
-        binding.textViewNetworkBanner.visible(!it)
+
       }
     )
   }

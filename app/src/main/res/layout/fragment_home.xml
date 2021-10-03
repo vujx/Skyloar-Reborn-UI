@@ -17,10 +17,16 @@
         android:id="@+id/tvIntroText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lineSpacingExtra="2dip"
+        android:autoLink="all"
         />
 
   </ScrollView>
 
-
+  <com.example.presentation.ui.customview.ErrorView
+      android:id="@+id/errorView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
 
 </FrameLayout>
