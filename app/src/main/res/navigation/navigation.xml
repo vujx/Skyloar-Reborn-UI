@@ -9,26 +9,26 @@
   <fragment
       android:id="@+id/homeFragment"
       android:name="com.example.presentation.ui.home.HomeFragment"
-      android:label="fragment_home"
+      android:label="@string/home"
       tools:layout="@layout/fragment_home" />
   <fragment
       android:id="@+id/auctionFragment"
       android:name="com.example.presentation.ui.auctions.AuctionFragment"
-      android:label="fragment_auction"
+      android:label="@string/auctions"
       tools:layout="@layout/fragment_auction" />
   <fragment
       android:id="@+id/statFragment"
       android:name="com.example.presentation.ui.stat.StatFragment"
-      android:label="fragment_stat"
+      android:label="@string/stat"
       tools:layout="@layout/fragment_stat" />
   <fragment
       android:id="@+id/leaderboardsFragment"
       android:name="com.example.presentation.ui.leaderboards.fragments.PvPFragment"
-      android:label="fragment_pvp"
+      android:label="@string/leaderboard"
       tools:layout="@layout/fragment_pvp" />
   <fragment
       android:id="@+id/docFragment"
       android:name="com.example.presentation.ui.doc.DocFragment"
-      android:label="fragment_doc"
+      android:label="@string/documentations"
       tools:layout="@layout/fragment_doc" />
 </navigation>

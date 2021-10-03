@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.R
 import com.example.databinding.ActivityMainBinding
 import com.example.util.ConnectionLiveData
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
   companion object {
     var listOfMonth: Map<Int, String>? = null
     var listOfDifficulties: Map<Int, String>? = null
+    var homeIntroText = ""
   }
 
   private lateinit var binding: ActivityMainBinding
@@ -26,8 +29,19 @@ class MainActivity : AppCompatActivity() {
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    setSupportActionBar(binding.toolbar)
     setDataValues()
     setNavHost()
+    val appBarConfiguration = AppBarConfiguration
+      .Builder(
+        R.id.homeFragment,
+        R.id.statFragment,
+        R.id.auctionFragment,
+        R.id.docFragment,
+        R.id.leaderboardsFragment,
+      )
+      .build()
+    setupActionBarWithNavController(navController, appBarConfiguration)
   }
 
   private fun setDataValues() {
@@ -40,6 +54,10 @@ class MainActivity : AppCompatActivity() {
     )
   }
 
+  override fun onSupportNavigateUp(): Boolean {
+    return navController.navigateUp() || super.onSupportNavigateUp()
+  }
+
   private fun setNavHost() {
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.frgNavBottom) as NavHostFragment
@@ -48,5 +66,9 @@ class MainActivity : AppCompatActivity() {
       binding.btmNav,
       navHostFragment.navController,
     )
+
+    navController.addOnDestinationChangedListener { _, _, _ ->
+        binding.toolbar.navigationIcon = null
+    }
   }
 }

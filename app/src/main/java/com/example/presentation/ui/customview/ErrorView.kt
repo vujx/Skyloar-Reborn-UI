@@ -2,7 +2,6 @@ package com.example.presentation.ui.customview
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.example.R
@@ -41,7 +40,6 @@ class ErrorView @JvmOverloads constructor(
   fun showError(data: ErrorEntity, notFound: String) {
     binding.root.visible(true)
     binding.btnRetry.visible(true)
-    Log.d("ispis", "$data")
     val errorMessage = when (data) {
       Network -> dictionary.getStringRes(string.check_internet)
       NotFound -> dictionary.getStringRes(string.unexpected_error)
