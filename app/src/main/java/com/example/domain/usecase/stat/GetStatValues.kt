@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class GetStatValues(
   private val statRepo: StatRepository,
-  private val dictionary: Dictionary
+  private val dictionary: Dictionary,
 ) {
 
   suspend operator fun invoke(): List<Result<StatEntity>> =
@@ -20,7 +20,7 @@ class GetStatValues(
       dictionary.getStringArray(R.array.statPaths).map { path ->
         if (path.contains("/")) {
           async {
-            statRepo.getCountWithMultiplePaths(
+            val response = statRepo.getCountWithMultiplePaths(
               path.substring(0, path.indexOf('/')),
               path.substring(
                 path.substring(
@@ -29,6 +29,8 @@ class GetStatValues(
                 ).length + 1
               )
             )
+
+            response
           }
         } else async { statRepo.getCount(path) }
       }.awaitAll()

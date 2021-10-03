@@ -7,11 +7,35 @@
     tools:context=".presentation.ui.home.HomeFragment"
     >
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
+  <ScrollView
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      tools:ignore="UselessParent"
+      >
+
+    <TextView
+        android:id="@+id/tvIntroText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="2dip"
+        android:autoLink="all"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        />
+
+  </ScrollView>
+
+  <com.example.presentation.ui.customview.ErrorView
+      android:id="@+id/errorView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:text="@string/hello_blank_fragment"
+      />
+
+  <com.example.presentation.ui.customview.ProgressBarView
+      android:id="@+id/prgSearch"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
       />
 
 </FrameLayout>

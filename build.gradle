@@ -10,6 +10,8 @@ buildscript {
         coroutines = '1.4.3'
 
         koin_version = "3.1.2"
+
+        markwonVersion = "4.2.0"
     }
     repositories {
         google()

@@ -31,7 +31,7 @@ class StatViewModel(private val getStatValues: GetStatValues) :
           is Result.Error -> null
         }
       }
-      if (resultStat.all { it == null }) _statValues.postValue(Resource.Failure(ErrorEntity.ServiceUnavailable)) else _statValues.postValue(Resource.Success(resultStat))
+      if (resultStat.all { it == null }) _statValues.postValue(Resource.Failure(ErrorEntity.Network)) else _statValues.postValue(Resource.Success(resultStat))
     }
   }
 }

@@ -2,6 +2,7 @@ package com.example
 
 import android.app.Application
 import com.example.data.di.ApiServiceModule.provideAuctionService
+import com.example.data.di.ApiServiceModule.provideHomeIntroService
 import com.example.data.di.ApiServiceModule.provideHttpClient
 import com.example.data.di.ApiServiceModule.provideLeaderboardService
 import com.example.data.di.ApiServiceModule.provideRetrofit
@@ -9,6 +10,7 @@ import com.example.data.mapper.PvEPlayerMapper
 import com.example.data.mapper.PvPPlayerMapper
 import com.example.data.network.NetworkResponseHelper
 import com.example.data.repository.auction.DefaultAuctionRepository
+import com.example.data.repository.leaderboards.DefaultHomeImpl
 import com.example.data.repository.leaderboards.DefaultLeaderboardsRepository
 import com.example.data.repository.leaderboards.DefaultPvERepository
 import com.example.data.repository.leaderboards.DefaultPvPRepository
@@ -20,6 +22,7 @@ import com.example.domain.repository.leaderboard.pvp.PvPRepository
 import com.example.domain.repository.stat.StatRepository
 import com.example.domain.usecase.auction.GetListOfAuctions
 import com.example.domain.usecase.auction.GetNumberOfSearchResults
+import com.example.domain.usecase.home.GetHomeIntroText
 import com.example.domain.usecase.leaderboards.GetMaps
 import com.example.domain.usecase.leaderboards.GetRanges
 import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
@@ -29,6 +32,7 @@ import com.example.domain.usecase.leaderboards.pvp.GetPvPPlayers
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
+import com.example.presentation.ui.home.viewmodel.HomeViewModel
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
@@ -50,6 +54,7 @@ class App : Application() {
     single { provideRetrofit(get()) }
     single { provideAuctionService(get()) }
     single { provideLeaderboardService(get()) }
+    single { provideHomeIntroService(get()) }
   }
 
   private val repoModule = module {
@@ -70,6 +75,8 @@ class App : Application() {
 
     factory { DefaultPvERepository(get(), get(), get()) }
     factory { PvERepository(get<DefaultPvERepository>()) }
+
+    factory { DefaultHomeImpl(get(), get()) }
   }
 
   private val mappersModule = module {
@@ -87,6 +94,7 @@ class App : Application() {
     factory { GetNumOfPvPSearchResult(get()) }
     factory { GetPvEPlayers(get()) }
     factory { GetNumOfPvESearchResult(get()) }
+    factory { GetHomeIntroText(get()) }
   }
 
   private val viewModelModule = module {
@@ -95,6 +103,7 @@ class App : Application() {
     viewModel { PvPPlayerViewModel(get(), get()) }
     viewModel { LeaderboardsViewModel(get(), get()) }
     viewModel { PvEPlayerViewModel(get(), get()) }
+    viewModel { HomeViewModel(get()) }
   }
 
   private val adapterModule = module {

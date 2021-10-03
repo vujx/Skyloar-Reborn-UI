@@ -2,6 +2,7 @@ package com.example.data.di
 
 import android.content.Context
 import com.example.data.network.AuctionStatService
+import com.example.data.network.HomeService
 import com.example.data.network.LeaderboardService
 import com.example.util.Constants
 import com.readystatesoftware.chuck.ChuckInterceptor
@@ -9,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object ApiServiceModule {
 
@@ -20,9 +22,14 @@ object ApiServiceModule {
     return retrofit.create(LeaderboardService::class.java)
   }
 
+  fun provideHomeIntroService(retrofit: Retrofit): HomeService {
+    return retrofit.create(HomeService::class.java)
+  }
+
   fun provideRetrofit(client: OkHttpClient): Retrofit {
     return Retrofit.Builder()
       .baseUrl(Constants.BASE_URL)
+      .addConverterFactory(ScalarsConverterFactory.create())
       .addConverterFactory(MoshiConverterFactory.create().asLenient())
       .client(client)
       .build()
