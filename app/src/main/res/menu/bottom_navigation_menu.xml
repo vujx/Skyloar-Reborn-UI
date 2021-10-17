@@ -29,5 +29,5 @@
       android:id="@+id/docFragment"
       android:enabled="true"
       android:icon="@drawable/ic_baseline_insert_drive_file_24"
-      android:title="@string/documentations" />
+      android:title="Doc" />
 </menu>
