@@ -3,10 +3,12 @@ package com.example.presentation.ui
 import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
+import android.util.Patterns
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -89,4 +91,13 @@ open class BaseFragment(
 
   fun getLastPage(page: String) =
     page.substring(getFirstPage(page).toString().length + 3).toInt()
+
+  protected fun openBrowser(url: String) {
+    if (Patterns.WEB_URL.matcher(url).matches()) {
+      url.let {
+        val i = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+        requireContext().startActivity(i)
+      }
+    }
+  }
 }

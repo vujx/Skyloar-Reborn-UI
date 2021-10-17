@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout"
+    >
+
+  <androidx.cardview.widget.CardView
+      android:layout_width="220dp"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:cardElevation="80dp"
+      app:cardBackgroundColor="#22000000"
+   >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <TextView
+          android:id="@+id/tvDocTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/auctions"
+          android:padding="8dp"
+          android:textColor="@color/black"
+          android:textSize="18sp"
+          android:background="#FF888888"
+          android:textStyle="bold"
+          />
+
+      <ImageView
+          android:layout_width="220dp"
+          android:layout_height="80dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/doc_pic"
+          />
+
+      <LinearLayout
+          android:id="@+id/rootDoc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="#48FFFFFF"
+          android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvDocDescTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:text="Docs #1"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/tvDocDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:text="Click here to open docs in new tab."
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+      </LinearLayout>
+    </LinearLayout>
+
+  </androidx.cardview.widget.CardView>
+
+
+
+</merge>

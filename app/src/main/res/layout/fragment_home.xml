@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="2dip"
         android:autoLink="all"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:padding="16dp"
         />
 
   </ScrollView>
