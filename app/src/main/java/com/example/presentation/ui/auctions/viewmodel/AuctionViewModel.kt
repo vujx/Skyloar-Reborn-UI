@@ -16,7 +16,7 @@ class AuctionViewModel(
 
   private val _auctions = MutableLiveData<Resource<List<AuctionEntityItem>>>()
   val auctions: LiveData<Resource<List<AuctionEntityItem>>> = _auctions
-
+  var pageNumber = 1
   init {
     getListOfAuctions(
       1,
@@ -45,6 +45,7 @@ class AuctionViewModel(
           maxPrice,
         )
       )
+      pageNumber = page
       when (result) {
         is Result.Success -> {
           if (result.data.auctions.isEmpty()) _auctions.postValue(Resource.Empty())

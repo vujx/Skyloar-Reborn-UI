@@ -56,7 +56,7 @@ class GetListOfAuctions(
         )
         Result.Success(auctionsData)
       } else if (resultAuctions is Result.Error) {
-        Result.Error((numberOfResult as Result.Error).error)
+        Result.Error((resultAuctions as Result.Error).error)
       } else Result.Error((numberOfResult as Result.Error).error)
     }
 }
