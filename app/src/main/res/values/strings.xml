@@ -162,4 +162,13 @@ It may take up to 10 minutes for new data to be cached and available.</string>
     <string name="pve">PvE</string>
     <string name="pvp">PvP</string>
 
+    <!-- DocFragment -->
+    <string name="docs_1">Docs #1</string>
+    <string name="click_here_to_open_doc_in_new_tab">Click here to open doc in browser</string>
+    <string name="docs_2">Docs #2</string>
+    <string name="docs_3">Docs #3</string>
+    <string name="info">Info</string>
+    <string name="docs_4">Docs #4</string>
+    <string name="swagger_documentation">Swagger Documentation</string>
+
 </resources>
