@@ -1,13 +1,15 @@
 package com.example.presentation.ui.stat.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.model.stat.StatEntity
 
 class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
 
-  private val listOfStatValue = mutableListOf<Long?>()
+  private val listOfStatValue = mutableListOf<StatEntity?>()
 
-  fun setListOfStatValues(list: List<Long?>) {
+  fun setListOfStatValues(list: List<StatEntity?>) {
     listOfStatValue.clear()
     listOfStatValue.addAll(list)
     notifyDataSetChanged()
@@ -19,7 +21,8 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
-    holder.bind(listOfStatValue[position], position)
+    Log.d("ispis", "${listOfStatValue[position]}")
+    listOfStatValue[position]?.let { holder.bind(it, position) }
   }
 
   override fun getItemCount(): Int = listOfStatValue.size

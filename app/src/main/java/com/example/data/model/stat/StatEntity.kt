@@ -1,5 +1,5 @@
 package com.example.data.model.stat
 
 data class StatEntity(
-  val count: Any
+  val count: Any,
 )

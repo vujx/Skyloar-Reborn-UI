@@ -4,17 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.error.ErrorEntity
+import com.example.data.model.stat.StatEntity
 import com.example.domain.usecase.stat.GetStatValues
 import com.example.util.Resource
+import com.example.util.Result.Error
+import com.example.util.Result.Success
 import kotlinx.coroutines.launch
-import com.example.util.Result
 
 class StatViewModel(private val getStatValues: GetStatValues) :
   ViewModel() {
 
-  private val _statValues = MutableLiveData<Resource<List<Long?>>>()
-  val statValues: LiveData<Resource<List<Long?>>> = _statValues
+  private val _statValues = MutableLiveData<Resource<List<StatEntity?>>>()
+  val statValues: LiveData<Resource<List<StatEntity?>>> = _statValues
 
   init {
     getListOfStatValues()
@@ -22,16 +23,9 @@ class StatViewModel(private val getStatValues: GetStatValues) :
 
   fun getListOfStatValues() = viewModelScope.launch {
     _statValues.postValue(Resource.Loading())
-    val result = getStatValues()
-    if (result.isEmpty()) _statValues.postValue(Resource.Empty())
-    else {
-      val resultStat = result.map {
-        when (it) {
-          is Result.Success -> (it.data.count as Double).toLong()
-          is Result.Error -> null
-        }
-      }
-      if (resultStat.all { it == null }) _statValues.postValue(Resource.Failure(ErrorEntity.Network)) else _statValues.postValue(Resource.Success(resultStat))
+    when(val result = getStatValues()) {
+      is Success -> _statValues.postValue(Resource.Success(result.data))
+      is Error -> _statValues.postValue(Resource.Failure(result.error))
     }
   }
 }

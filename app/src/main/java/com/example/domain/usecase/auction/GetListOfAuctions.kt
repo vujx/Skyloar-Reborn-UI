@@ -2,12 +2,14 @@ package com.example.domain.usecase.auction
 
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.data.model.auction.NumberOfSearchResultsEntity
+import com.example.domain.error.ErrorEntity
 import com.example.domain.repository.auction.AuctionRepository
 import com.example.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 class GetListOfAuctions(
   private val auctionRepo: AuctionRepository,
@@ -18,36 +20,38 @@ class GetListOfAuctions(
 
   suspend operator fun invoke(params: List<Any?>): Result<AuctionsData> =
     withContext(Dispatchers.IO) {
-      listOf(
-        async {
-          resultAuctions = auctionRepo.getListOfAuctions(
-            params[0] as Int,
-            params[1] as Int,
-            params[2]?.let {
-              it as String
-            },
-            params[3]?.let {
-              it as Int
-            },
-            params[4]?.let {
-              it as Int
-            }
-          )
-        },
-        async {
-          numberOfResult = auctionRepo.getNumberOfSearchResults(
-            params[2]?.let {
-              it as String
-            },
-            params[3]?.let {
-              it as Int
-            },
-            params[4]?.let {
-              it as Int
-            }
-          )
-        }
-      ).awaitAll()
+      withTimeoutOrNull(2000) {
+        listOf(
+          async {
+            resultAuctions = auctionRepo.getListOfAuctions(
+              params[0] as Int,
+              params[1] as Int,
+              params[2]?.let {
+                it as String
+              },
+              params[3]?.let {
+                it as Int
+              },
+              params[4]?.let {
+                it as Int
+              }
+            )
+          },
+          async {
+            numberOfResult = auctionRepo.getNumberOfSearchResults(
+              params[2]?.let {
+                it as String
+              },
+              params[3]?.let {
+                it as Int
+              },
+              params[4]?.let {
+                it as Int
+              }
+            )
+          }
+        ).awaitAll()
+      } ?: return@withContext Result.Error(ErrorEntity.ServiceUnavailable)
 
       return@withContext if (resultAuctions is Result.Success && numberOfResult is Result.Success) {
         val auctionsData = AuctionsData(

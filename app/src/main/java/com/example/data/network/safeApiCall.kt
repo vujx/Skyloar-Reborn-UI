@@ -14,7 +14,6 @@ class NetworkResponseHelper(private val errorMapper: ErrorMapper) {
     return try {
       Result.Success(apiCall())
     } catch (throwable: Throwable) {
-      Log.d("isw", throwable.toString())
       Result.Error(errorMapper.map(throwable, errorType))
     }
   }
