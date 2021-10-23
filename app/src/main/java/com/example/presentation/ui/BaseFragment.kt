@@ -7,11 +7,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import android.util.Patterns
-import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
@@ -27,12 +24,6 @@ open class BaseFragment(
   var maxPrice: Int? = null
   var cardName: String? = null
 
-  fun displayMessage(message: String) {
-    val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
-    toast.setGravity(Gravity.CENTER, 0, 0)
-    toast.show()
-  }
-
   @SuppressLint("WrongConstant")
   fun onExportPress(url: String) {
     if (checkSelfPermission(
@@ -46,7 +37,6 @@ open class BaseFragment(
       )
     } else {
       downloadFile(url)
-      Log.d("sddsa", "dsadsa")
     }
   }
 
@@ -71,12 +61,6 @@ open class BaseFragment(
     val manager = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     manager.enqueue(request)
   }
-
-  fun checkIfInputIsEmpty(input: String): Int? =
-    if (input.isBlank())
-      null
-    else
-      Integer.parseInt(input)
 
   fun hideKeyBoard() {
     requireActivity().currentFocus?.let { view ->

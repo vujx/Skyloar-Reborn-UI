@@ -47,10 +47,10 @@
     <string name="retry">Retry</string>
 
     <!-- Dialogs -->
-    <string name="enter_page_number">Enter page number</string>
-    <string name="page_title">Page Number:</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
+    <string name="enter_page">Enter page</string>
+    <string name="page_number">Page Number</string>
 
     <!-- FragmentStat -->
     <string name="stat_title">Stat</string>

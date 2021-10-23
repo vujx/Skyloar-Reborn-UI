@@ -2,10 +2,12 @@ package com.example.presentation.ui.stat.adapter
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.Dictionary
 import com.example.R
+import com.example.data.model.stat.StatEntity
 import com.example.databinding.ItemStatInfoBinding
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -29,10 +31,13 @@ class StatItem @JvmOverloads constructor(
   }
 
   fun bind(
-    statCount: Long?,
+    statCount: StatEntity?,
     statPos: Int,
   ) {
-    binding.tvStatTitle.text = dictionary.getStringArray(R.array.statTitle)[statPos].toString()
-    binding.tvStatValue.text = statCount?.toString() ?: dictionary.getStringRes(R.string.not_found_stat_value)
+    Log.d("ispis", "sd")
+    binding.tvStatTitle.text = dictionary.getStringArray(R.array.statTitle)[statPos]
+    binding.tvStatValue.text = statCount?.let {
+      (it.count as Double).toLong().toString()
+    } ?: dictionary.getStringRes(R.string.not_found_stat_value)
   }
 }

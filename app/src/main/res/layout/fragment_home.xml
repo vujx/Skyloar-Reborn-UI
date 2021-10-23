@@ -18,8 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="2dip"
-        android:autoLink="all"
+        android:focusable="true"
         android:padding="16dp"
+        android:textColorLink="#0000EE"
+        android:linksClickable="true"
+        android:textColor="@color/black"
         />
 
   </ScrollView>

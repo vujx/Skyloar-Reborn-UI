@@ -29,7 +29,6 @@ class DialogForAddingPageNumber(
       requireActivity(),
       R.style.MaterialAlertDialog_OK_color
     ).setView(view)
-      .setMessage(dictionary.getStringRes(R.string.page_title))
       .setPositiveButton(dictionary.getStringRes(R.string.ok)) { _, _ ->
         val etPage = view.findViewById<EditText>(R.id.etPage)
         if (etPage.text.toString().isNotBlank() || etPage.text.toString() == currentPage.toString()) onClickListener?.invoke(Integer.parseInt(etPage.text.toString()))
