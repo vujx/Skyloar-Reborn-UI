@@ -100,7 +100,10 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
       )
     }
     binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS) }
-    binding.swipeRefresh.setOnRefreshListener { getAuctions(binding.bottomPage.getFirstPage()) }
+    binding.swipeRefresh.setOnRefreshListener {
+      getAuctions(binding.bottomPage.getFirstPage())
+      binding.prgSearch.showProgressBar(false)
+    }
   }
 
   @SuppressLint("SetTextI18n")

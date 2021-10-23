@@ -1,6 +1,5 @@
 package com.example.domain.usecase.stat
 
-import androidx.work.ListenableWorker.Result.Success
 import com.example.Dictionary
 import com.example.R
 import com.example.data.model.stat.StatEntity
@@ -24,6 +23,7 @@ class GetStatValues(
 
   suspend operator fun invoke() =
     withContext(Dispatchers.IO) {
+      listOfStatValues.clear()
       try {
         withTimeoutOrNull(5000) {
           dictionary.getStringArray(R.array.statPaths).map { path ->
@@ -67,11 +67,10 @@ class GetStatValues(
         } ?: Result.Error(ErrorEntity.ServiceUnavailable)
 
         return@withContext Result.Success(listOfStatValues)
+      } catch (e: ConnectException) {
+        return@withContext Result.Error(ErrorEntity.Network)
       } catch (e: Exception) {
-        if (e == ConnectException()) {
-          return@withContext Result.Error(ErrorEntity.Network)
-        } else
-          return@withContext Result.Error(ErrorEntity.Unknown)
+        return@withContext Result.Error(ErrorEntity.NotFound)
       }
     }
 }

@@ -21,7 +21,7 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
-    Log.d("ispis", "${listOfStatValue[position]}")
+    Log.d("ispis", "${listOfStatValue.size}")
     listOfStatValue[position]?.let { holder.bind(it, position) }
   }
 

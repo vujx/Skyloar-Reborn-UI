@@ -1,6 +1,7 @@
 package com.example.presentation.ui.stat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
     setUpRecyclerView()
     bind()
 
+    binding.swipeRefresh.setOnRefreshListener { viewModelStat.getListOfStatValues() }
     return binding.root
   }
 
@@ -50,15 +52,20 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
         when (result) {
           is Resource.Success -> {
             setProgressBarAndSearchResult(visibilityValue = true)
+            Log.d("check", result.value.size.toString())
             adapter.setListOfStatValues(result.value)
           }
-          is Resource.Loading -> setProgressBarAndSearchResult(visibilityProgressBar = true)
+          is Resource.Loading -> {
+            setProgressBarAndSearchResult(visibilityProgressBar = true)
+            adapter.setListOfStatValues(emptyList())
+          }
           is Resource.Failure -> {
             setProgressBarAndSearchResult(visibilityErrorView = true)
             binding.errorView.onRetryClick = {
               viewModelStat.getListOfStatValues()
             }
-            binding.errorView.showError(result.error, dictionary.getStringRes(R.string.auction_not_found))
+            adapter.setListOfStatValues(emptyList())
+            binding.errorView.showError(result.error, dictionary.getStringRes(R.string.stat_not_found))
           }
           else -> setProgressBarAndSearchResult()
         }
@@ -72,9 +79,10 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
     visibilityValue: Boolean = false,
   ) {
     binding.progressBar.visible(visibilityProgressBar)
-    binding.tvStat.visible(visibilityValue)
-    binding.tvValue.visible(visibilityValue)
     if (!visibilityErrorView) binding.errorView.visible(false)
+    binding.swipeRefresh.isRefreshing = false
+    binding.tvValue.visible(visibilityValue)
+    binding.tvStat.visible(visibilityValue)
   }
 
   private fun setUpRecyclerView() {
