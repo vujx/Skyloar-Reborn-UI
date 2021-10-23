@@ -76,5 +76,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
-    implementation "io.noties.markwon:core:${markwonVersion}"
+    implementation "ru.noties:markwon:2.0.1"
+    implementation "ru.noties:markwon-image-loader:2.0.1"
+    implementation "ru.noties:markwon-syntax-highlight:2.0.1"
+    implementation "ru.noties:markwon-view:2.0.1"
 }

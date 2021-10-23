@@ -1,9 +1,14 @@
 package com.example.presentation.ui.home
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.Dictionary
 import com.example.R.string
@@ -11,9 +16,9 @@ import com.example.databinding.FragmentHomeBinding
 import com.example.presentation.ui.home.viewmodel.HomeViewModel
 import com.example.util.Resource
 import com.example.util.visible
-import io.noties.markwon.Markwon
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.noties.markwon.Markwon
 
 class HomeFragment : Fragment() {
 
@@ -51,8 +56,10 @@ class HomeFragment : Fragment() {
           is Resource.Success -> {
             binding.errorView.visible(false)
             binding.prgSearch.visible(false)
-            val markWon = Markwon.create(requireContext())
-            markWon.setMarkdown(binding.tvIntroText, result.value)
+
+            binding.tvIntroText.movementMethod = LinkMovementMethod.getInstance()
+            binding.tvIntroText.text = Markwon.markdown(requireContext(), result.value)
+            binding.tvIntroText.removeLinksUnderline()
           }
           is Resource.Failure -> {
             binding.errorView.showError(result.error, dictionary.getStringRes(string.check_internet))
@@ -62,5 +69,17 @@ class HomeFragment : Fragment() {
         }
       }
     )
+  }
+  fun TextView.removeLinksUnderline() {
+    val spannable = SpannableString(text)
+    for (u in spannable.getSpans(0, spannable.length, URLSpan::class.java)) {
+      spannable.setSpan(object : URLSpan(u.url) {
+        override fun updateDrawState(ds: TextPaint) {
+          super.updateDrawState(ds)
+          ds.isUnderlineText = false
+        }
+      }, spannable.getSpanStart(u), spannable.getSpanEnd(u), 0)
+    }
+    text = spannable
   }
 }
