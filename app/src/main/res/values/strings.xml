@@ -170,5 +170,6 @@ It may take up to 10 minutes for new data to be cached and available.</string>
     <string name="info">Info</string>
     <string name="docs_4">Docs #4</string>
     <string name="swagger_documentation">Swagger Documentation</string>
+  <string name="click_here_to_show_the_rankings_table">Click here to show the rankings table.</string>
 
 </resources>

@@ -5,23 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentDocBinding
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.doc.model.Doc
+import com.example.presentation.ui.leaderboards.leaderboards.LeaderBoards
+import com.example.presentation.ui.leaderboards.leaderboards.LeaderboardsAdapter
 
 class DocFragment : BaseFragment(R.layout.fragment_doc) {
 
-  companion object {
-
-    const val DOC_AUCTION = "http://185.203.18.254:7750/api/docs/auctions/"
-    const val DOC_STAT = "http://185.203.18.254:7750/api/docs/stats/"
-    const val DOC_LEADERBOARDS = "http://185.203.18.254:7750/api/docs/leaderboards/"
-    const val DOC_INFO = "http://185.203.18.254:7750/api/docs/info/"
-  }
-
   private var _binding: FragmentDocBinding? = null
   private val binding get() = _binding!!
+  private val adapter = LeaderboardsAdapter()
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -30,7 +26,11 @@ class DocFragment : BaseFragment(R.layout.fragment_doc) {
   ): View {
     _binding = FragmentDocBinding.inflate(inflater, container, false)
 
+    adapter.onDocClick = { docUrl ->
+      openBrowser(docUrl)
+    }
     clickListeners()
+    setUpRecyclerView()
     return binding.root
   }
 
@@ -39,21 +39,20 @@ class DocFragment : BaseFragment(R.layout.fragment_doc) {
     _binding = null
   }
 
+  private fun setUpRecyclerView() {
+    binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    binding.recyclerView.adapter = adapter
+    adapter.setList(
+      listOf(
+        LeaderBoards("Auctions", R.drawable.doc_pic,"Docs #1", "Click here to open docs in new tab."),
+        LeaderBoards("Statistics", R.drawable.doc_pic,"Docs #2", "Click here to open docs in new tab."),
+        LeaderBoards("Leaderboards", R.drawable.doc_pic,"Docs #3", "Click here to open docs in new tab."),
+        LeaderBoards("Info", R.drawable.doc_pic,"Docs #4", "Click here to open docs in new tab."),
+      )
+    )
+  }
+
   private fun clickListeners() {
-    binding.firstCard.setOnClickListener {
-      openBrowser(DOC_AUCTION)
-    }
 
-    binding.secondCard.setOnClickListener {
-      openBrowser(DOC_STAT)
-    }
-
-    binding.thirdCard.setOnClickListener {
-      openBrowser(DOC_LEADERBOARDS)
-    }
-
-    binding.fourthCard.setOnClickListener {
-      openBrowser(DOC_INFO)
-    }
   }
 }
