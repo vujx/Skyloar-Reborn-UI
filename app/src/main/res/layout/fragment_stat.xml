@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.stat.StatFragment"
+    android:background="@color/black"
     >
 
   <ProgressBar
@@ -23,7 +24,7 @@
       android:id="@+id/tvStat"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:background="@drawable/tv_border_values"
+      android:background="@color/darkred"
       android:padding="12dp"
       android:text="@string/stat_title"
       android:textColor="@color/white"
@@ -39,7 +40,7 @@
       android:id="@+id/tvValue"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:background="@drawable/tv_border_values"
+      android:background="@color/darkred"
       android:padding="12dp"
       android:text="@string/value"
       android:visibility="gone"

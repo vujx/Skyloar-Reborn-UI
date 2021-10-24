@@ -34,7 +34,10 @@ class StatItem @JvmOverloads constructor(
     statCount: StatEntity?,
     statPos: Int,
   ) {
-    Log.d("ispis", "sd")
+    if (statPos % 2 == 0)
+      binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey_lighter))
+    else
+      binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey))
     binding.tvStatTitle.text = dictionary.getStringArray(R.array.statTitle)[statPos]
     binding.tvStatValue.text = statCount?.let {
       (it.count as Double).toLong().toString()
