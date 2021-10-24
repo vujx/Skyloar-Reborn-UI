@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 class LeaderboardsAdapter : RecyclerView.Adapter<LeaderBoardsViewHolder>() {
 
   private val listOfLeaderboards = mutableListOf<LeaderBoards>()
+  var onDocClick: ((String) -> Unit)? = null
 
   fun setList(list: List<LeaderBoards>) {
     listOfLeaderboards.clear()
@@ -18,7 +19,7 @@ class LeaderboardsAdapter : RecyclerView.Adapter<LeaderBoardsViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: LeaderBoardsViewHolder, position: Int) {
-    holder.bind(listOfLeaderboards[position])
+    holder.bind(listOfLeaderboards[position], position, onDocClick)
   }
 
   override fun getItemCount(): Int = listOfLeaderboards.size
