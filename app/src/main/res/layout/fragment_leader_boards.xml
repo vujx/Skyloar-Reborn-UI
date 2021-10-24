@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.leaderboards.fragments.LeaderBoardsFragment"
+    android:background="#1E000000"
+    >
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:paddingVertical="25dp"
+      android:paddingHorizontal="50dp"
+      android:clipToPadding="false"
+      />
+
+  <com.example.presentation.ui.customview.ProgressBarView
+      android:id="@+id/prgSearch"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      />
+
+</FrameLayout>
