@@ -23,9 +23,9 @@
       tools:layout="@layout/fragment_stat" />
   <fragment
       android:id="@+id/leaderboardsFragment"
-      android:name="com.example.presentation.ui.leaderboards.fragments.PvPFragment"
+      android:name="com.example.presentation.ui.leaderboards.fragments.LeaderBoardsFragment"
       android:label="@string/leaderboard"
-      tools:layout="@layout/fragment_pvp" />
+      tools:layout="@layout/fragment_leader_boards" />
   <fragment
       android:id="@+id/docFragment"
       android:name="com.example.presentation.ui.doc.DocFragment"

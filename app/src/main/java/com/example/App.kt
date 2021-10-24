@@ -35,6 +35,8 @@ import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.home.viewmodel.HomeViewModel
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
+import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsMapper
+import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsPicViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
@@ -104,6 +106,8 @@ class App : Application() {
     viewModel { LeaderboardsViewModel(get(), get()) }
     viewModel { PvEPlayerViewModel(get(), get()) }
     viewModel { HomeViewModel(get()) }
+    factory { LeaderBoardsMapper() }
+    viewModel { LeaderBoardsPicViewModel(get()) }
   }
 
   private val adapterModule = module {
