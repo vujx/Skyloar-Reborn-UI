@@ -47,10 +47,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   }
 
   private fun setUpRecyclerView() {
-    binding.apply {
-      rvPVEPlayers.layoutManager = LinearLayoutManager(requireContext())
-      rvPVEPlayers.adapter = adapter
-    }
+
   }
 
   private fun bind() {
@@ -87,7 +84,6 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     visibilityProgressBar: Boolean = false,
     searchResult: String = "",
   ) {
-    binding.progressBar.visible(visibilityProgressBar)
-    binding.tvSearchNoResult.text = searchResult
+
   }
 }

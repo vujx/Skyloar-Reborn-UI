@@ -94,7 +94,7 @@ class App : Application() {
     factory { GetMaps(get()) }
     factory { GetPvPPlayers(get()) }
     factory { GetNumOfPvPSearchResult(get()) }
-    factory { GetPvEPlayers(get()) }
+    factory { GetPvEPlayers(get(), get()) }
     factory { GetNumOfPvESearchResult(get()) }
     factory { GetHomeIntroText(get()) }
   }
@@ -104,7 +104,7 @@ class App : Application() {
     viewModel { StatViewModel(get()) }
     viewModel { PvPPlayerViewModel(get(), get()) }
     viewModel { LeaderboardsViewModel(get(), get()) }
-    viewModel { PvEPlayerViewModel(get(), get()) }
+    viewModel { PvEPlayerViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     factory { LeaderBoardsMapper() }
     viewModel { LeaderBoardsPicViewModel(get()) }

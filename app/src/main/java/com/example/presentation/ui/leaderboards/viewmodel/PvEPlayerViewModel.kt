@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.PvEPlayer
-import com.example.domain.usecase.leaderboards.pve.GetNumOfPvESearchResult
 import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.presentation.ui.BaseViewModel
 import com.example.util.Resource
@@ -13,7 +12,6 @@ import com.example.util.Result
 
 class PvEPlayerViewModel(
   private val getPvEPlayersUseCase: GetPvEPlayers,
-  private val getNumOfPvESearchResult: GetNumOfPvESearchResult,
 ) : BaseViewModel() {
 
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
@@ -42,9 +40,7 @@ class PvEPlayerViewModel(
       _pvePlayer.postValue(Resource.Loading())
       when (val result = getPvEPlayersUseCase(listOf(type, players, map, month, page, number))) {
         is Result.Success -> {
-          result.data?.let {
-            if (it.isEmpty()) _pvePlayer.postValue(Resource.Empty())
-          } ?: _pvePlayer.postValue(Resource.Success(null))
+          
         }
         is Result.Error -> _pvePlayer.postValue(Resource.Failure(result.error))
       }
