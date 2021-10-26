@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentAuctionBinding
+import com.example.domain.error.ErrorEntity
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
@@ -131,6 +132,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
           is Resource.Empty -> {
             setProgressBarAndSearchResult()
             adapter.setListOfAuctions(emptyList())
+            binding.errorView.showError(ErrorEntity.Unknown, dictionary.getStringRes(R.string.auction_not_found))
           }
         }
         hideKeyBoard()
@@ -182,7 +184,7 @@ class AuctionFragment : BaseFragment(R.layout.fragment_auction), AuctionSearchDi
     }
   }
 
-  override fun onSubmit(searchCard: String?, minPrice: Int?, maxPrice: Int?) {
+  override fun onSubmit(searchCard: String?, minPrice: Long?, maxPrice: Long?) {
     cardName = searchCard
     this.minPrice = minPrice
     this.maxPrice = maxPrice

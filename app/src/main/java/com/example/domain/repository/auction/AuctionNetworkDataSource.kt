@@ -10,13 +10,13 @@ interface AuctionNetworkDataSource {
     page: Int,
     number: Int,
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?
+    minPrice: Long?,
+    maxPrice: Long?
   ): Result<List<AuctionEntityItem>>
 
   suspend fun getNumberOfSearchResults(
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?
+    minPrice: Long?,
+    maxPrice: Long?
   ): Result<NumberOfSearchResultsEntity>
 }

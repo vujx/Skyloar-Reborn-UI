@@ -1,11 +1,14 @@
 package com.example.presentation.ui.dialogs
 
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.Dictionary
 import com.example.R
 import com.example.R.style
+import com.example.util.RangeEditText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import org.koin.android.ext.android.inject
@@ -39,14 +42,19 @@ class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), Ko
       }.create()
   }
 
-  private fun checkIfInputIsEmpty(input: String): Int? =
+  private fun checkIfInputIsEmpty(input: String): Long? =
     if (input.isBlank() || input == "0")
       null
     else
-      Integer.parseInt(input)
+      input.toLong()
+
+  private fun setFilters(view: View) {
+    val etDefense = view.findViewById<EditText>(R.id.etPage)
+    etDefense.filters = arrayOf(RangeEditText(1, Long.MAX_VALUE))
+  }
 
   interface Listener {
 
-    fun onSubmit(searchCard: String?, minPrice: Int?, maxPrice: Int?)
+    fun onSubmit(searchCard: String?, minPrice: Long?, maxPrice: Long?)
   }
 }

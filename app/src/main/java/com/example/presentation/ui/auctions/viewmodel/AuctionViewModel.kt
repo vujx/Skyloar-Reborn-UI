@@ -31,8 +31,8 @@ class AuctionViewModel(
     page: Int,
     number: Int,
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?,
+    minPrice: Long?,
+    maxPrice: Long?,
   ) {
     viewModelScope.launch {
       _auctions.postValue(Resource.Loading())
@@ -64,8 +64,8 @@ class AuctionViewModel(
     page: String,
     number: Int,
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?,
+    minPrice: Long?,
+    maxPrice: Long?,
   ) {
     if (page != "1 / 1") {
       if (getFirstPage(page) == 1) {
@@ -80,8 +80,8 @@ class AuctionViewModel(
     page: String,
     number: Int,
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?,
+    minPrice: Long?,
+    maxPrice: Long?,
   ) {
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
