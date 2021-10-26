@@ -24,7 +24,7 @@
   <fragment
       android:id="@+id/leaderboardsFragment"
       android:name="com.example.presentation.ui.leaderboards.fragments.LeaderBoardsFragment"
-      android:label="@string/leaderboard"
+      android:label="@string/rating"
       tools:layout="@layout/fragment_leader_boards" >
     <action
         android:id="@+id/action_leaderboardsFragment_to_pvEFragment"
@@ -38,7 +38,7 @@
   <fragment
       android:id="@+id/pvEFragment"
       android:name="com.example.presentation.ui.leaderboards.fragments.PvEFragment"
-      android:label="fragment_pve"
+      android:label="PvE Players"
       tools:layout="@layout/fragment_pve">
 
     <argument

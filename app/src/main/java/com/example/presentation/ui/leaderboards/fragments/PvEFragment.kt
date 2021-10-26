@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.Dictionary
 import com.example.R
@@ -24,6 +25,8 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
 
   private var _binding: FragmentPveBinding? = null
   private val binding get() = _binding!!
+
+  private val args: PvEFragmentArgs by navArgs()
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -74,6 +77,20 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
         }
         hideKeyBoard()
       })
+
+    viewModelPvE.numOfSearchResult.observe(
+      viewLifecycleOwner,
+      {
+        binding.bottomPage.setSearch("Searched: $it")
+      }
+    )
+
+    viewModelPvE.pageResult.observe(
+      viewLifecycleOwner,
+      {
+        binding.bottomPage.setPage(it)
+      }
+    )
   }
 
   private fun setProgressBarAndSearchResult(

@@ -32,7 +32,7 @@ class PvEPlayerViewModel(
   fun getPvEPlayers(
     type: Int,
     players: Int,
-    map: Int,
+    map: Int?,
     month: Int,
     page: Int,
     number: Int
@@ -40,7 +40,7 @@ class PvEPlayerViewModel(
     viewModelScope.launch {
       _pvePlayer.postValue(Resource.Loading())
       pageNumber = page
-      when (val result = getPvEPlayersUseCase(listOf(type, players, map, month, page, number))) {
+      when (val result = getPvEPlayersUseCase(type, players, map, month, page, number)) {
         is Result.Success -> {
           if(result.data.pvePlayers.isNullOrEmpty()) _pvePlayer.postValue(Resource.Empty())
           _pvePlayer.postValue(Resource.Success(result.data.pvePlayers))
@@ -52,5 +52,45 @@ class PvEPlayerViewModel(
         }
       }
     }
+  }
+
+  fun onPreviousPress(
+    type: Int,
+    players: Int,
+    map: Int,
+    month: Int,
+    page: String,
+    number: Int
+  ) {
+    if (page != "1 / 1") {
+      if (getFirstPage(page) == 1) {
+        getPvEPlayers(type, players, map, month, getLastPage(page), number)
+      } else {
+        getPvEPlayers(type, players, map, month,getFirstPage(page) - 1, number)
+      }
+    }
+  }
+
+  fun onNextPress(
+    type: Int,
+    players: Int,
+    map: Int,
+    month: Int,
+    page: String,
+    number: Int
+  ) {
+    if (page != "1 / 1") {
+      if (getFirstPage(page) == getLastPage(page)) {
+        getPvEPlayers(type, players, map, month,1, number)
+      } else getPvEPlayers(type, players, map, month,getFirstPage(page) + 1, number)
+    }
+  }
+
+  private fun getFirstPage(page: String): Int {
+    return page.substring(0, page.indexOf(' ')).toInt()
+  }
+
+  private fun getLastPage(page: String): Int {
+    return page.substring(getFirstPage(page).toString().length + 3).toInt()
   }
 }

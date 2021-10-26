@@ -21,7 +21,7 @@ class PvEAdapter : RecyclerView.Adapter<PvEViewHolder>() {
 
   override fun onBindViewHolder(holder: PvEViewHolder, position: Int) {
     listOfPvEPlayer[position].apply {
-      holder.bind(players.toString(), time, difficultyStr)
+      holder.bind(players.joinToString(), time, difficultyStr, position)
     }
   }
 

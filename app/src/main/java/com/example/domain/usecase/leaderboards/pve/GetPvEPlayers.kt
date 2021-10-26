@@ -1,6 +1,5 @@
 package com.example.domain.usecase.leaderboards.pve
 
-import android.util.Log
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.domain.error.ErrorEntity
 import com.example.domain.model.PvEPlayer
@@ -25,36 +24,46 @@ class GetPvEPlayers(
   private var maps: Result<MutableMap<Int, String>>? = null
   private var difficulties: Result<MutableMap<Int, String>>? = null
 
-  suspend operator fun invoke(params: List<Int>): Result<PvEData> =
+  suspend operator fun invoke(
+    type: Int,
+    players: Int,
+    map: Int,
+    month: Int,
+    page: Int,
+    number: Int
+  ): Result<PvEData> =
     withContext(Dispatchers.IO) {
       withTimeoutOrNull(5000) {
+        var currentMap = map
+        if(map == -1) {
+          when(val result = leaderboardsRepo.getMaps(type)) {
+            is Success -> currentMap = result.data.keys.elementAt(0)
+            is Error -> Error(result.error)
+          }
+        }
         listOf(async {
           listOfPvePlayer = pveRepo.getPvEPlayers(
-            params[0],
-            params[1],
-            params[2],
-            params[3],
-            params[4],
-            params[5]
+            type,
+            players,
+            currentMap,
+            month,
+            page,
+            number,
           )
-          Log.d("ispis", "1: ${listOfPvePlayer}")
         },
           async {
             numberOfResults = pveRepo.getNumOfPvESearchResult(
-              params[0],
-              params[1],
-              params[2],
-              params[3],
+              type,
+              players,
+              map,
+              month,
             )
-            Log.d("ispis", "2: ${numberOfResults}")
           },
           async {
-            maps = leaderboardsRepo.getMaps(params[0])
-            Log.d("ispis", "3: ${maps}")
+            maps = leaderboardsRepo.getMaps(type)
           },
           async {
             difficulties = leaderboardsRepo.getRange("difficulties")
-            Log.d("ispis", "$4: {difficulties}")
           }).awaitAll()
       } ?: return@withContext Error(ErrorEntity.ServiceUnavailable)
 

@@ -10,12 +10,14 @@ class PvEViewHolder(
   fun bind(
     pvePlayer: String,
     time: String,
-    difficulty: String
+    difficulty: String,
+    position: Int,
   ) {
     itemPvE.bind(
       pvePlayer,
       time,
-      difficulty
+      difficulty,
+      position,
     )
   }
 }
