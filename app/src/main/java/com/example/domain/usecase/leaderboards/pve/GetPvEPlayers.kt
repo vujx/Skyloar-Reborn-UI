@@ -1,5 +1,6 @@
 package com.example.domain.usecase.leaderboards.pve
 
+import android.util.Log
 import com.example.data.model.auction.NumberOfSearchResultsEntity
 import com.example.domain.error.ErrorEntity
 import com.example.domain.model.PvEPlayer
@@ -26,7 +27,7 @@ class GetPvEPlayers(
 
   suspend operator fun invoke(params: List<Int>): Result<PvEData> =
     withContext(Dispatchers.IO) {
-      withTimeoutOrNull(2000) {
+      withTimeoutOrNull(5000) {
         listOf(async {
           listOfPvePlayer = pveRepo.getPvEPlayers(
             params[0],
@@ -36,6 +37,7 @@ class GetPvEPlayers(
             params[4],
             params[5]
           )
+          Log.d("ispis", "1: ${listOfPvePlayer}")
         },
           async {
             numberOfResults = pveRepo.getNumOfPvESearchResult(
@@ -44,12 +46,15 @@ class GetPvEPlayers(
               params[2],
               params[3],
             )
+            Log.d("ispis", "2: ${numberOfResults}")
           },
           async {
             maps = leaderboardsRepo.getMaps(params[0])
+            Log.d("ispis", "3: ${maps}")
           },
           async {
             difficulties = leaderboardsRepo.getRange("difficulties")
+            Log.d("ispis", "$4: {difficulties}")
           }).awaitAll()
       } ?: return@withContext Error(ErrorEntity.ServiceUnavailable)
 

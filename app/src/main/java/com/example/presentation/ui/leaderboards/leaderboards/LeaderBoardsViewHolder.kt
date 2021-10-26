@@ -6,10 +6,20 @@ class LeaderBoardsViewHolder(
   private val item: LeaderboardsItem
   ) : RecyclerView.ViewHolder(item) {
 
-    fun bind(leaderBoards: LeaderBoards, position: Int,onDocClick: ((String) -> Unit)?) {
-      item.bind(leaderBoards, position) {
+    fun bind(
+      leaderBoards: LeaderBoards,
+      position: Int,
+      onDocClick: ((String) -> Unit)?,
+      onLeaderboardsClick: ((Int) -> Unit)?,
+      isLeaderBoards: Boolean
+    ) {
+      item.bind(leaderBoards, position, isLeaderBoards,{
         if (onDocClick != null) {
           onDocClick(it)
+        }
+      }) {
+        if(onLeaderboardsClick != null) {
+          onLeaderboardsClick(it)
         }
       }
     }

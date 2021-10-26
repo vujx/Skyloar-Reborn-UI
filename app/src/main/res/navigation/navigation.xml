@@ -25,10 +25,25 @@
       android:id="@+id/leaderboardsFragment"
       android:name="com.example.presentation.ui.leaderboards.fragments.LeaderBoardsFragment"
       android:label="@string/leaderboard"
-      tools:layout="@layout/fragment_leader_boards" />
+      tools:layout="@layout/fragment_leader_boards" >
+    <action
+        android:id="@+id/action_leaderboardsFragment_to_pvEFragment"
+        app:destination="@id/pvEFragment" />
+  </fragment>
   <fragment
       android:id="@+id/docFragment"
       android:name="com.example.presentation.ui.doc.DocFragment"
       android:label="@string/documentations"
       tools:layout="@layout/fragment_doc" />
+  <fragment
+      android:id="@+id/pvEFragment"
+      android:name="com.example.presentation.ui.leaderboards.fragments.PvEFragment"
+      android:label="fragment_pve"
+      tools:layout="@layout/fragment_pve">
+
+    <argument
+      android:name="type"
+      app:argType="integer" />
+
+  </fragment>
 </navigation>

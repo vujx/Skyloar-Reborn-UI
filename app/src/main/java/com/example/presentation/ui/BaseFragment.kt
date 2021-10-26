@@ -20,8 +20,8 @@ open class BaseFragment(
   private val STORAGE_PERMISSION_CODE: Int = 1000
   var onPageClickListener: ((Int) -> Unit)? = null
 
-  var minPrice: Int? = null
-  var maxPrice: Int? = null
+  var minPrice: Long? = null
+  var maxPrice: Long? = null
   var cardName: String? = null
 
   @SuppressLint("WrongConstant")
@@ -41,7 +41,7 @@ open class BaseFragment(
   }
 
   fun onPagePress(lastPage: Int, currentPage: Int) {
-    val dialog = DialogForAddingPageNumber(lastPage, onPageClickListener, currentPage)
+    val dialog = DialogForAddingPageNumber(lastPage.toLong(), onPageClickListener, currentPage)
     dialog.show(requireActivity().supportFragmentManager, "PageNumberChange")
   }
 

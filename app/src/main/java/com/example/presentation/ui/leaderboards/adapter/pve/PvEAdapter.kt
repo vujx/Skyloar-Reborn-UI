@@ -20,12 +20,9 @@ class PvEAdapter : RecyclerView.Adapter<PvEViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: PvEViewHolder, position: Int) {
-    var diff = ""
-    MainActivity.listOfDifficulties?.forEach {
-      if (it.key == listOfPvEPlayer[position].difficulty)
-        diff = it.value
+    listOfPvEPlayer[position].apply {
+      holder.bind(players.toString(), time, difficultyStr)
     }
-    holder.bind(listOfPvEPlayer[position], diff)
   }
 
   override fun getItemCount(): Int = listOfPvEPlayer.size

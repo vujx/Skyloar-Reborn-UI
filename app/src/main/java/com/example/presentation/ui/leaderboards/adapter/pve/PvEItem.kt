@@ -23,11 +23,12 @@ class PvEItem @JvmOverloads constructor(
   }
 
   fun bind(
-    pvePlayer: PvEPlayer,
+    pvePlayer: String,
+    time: String,
     difficulty: String,
   ) {
-    binding.tvPlayers.text = pvePlayer.name
-    binding.tvTime.text = pvePlayer.time
+    binding.tvPlayers.text = pvePlayer
+    binding.tvTime.text = time
     binding.tvDifficulty.text = difficulty
   }
 }

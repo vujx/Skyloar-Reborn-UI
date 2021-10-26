@@ -6,11 +6,11 @@ import com.example.domain.model.PvEPlayer
 class PvEPlayerMapper() : EntityMapper<PlayerPvEEntityItem, PvEPlayer> {
   override fun mapFromEntity(entity: PlayerPvEEntityItem): PvEPlayer =
     PvEPlayer(
+      entity.players,
+      convertTime(entity.time),
       entity.difficulty,
-      entity.experience,
+      entity.difficultyStr,
       entity.map,
-      entity.name,
-      convertTime(entity.time)
     )
 
   fun convertTime(time: Int): String =

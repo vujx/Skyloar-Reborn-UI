@@ -16,12 +16,13 @@ class PvEPlayerViewModel(
 
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
   val pvePlayer: LiveData<Resource<List<PvEPlayer>?>> = _pvePlayer
+  var pageNumber = 1
 
   init {
     getPvEPlayers(
       1,
       1,
-      9,
+      67,
       0,
       1,
       20
@@ -38,16 +39,18 @@ class PvEPlayerViewModel(
   ) {
     viewModelScope.launch {
       _pvePlayer.postValue(Resource.Loading())
+      pageNumber = page
       when (val result = getPvEPlayersUseCase(listOf(type, players, map, month, page, number))) {
         is Result.Success -> {
-          
+          if(result.data.pvePlayers.isNullOrEmpty()) _pvePlayer.postValue(Resource.Empty())
+          _pvePlayer.postValue(Resource.Success(result.data.pvePlayers))
+          getNumOfSearchResult(result.data.numberOfSearchResults.count, page)
         }
-        is Result.Error -> _pvePlayer.postValue(Resource.Failure(result.error))
+        is Result.Error -> {
+          getNumOfSearchResult(-1, page)
+          _pvePlayer.postValue(Resource.Failure(result.error))
+        }
       }
-      getNumOfSearchResult(
-        1,
-        page
-      )
     }
   }
 }

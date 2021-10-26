@@ -10,7 +10,6 @@ import com.example.R
 import com.example.databinding.FragmentPveBinding
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
-import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Resource
 import com.example.util.visible
@@ -19,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PvEFragment : BaseFragment(R.layout.fragment_pve) {
 
-  private val viewModelLeaderboards: LeaderboardsViewModel by viewModel()
   private val viewModelPvE: PvEPlayerViewModel by viewModel()
   private val adapter: PvEAdapter by inject()
   private val dictionary: Dictionary by inject()
@@ -33,7 +31,6 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     savedInstanceState: Bundle?
   ): View {
     _binding = FragmentPveBinding.inflate(inflater, container, false)
-    viewModelLeaderboards.getRange("difficulties")
 
     setUpRecyclerView()
     bind()
@@ -47,7 +44,8 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   }
 
   private fun setUpRecyclerView() {
-
+    binding.rvPvEPlayers.layoutManager = LinearLayoutManager(requireContext())
+    binding.rvPvEPlayers.adapter = adapter
   }
 
   private fun bind() {
@@ -56,34 +54,40 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
       { result ->
         when (result) {
           is Resource.Success -> {
-            if (result.value == null) {
-              adapter.setList(emptyList())
-              setProgressBarAndSearchResult(searchResult = dictionary.getStringRes(R.string.caching_data))
-            } else {
-              result.value.let { adapter.setList(it) }
-              setProgressBarAndSearchResult()
-            }
+            if (result.value == null) adapter.setList(emptyList())
+            else result.value.let { adapter.setList(it) }
+            setProgressBarAndSearchResult(visibilityTitles = true, visibilityBottomPage = true)
           }
           is Resource.Failure -> {
-            setProgressBarAndSearchResult()
+            setProgressBarAndSearchResult(visibilityErrorView = true)
+            adapter.setList(emptyList())
+            binding.errorView.showError(result.error, dictionary.getStringRes(R.string.pvp_players_not_found))
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
             adapter.setList(emptyList())
           }
           is Resource.Empty -> {
-            setProgressBarAndSearchResult(searchResult = dictionary.getStringRes(R.string.pvp_players_not_found))
+            setProgressBarAndSearchResult()
             adapter.setList(emptyList())
           }
         }
-      }
-    )
+        hideKeyBoard()
+      })
   }
 
   private fun setProgressBarAndSearchResult(
     visibilityProgressBar: Boolean = false,
-    searchResult: String = "",
+    visibilityTitles: Boolean = false,
+    visibilityBottomPage: Boolean = false,
+    visibilityErrorView: Boolean = false
   ) {
-
+    binding.prgSearch.showProgressBar(visibilityProgressBar)
+    binding.tvPlayers.visible(visibilityTitles)
+    binding.tvDifficulty.visible(visibilityTitles)
+    binding.tvTime.visible(visibilityTitles)
+    binding.swipeRefresh.isRefreshing = false
+    binding.bottomPage.visible(visibilityBottomPage)
+    if (!visibilityErrorView) binding.errorView.visible(false)
   }
 }
