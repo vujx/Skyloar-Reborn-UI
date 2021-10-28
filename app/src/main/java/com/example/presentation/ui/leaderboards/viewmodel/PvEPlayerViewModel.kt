@@ -4,35 +4,48 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.PvEPlayer
+import com.example.domain.usecase.leaderboards.GetMaps
 import com.example.domain.usecase.leaderboards.pve.GetPvEPlayers
 import com.example.presentation.ui.BaseViewModel
 import com.example.util.Resource
 import kotlinx.coroutines.launch
 import com.example.util.Result
+import com.example.util.Result.Success
 
 class PvEPlayerViewModel(
   private val getPvEPlayersUseCase: GetPvEPlayers,
+  private val getMapsUseCase: GetMaps,
 ) : BaseViewModel() {
 
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
   val pvePlayer: LiveData<Resource<List<PvEPlayer>?>> = _pvePlayer
+  lateinit var getMapList: MutableMap<Int, String>
   var pageNumber = 1
 
-  init {
-    getPvEPlayers(
-      1,
-      1,
-      67,
-      0,
-      1,
-      20
-    )
+  private fun getInitPvePlayer(type: Int, map: Int) {
+    getPvEPlayers(type, type, map, 0, 1, 20)
+  }
+
+  fun getMaps(type: Int) {
+    viewModelScope.launch {
+      _pvePlayer.postValue(Resource.Loading())
+      when (val result = getMapsUseCase(type)) {
+        is Success -> {
+          getInitPvePlayer(type, result.data.keys.first())
+          getMapList = result.data
+        }
+        is Result.Error -> {
+          getNumOfSearchResult(-1, 1)
+          _pvePlayer.postValue(Resource.Failure(result.error))
+        }
+      }
+    }
   }
 
   fun getPvEPlayers(
     type: Int,
     players: Int,
-    map: Int?,
+    map: Int,
     month: Int,
     page: Int,
     number: Int
@@ -41,7 +54,7 @@ class PvEPlayerViewModel(
       _pvePlayer.postValue(Resource.Loading())
       pageNumber = page
       when (val result = getPvEPlayersUseCase(type, players, map, month, page, number)) {
-        is Result.Success -> {
+        is Success -> {
           if(result.data.pvePlayers.isNullOrEmpty()) _pvePlayer.postValue(Resource.Empty())
           _pvePlayer.postValue(Resource.Success(result.data.pvePlayers))
           getNumOfSearchResult(result.data.numberOfSearchResults.count, page)

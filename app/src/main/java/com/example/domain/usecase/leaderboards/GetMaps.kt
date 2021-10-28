@@ -6,10 +6,11 @@ import kotlinx.coroutines.withContext
 import com.example.util.Result
 
 class GetMaps(
-  private val leaderboardsRepo: LeaderboardRepository
+  private val leaderboardsRepo: LeaderboardRepository,
 ) {
 
-  suspend operator fun invoke(params: Int): Result<MutableMap<Int, String>> = withContext(Dispatchers.IO) {
-    leaderboardsRepo.getMaps(params)
-  }
+  suspend operator fun invoke(type: Int): Result<MutableMap<Int, String>> =
+    withContext(Dispatchers.IO) {
+      leaderboardsRepo.getMaps(type)
+    }
 }

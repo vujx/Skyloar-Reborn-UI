@@ -12,6 +12,7 @@ import com.example.databinding.FragmentPveBinding
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
+import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.visible
 import org.koin.android.ext.android.inject
@@ -31,12 +32,15 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
-    savedInstanceState: Bundle?
+    savedInstanceState: Bundle?,
   ): View {
     _binding = FragmentPveBinding.inflate(inflater, container, false)
 
     setUpRecyclerView()
     bind()
+    onClickListener()
+    viewModelPvE.getMaps(args.type)
+    binding.bottomPage.clickListeners()
 
     return binding.root
   }
@@ -64,7 +68,8 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
           is Resource.Failure -> {
             setProgressBarAndSearchResult(visibilityErrorView = true)
             adapter.setList(emptyList())
-            binding.errorView.showError(result.error, dictionary.getStringRes(R.string.pvp_players_not_found))
+            binding.errorView.showError(result.error,
+              dictionary.getStringRes(R.string.pvp_players_not_found))
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
@@ -97,7 +102,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     visibilityProgressBar: Boolean = false,
     visibilityTitles: Boolean = false,
     visibilityBottomPage: Boolean = false,
-    visibilityErrorView: Boolean = false
+    visibilityErrorView: Boolean = false,
   ) {
     binding.prgSearch.showProgressBar(visibilityProgressBar)
     binding.tvPlayers.visible(visibilityTitles)
@@ -106,5 +111,54 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     binding.swipeRefresh.isRefreshing = false
     binding.bottomPage.visible(visibilityBottomPage)
     if (!visibilityErrorView) binding.errorView.visible(false)
+  }
+
+  private fun onClickListener() {
+    onPageClickListener = { page -> getPvEPlayers(page) }
+
+    binding.bottomPage.onNextPress = {
+      viewModelPvE.onNextPress(
+        args.type,
+        args.type,
+        viewModelPvE.getMapList.keys.first(),
+        0,
+        binding.bottomPage.getPage(),
+        20
+      )
+    }
+
+    binding.bottomPage.onPreviousPress = {
+      viewModelPvE.onPreviousPress(
+        args.type,
+        args.type,
+        viewModelPvE.getMapList.keys.first(),
+        0,
+        binding.bottomPage.getPage(),
+        20
+      )
+    }
+
+    binding.bottomPage.onPagePress = {
+      onPagePress(
+        getLastPage(binding.bottomPage.getPage()),
+        getFirstPage(binding.bottomPage.getPage())
+      )
+    }
+    binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS) }
+    binding.swipeRefresh.setOnRefreshListener {
+      getPvEPlayers(binding.bottomPage.getFirstPage())
+      binding.prgSearch.showProgressBar(false)
+    }
+  }
+
+  private fun getPvEPlayers(page: Int) {
+    viewModelPvE.getPvEPlayers(
+      args.type,
+      1,
+      viewModelPvE.getMapList.keys.first(),
+      0,
+      page,
+      20
+    )
   }
 }
