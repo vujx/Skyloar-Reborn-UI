@@ -2,14 +2,20 @@ package com.example.presentation.ui.leaderboards.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentPveBinding
 import com.example.presentation.ui.BaseFragment
+import com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearch
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Constants
@@ -29,6 +35,11 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
 
   private val args: PvEFragmentArgs by navArgs()
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
+  }
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -43,6 +54,21 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     binding.bottomPage.clickListeners()
 
     return binding.root
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+    menuInflater.inflate(R.menu.toolbar_menu, menu)
+    return super.onCreateOptionsMenu(menu, menuInflater)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.searchIcon -> {
+        navigateToSearchDialog()
+        true
+      }
+      else -> true
+    }
   }
 
   override fun onDestroy() {
@@ -160,5 +186,20 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
       page,
       20
     )
+  }
+
+  private fun navigateToSearchDialog() {
+    navigateTo(PvEFragmentDirections.actionPvEFragmentToPvEPlayerSearchDialog(
+      PvESearch(
+        viewModelPvE.getMapList,
+        viewModelPvE.getMonthList,
+        viewModelPvE.currentPLayers,
+        viewModelPvE.currentMonth,
+        viewModelPvE.currentMap)
+    ))
+  }
+
+  private fun navigateTo(directions: NavDirections) {
+    NavHostFragment.findNavController(this).navigate(directions)
   }
 }

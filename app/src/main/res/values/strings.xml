@@ -1,175 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SR-UI</string>
+  <string name="app_name">SR-UI</string>
 
-    <!-- AuctionFragment-->
-    <string name="min_price">Min. price</string>
-    <string name="max_price">Max. price</string>
-    <string name="results_page">Results page</string>
-    <string name="count_search">Searched: %d</string>
-    <string name="previous">Previous</string>
-    <string name="next">Next</string>
-    <string name="enter_card">Card name</string>
-    <string name="export">Export</string>
-    <string name="card">Card</string>
-    <string name="start">Start</string>
-    <string name="bid">Bid</string>
-    <string name="buyout">Buyout</string>
-    <string name="end">End</string>
-    <string name="search">Search</string>
-    <string name="search_by">Search by</string>
+  <!-- AuctionFragment-->
+  <string name="min_price">Min. price</string>
+  <string name="max_price">Max. price</string>
+  <string name="results_page">Results page</string>
+  <string name="count_search">Searched: %d</string>
+  <string name="previous">Previous</string>
+  <string name="next">Next</string>
+  <string name="enter_card">Card name</string>
+  <string name="export">Export</string>
+  <string name="card">Card</string>
+  <string name="start">Start</string>
+  <string name="bid">Bid</string>
+  <string name="buyout">Buyout</string>
+  <string name="end">End</string>
+  <string name="search">Search</string>
+  <string name="search_by">Search by</string>
 
-    <!-- Toolbar-->
-    <string name="auctions">Auctions</string>
-    <string name="leaderboard">LeaderBoard</string>
-    <string name="stat">Statistics</string>
-    <string name="navigation">Navigation</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+  <!-- Toolbar-->
+  <string name="auctions">Auctions</string>
+  <string name="leaderboard">LeaderBoard</string>
+  <string name="stat">Statistics</string>
+  <string name="navigation">Navigation</string>
+  <string name="open">Open</string>
+  <string name="close">Close</string>
 
-    <!-- BottomNav-->
-    <string name="home">Home</string>
-    <string name="statistics">Statistics</string>
-    <string name="leaderboards">Leaderboards</string>
-    <string name="documentations">Documentation</string>
+  <!-- BottomNav-->
+  <string name="home">Home</string>
+  <string name="statistics">Statistics</string>
+  <string name="leaderboards">Leaderboards</string>
+  <string name="documentations">Documentation</string>
 
-    <!-- Errors -->
-    <string name="auction_not_found">Auction not found, please search again!</string>
-    <string name="stat_not_found">Statistics not found, try again!</string>
-    <string name="pvp_players_not_found">PvP Players not found, try again!</string>
-    <string name="unexpected_error">
+  <!-- Errors -->
+  <string name="auction_not_found">Auction not found, please search again!</string>
+  <string name="stat_not_found">Statistics not found, try again!</string>
+  <string name="pvp_players_not_found">PvP Players not found, try again!</string>
+  <string name="unexpected_error">
         Unexpected error. Please check your network status and try again or come later.</string>
-    <string name="check_internet">Check you internet connection!</string>
-    <string name="no_internet_connection">No Internet Connection</string>
-    <string name="unknown_host">There is a problem with loading new data. Please try again later.</string>
-    <string name="cache_data_loading">New data is loading, try again later!</string>
-    <string name="values_not_found">Not found, try again!</string>
-    <string name="retry">Retry</string>
+  <string name="check_internet">Check you internet connection!</string>
+  <string name="no_internet_connection">No Internet Connection</string>
+  <string name="unknown_host">There is a problem with loading new data. Please try again later.</string>
+  <string name="cache_data_loading">New data is loading, try again later!</string>
+  <string name="values_not_found">Not found, try again!</string>
+  <string name="retry">Retry</string>
 
-    <!-- Dialogs -->
-    <string name="cancel">Cancel</string>
-    <string name="ok">OK</string>
-    <string name="enter_page">Enter page</string>
-    <string name="page_number">Page Number</string>
+  <!-- Dialogs -->
+  <string name="cancel">Cancel</string>
+  <string name="ok">OK</string>
+  <string name="enter_page">Enter page</string>
+  <string name="page_number">Page Number</string>
 
-    <!-- FragmentStat -->
-    <string name="stat_title">Stat</string>
-    <string name="value">Value</string>
-    <string name="statistic_values_not_found_try_again">Statistic values not found, try again!</string>
-    <string name="not_found_stat_value">Not found!</string>
-    <string name="this_month">This month</string>
+  <!-- FragmentStat -->
+  <string name="stat_title">Stat</string>
+  <string name="value">Value</string>
+  <string name="statistic_values_not_found_try_again">Statistic values not found, try again!</string>
+  <string name="not_found_stat_value">Not found!</string>
+  <string name="this_month">This month</string>
 
 
-    <string name="caching_data">Backend is currently caching new data
+  <string name="caching_data">Backend is currently caching new data
 It may take up to 10 minutes for new data to be cached and available.</string>
 
-    <!-- FragmentPvP1v1 -->
-    <string name="player">Player</string>
-    <string name="rating">Rating</string>
+  <!-- FragmentPvP1v1 -->
+  <string name="player">Player</string>
+  <string name="rating">Rating</string>
 
-    <string name="elo">ELO</string>
-    <string name="activity">Activity</string>
-    <string name="matches">Matches</string>
-    <string-array name="statPaths">
-        <item>accounts</item>
-        <item>sessions</item>
-        <item>matches</item>
-        <item>matches/players</item>
-        <item>quests/active</item>
-        <item>quests/completed</item>
-        <item>quests/rerolled</item>
-        <item>auctions</item>
-        <item>boosters</item>
-        <item>boosters/opened</item>
-        <item>boosters/spent</item>
-        <item>cards</item>
-        <item>upgrades</item>
-        <item>decks</item>
-        <item>mails</item>
-        <item>transactions</item>
-        <item>scratch</item>
-        <item>auctions/watchers</item>
-        <item>experience</item>
-        <item>elo</item>
-        <item>gold</item>
-        <item>bfp</item>
-        <item>friendlist</item>
-        <item>mutelist</item>
-        <item>matches/1pve</item>
-        <item>matches/2pve</item>
-        <item>matches/4pve</item>
-        <item>matches/12pve</item>
-        <item>matches/1rpve</item>
-        <item>matches/2rpve</item>
-        <item>matches/4rpve</item>
-        <item>matches/1cpve</item>
-        <item>matches/2cpve</item>
-        <item>matches/4cpve</item>
-        <item>matches/1v1</item>
-        <item>matches/2v2</item>
-        <item>matches/c1v1</item>
-        <item>matches/c2v2</item>
-        <item>matches/c3v3</item>
-    </string-array>
-    <string-array name="statTitle">
-        <item>Registered accounts</item>
-        <item>Online players</item>
-        <item>Running matches</item>
-        <item>Total players in matches</item>
-        <item>Active quests</item>
-        <item>Completed quests</item>
-        <item>Rerolled quests</item>
-        <item>Live auctions</item>
-        <item>Unopened boosters</item>
-        <item>Opened boosters</item>
-        <item>Total BFP spent on boosters</item>
-        <item>Owned cards</item>
-        <item>Owned card upgrades</item>
-        <item>Unique decks</item>
-        <item>Sent mails</item>
-        <item>Completed game transactions</item>
-        <item>Total scratch codes used</item>
-        <item>Total number of players watching auctions</item>
-        <item>Total experience</item>
-        <item>Total PvP ELO</item>
-        <item>Total gold</item>
-        <item>Total BFP</item>
-        <item>Total number of players in friends lists</item>
-        <item>Total number of players on mute</item>
-        <item>1-player PvE matches won</item>
-        <item>2-player PvE matches won</item>
-        <item>4-player PvE matches won</item>
-        <item>12-player PvE matches won</item>
-        <item>1-player Random PvE matches won</item>
-        <item>2-player Random PvE matches won</item>
-        <item>4-player Random PvE matches won</item>
-        <item>1-player Community PvE matches won</item>
-        <item>2-player Community PvE matches won</item>
-        <item>4-player Community PvE matches won</item>
-        <item>1v1 PvP matches won</item>
-        <item>2v2 PvP matches won</item>
-        <item>1v1 PvP Community matches played</item>
-        <item>2v2 PvP Community matches played</item>
-        <item>3v3 PvP Community matches played</item>
-    </string-array>
-    <string name="wins">Wins</string>
-    <string name="losses">Losses</string>
-    <string name="activity_precentage">%d%%</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="players">Players</string>
-    <string name="time">Time</string>
-    <string name="difficulty">Difficulty</string>
-    <string name="pve">PvE</string>
-    <string name="pvp">PvP</string>
+  <string name="elo">ELO</string>
+  <string name="activity">Activity</string>
+  <string name="matches">Matches</string>
+  <string name="wins">Wins</string>
+  <string name="losses">Losses</string>
+  <string name="activity_precentage">%d%%</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="players">Players</string>
+  <string name="time">Time</string>
+  <string name="difficulty">Difficulty</string>
+  <string name="pve">PvE</string>
+  <string name="pvp">PvP</string>
+  <string name="docs_1">Docs #1</string>
+  <string name="click_here_to_open_doc_in_new_tab">Click here to open doc in browser</string>
 
-    <!-- DocFragment -->
-    <string name="docs_1">Docs #1</string>
-    <string name="click_here_to_open_doc_in_new_tab">Click here to open doc in browser</string>
-    <string name="docs_2">Docs #2</string>
-    <string name="docs_3">Docs #3</string>
-    <string name="info">Info</string>
-    <string name="docs_4">Docs #4</string>
-    <string name="swagger_documentation">Swagger Documentation</string>
+  <!-- DocFragment -->
+  <string name="docs_2">Docs #2</string>
+  <string name="docs_3">Docs #3</string>
+  <string name="info">Info</string>
+  <string name="docs_4">Docs #4</string>
+  <string name="swagger_documentation">Swagger Documentation</string>
   <string name="click_here_to_show_the_rankings_table">Click here to show the rankings table.</string>
+  <string-array name="statPaths">
+    <item>accounts</item>
+    <item>sessions</item>
+    <item>matches</item>
+    <item>matches/players</item>
+    <item>quests/active</item>
+    <item>quests/completed</item>
+    <item>quests/rerolled</item>
+    <item>auctions</item>
+    <item>boosters</item>
+    <item>boosters/opened</item>
+    <item>boosters/spent</item>
+    <item>cards</item>
+    <item>upgrades</item>
+    <item>decks</item>
+    <item>mails</item>
+    <item>transactions</item>
+    <item>scratch</item>
+    <item>auctions/watchers</item>
+    <item>experience</item>
+    <item>elo</item>
+    <item>gold</item>
+    <item>bfp</item>
+    <item>friendlist</item>
+    <item>mutelist</item>
+    <item>matches/1pve</item>
+    <item>matches/2pve</item>
+    <item>matches/4pve</item>
+    <item>matches/12pve</item>
+    <item>matches/1rpve</item>
+    <item>matches/2rpve</item>
+    <item>matches/4rpve</item>
+    <item>matches/1cpve</item>
+    <item>matches/2cpve</item>
+    <item>matches/4cpve</item>
+    <item>matches/1v1</item>
+    <item>matches/2v2</item>
+    <item>matches/c1v1</item>
+    <item>matches/c2v2</item>
+    <item>matches/c3v3</item>
+  </string-array>
+  <string-array name="statTitle">
+    <item>Registered accounts</item>
+    <item>Online players</item>
+    <item>Running matches</item>
+    <item>Total players in matches</item>
+    <item>Active quests</item>
+    <item>Completed quests</item>
+    <item>Rerolled quests</item>
+    <item>Live auctions</item>
+    <item>Unopened boosters</item>
+    <item>Opened boosters</item>
+    <item>Total BFP spent on boosters</item>
+    <item>Owned cards</item>
+    <item>Owned card upgrades</item>
+    <item>Unique decks</item>
+    <item>Sent mails</item>
+    <item>Completed game transactions</item>
+    <item>Total scratch codes used</item>
+    <item>Total number of players watching auctions</item>
+    <item>Total experience</item>
+    <item>Total PvP ELO</item>
+    <item>Total gold</item>
+    <item>Total BFP</item>
+    <item>Total number of players in friends lists</item>
+    <item>Total number of players on mute</item>
+    <item>1-player PvE matches won</item>
+    <item>2-player PvE matches won</item>
+    <item>4-player PvE matches won</item>
+    <item>12-player PvE matches won</item>
+    <item>1-player Random PvE matches won</item>
+    <item>2-player Random PvE matches won</item>
+    <item>4-player Random PvE matches won</item>
+    <item>1-player Community PvE matches won</item>
+    <item>2-player Community PvE matches won</item>
+    <item>4-player Community PvE matches won</item>
+    <item>1v1 PvP matches won</item>
+    <item>2v2 PvP matches won</item>
+    <item>1v1 PvP Community matches played</item>
+    <item>2v2 PvP Community matches played</item>
+    <item>3v3 PvP Community matches played</item>
+  </string-array>
 
 </resources>

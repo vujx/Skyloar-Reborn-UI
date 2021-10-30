@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/pvEItemRadioButton"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:layout_gravity="center_vertical"
+      android:src="@drawable/ic_baseline_radio_button_unchecked_24"
+      />
+
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/pveFilterContentName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:layout_marginStart="28dp"
+      android:textSize="14sp"
+      tools:text="Intro"
+      />
+
+</merge>
