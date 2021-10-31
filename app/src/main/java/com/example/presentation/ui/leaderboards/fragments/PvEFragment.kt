@@ -1,6 +1,7 @@
 package com.example.presentation.ui.leaderboards.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +17,7 @@ import com.example.R
 import com.example.databinding.FragmentPveBinding
 import com.example.presentation.ui.BaseFragment
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearch
+import com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearchResult
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Constants
@@ -47,10 +49,20 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   ): View {
     _binding = FragmentPveBinding.inflate(inflater, container, false)
 
+    arguments?.getParcelable<PvESearchResult>("searchResult")?.let {
+      if(it.type == 0) {
+        viewModelPvE.getPvEPlayers(
+          args.type, args.type, it.map, it.month, 1, 20
+        )
+      } else {
+        viewModelPvE.getPvEPlayers(
+          args.type, it.type, it.map, it.month, 1, 20
+        )
+      }
+    } ?: viewModelPvE.getMaps(args.type)
     setUpRecyclerView()
     bind()
     onClickListener()
-    viewModelPvE.getMaps(args.type)
     binding.bottomPage.clickListeners()
 
     return binding.root
@@ -146,7 +158,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
       viewModelPvE.onNextPress(
         args.type,
         args.type,
-        viewModelPvE.getMapList.keys.first(),
+        PvEPlayerViewModel.getMapList.keys.first(),
         0,
         binding.bottomPage.getPage(),
         20
@@ -157,7 +169,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
       viewModelPvE.onPreviousPress(
         args.type,
         args.type,
-        viewModelPvE.getMapList.keys.first(),
+        PvEPlayerViewModel.getMapList.keys.first(),
         0,
         binding.bottomPage.getPage(),
         20
@@ -181,7 +193,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     viewModelPvE.getPvEPlayers(
       args.type,
       1,
-      viewModelPvE.getMapList.keys.first(),
+      PvEPlayerViewModel.getMapList.keys.first(),
       0,
       page,
       20
@@ -189,13 +201,16 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   }
 
   private fun navigateToSearchDialog() {
+    Log.d("ipsi123", viewModelPvE.currentPLayers.toString())
     navigateTo(PvEFragmentDirections.actionPvEFragmentToPvEPlayerSearchDialog(
       PvESearch(
-        viewModelPvE.getMapList,
-        viewModelPvE.getMonthList,
+        PvEPlayerViewModel.getMapList,
+        PvEPlayerViewModel.getMonthList,
+        args.type,
         viewModelPvE.currentPLayers,
         viewModelPvE.currentMonth,
-        viewModelPvE.currentMap)
+        viewModelPvE.currentMap
+      )
     ))
   }
 

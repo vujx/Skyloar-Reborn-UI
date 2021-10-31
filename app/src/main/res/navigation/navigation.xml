@@ -25,7 +25,7 @@
       android:id="@+id/leaderboardsFragment"
       android:name="com.example.presentation.ui.leaderboards.fragments.LeaderBoardsFragment"
       android:label="Ranking"
-      tools:layout="@layout/fragment_leader_boards" >
+      tools:layout="@layout/fragment_leader_boards">
     <action
         android:id="@+id/action_leaderboardsFragment_to_pvEFragment"
         app:destination="@id/pvEFragment" />
@@ -41,12 +41,13 @@
       android:label="PvE Players"
       tools:layout="@layout/fragment_pve">
 
-    <argument
-      android:name="type"
-      app:argType="integer" />
     <action
         android:id="@+id/action_pvEFragment_to_pvEPlayerSearchDialog"
         app:destination="@id/pvEPlayerSearchDialog" />
+
+    <argument
+        android:name="type"
+        app:argType="integer" />
 
   </fragment>
   <fragment
@@ -55,9 +56,21 @@
       android:label="SearchPvEPlayers"
       tools:layout="@layout/fragment_pv_e_player_search_dialog">
 
-
     <argument
-      android:name="searchParams"
-      app:argType="com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearch" />
+        android:name="searchParams"
+        app:argType="com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearch" />
+
+    <action
+        android:id="@+id/navigateToPvEFragment"
+        app:destination="@id/pvEFragment"
+        app:popUpTo="@id/pvEFragment"
+        app:popUpToInclusive="true">
+
+        <argument
+          android:name="searchResult"
+          app:argType="com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearchResult" />
+
+    </action>
+
   </fragment>
 </navigation>

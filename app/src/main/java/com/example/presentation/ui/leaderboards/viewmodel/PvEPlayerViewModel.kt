@@ -1,6 +1,5 @@
 package com.example.presentation.ui.leaderboards.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,10 +19,13 @@ class PvEPlayerViewModel(
   private val getRanges: GetRanges,
 ) : BaseViewModel() {
 
+  companion object {
+    var getMapList: MutableMap<Int, String> = mutableMapOf()
+    var getMonthList: MutableMap<Int, String> = mutableMapOf()
+  }
+
   private val _pvePlayer = MutableLiveData<Resource<List<PvEPlayer>?>>()
   val pvePlayer: LiveData<Resource<List<PvEPlayer>?>> = _pvePlayer
-  var getMapList: MutableMap<Int, String> = mutableMapOf()
-  var getMonthList: MutableMap<Int, String> = mutableMapOf()
   var pageNumber = 1
   var currentMap = 0
   var currentMonth = 0
@@ -45,8 +47,6 @@ class PvEPlayerViewModel(
           when(val month = getRanges("ranges")) {
             is Success -> {
               getMonthList = month.data
-              Log.d("ispis",  getMapList.keys.first().toString())
-              Log.d("ispis2", getMapList.toString())
               getInitPvePlayer(type, type, getMapList.keys.first(), getMonthList.keys.first())
             }
             is Result.Error -> {

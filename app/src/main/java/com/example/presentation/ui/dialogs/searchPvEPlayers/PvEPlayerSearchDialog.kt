@@ -5,13 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentPvEPlayerSearchDialogBinding
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.Content
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.Loading
+import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.NavigateToPvEFragment
 import com.example.util.MultiTypeAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,7 +55,11 @@ class PvEPlayerSearchDialog : Fragment() {
               }
             }
           is PvEPlayerButton ->
-            showView(R.layout.pve_player_button) { _, _ -> }
+            showView(R.layout.pve_player_button) { _, _ ->
+              (this as FrameLayout).setOnClickListener {
+                viewModel.onSearchClick(args.searchParams.maps, args.searchParams.months)
+              }
+            }
           else -> throw NotImplementedError("Unsupported list item type: $item")
         }
       }
@@ -65,7 +73,14 @@ class PvEPlayerSearchDialog : Fragment() {
 
     initAdapter()
     observeViewModel()
-    viewModel.requestData(args.searchParams.maps, args.searchParams.months, args.searchParams.type)
+    viewModel.requestData(
+      args.searchParams.maps,
+      args.searchParams.months,
+      args.searchParams.realType,
+      args.searchParams.type,
+      args.searchParams.month,
+      args.searchParams.map,
+    )
     return binding.root
   }
 
@@ -86,6 +101,10 @@ class PvEPlayerSearchDialog : Fragment() {
         when(data) {
           is Content -> renderContent(data)
           is Loading -> binding.prgSearch.showProgressBar(true)
+          is NavigateToPvEFragment -> navigateTo(
+            PvEPlayerSearchDialogDirections.navigateToPvEFragment(
+              data.searchValue, args.searchParams.realType
+            ))
         }
       }
     )
@@ -94,5 +113,9 @@ class PvEPlayerSearchDialog : Fragment() {
   private fun renderContent(data: Content) {
     adapter?.update(data.filterList)
     binding.prgSearch.showProgressBar(false)
+  }
+
+  private fun navigateTo(directions: NavDirections) {
+    NavHostFragment.findNavController(this).navigate(directions)
   }
 }

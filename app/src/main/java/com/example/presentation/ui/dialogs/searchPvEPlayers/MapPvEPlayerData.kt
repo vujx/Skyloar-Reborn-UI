@@ -1,36 +1,46 @@
 package com.example.presentation.ui.dialogs.searchPvEPlayers
 
+import android.util.Log
+
 class MapPvEPlayerData {
 
   fun map(
     map: MutableMap<Int, String>,
     month: MutableMap<Int, String>,
-    type: Int?,
+    type: Int,
+    realType: Int,
+    selectMap: Int,
+    selectMonth: Int,
   ): MutableList<PvEPlayerFilterUiModels> {
     val content = mutableListOf<PvEPlayerFilterUiModels>()
-    type?.let {
       when(type) {
         2 -> {
           content.add(PvEPlayerHeader("Player"))
-          content.add(PvEPlayerType("1", false, 0))
-          content.add(PvEPlayerType("2", false, 1))
+          (1..2).forEach {
+            if(realType == it) {
+              content.add(PvEPlayerType(it.toString(), true, it))
+            } else content.add(PvEPlayerType(it.toString(), false, it))
+          }
         }
         4 -> {
           content.add(PvEPlayerHeader("Player"))
-          content.add(PvEPlayerType("1", false, 0))
-          content.add(PvEPlayerType("2", false, 1))
-          content.add(PvEPlayerType("3", false, 2))
-          content.add(PvEPlayerType("4", false, 3))
+          (1..4).forEach {
+            if(realType == it) {
+              content.add(PvEPlayerType(it.toString(), true, it))
+            } else content.add(PvEPlayerType(it.toString(), false, it))
+          }
         }
         else -> {}
-      }
     }
 
     var position = 0
     if(month.isNotEmpty()) {
       content.add(PvEPlayerHeader("Month"))
       month.forEach { value ->
-        content.add(PvEPlayerMonth(value.value, false, position))
+        if(value.key == selectMonth)
+          content.add(PvEPlayerMonth(value.value, true, position))
+        else
+          content.add(PvEPlayerMonth(value.value, false, position))
         position++
       }
       position = 0
@@ -39,7 +49,9 @@ class MapPvEPlayerData {
     if(map.isNotEmpty()) {
       content.add(PvEPlayerHeader("Maps"))
       map.forEach { value ->
-        content.add(PvEPlayerMap(value.value, false, position))
+        if(value.key == selectMap)
+          content.add(PvEPlayerMap(value.value, true, position))
+        else content.add(PvEPlayerMap(value.value, false, position))
         position++
       }
     }
@@ -85,5 +97,42 @@ class MapPvEPlayerData {
         else -> filterModel
       }
     }
+  }
+
+  fun getSearchResult(
+    filterList: List<PvEPlayerFilterUiModels>,
+    month: MutableMap<Int, String>,
+    map: MutableMap<Int, String>,
+  ): PvESearchResult {
+    var selectedType = 0
+    var selectedMonth = 0
+    var selectedMap = 0
+    filterList.forEach { filterModel ->
+      when(filterModel) {
+        is PvEPlayerMonth -> {
+          if(filterModel.isChecked) {
+            month.forEach { value ->
+              Log.d("ispis", "${value.value} I ${filterModel.monthName}")
+              if(filterModel.monthName == value.value){
+                selectedMonth = value.key
+              }
+
+            }
+          }
+        }
+        is PvEPlayerType -> {
+          if(filterModel.isChecked) selectedType = filterModel.type.toInt()
+        }
+        is PvEPlayerMap -> {
+          if(filterModel.isChecked) {
+            map.forEach { value ->
+              if(filterModel.mapName == value.value)
+                selectedMap = value.key
+            }
+          }
+        }
+      }
+    }
+    return PvESearchResult(selectedType, selectedMonth, selectedMap)
   }
 }
