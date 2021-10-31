@@ -9,16 +9,19 @@ data class PvEPlayerHeader(
 data class PvEPlayerMonth(
   val monthName: String,
   val isChecked: Boolean,
+  val isEven: Int,
 ) : PvEPlayerFilterUiModels
 
 data class PvEPlayerMap(
   val mapName: String,
   val isChecked: Boolean,
+  val isEven: Int,
 ) : PvEPlayerFilterUiModels
 
 data class PvEPlayerType(
   val type: String,
   val isChecked: Boolean,
+  val isEven: Int,
 ) : PvEPlayerFilterUiModels
 
 object PvEPlayerButton : PvEPlayerFilterUiModels

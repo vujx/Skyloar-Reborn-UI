@@ -23,4 +23,11 @@ class PvEFilterViewModel(
       viewState.postValue(Content(mapper.map(map, month, type)))
     }
   }
+
+  fun onItemClick(item: PvEPlayerFilterUiModels) {
+    (viewState.value as? Content)?.filterList?.let { filterList ->
+      val newFilterList = mapper.update(filterList, item)
+      viewState.postValue(Content(newFilterList))
+    }
+  }
 }

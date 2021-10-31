@@ -35,16 +35,19 @@ class PvEPlayerSearchDialog : Fragment() {
           is PvEPlayerType ->
             showView(R.layout.pve_preview_item) { _, _ ->
               (this as PvEFilterListView).bind(item) {
+                viewModel.onItemClick(item)
               }
             }
           is PvEPlayerMonth ->
             showView(R.layout.pve_preview_item) { _, _ ->
               (this as PvEFilterListView).bind(item) {
+                viewModel.onItemClick(item)
               }
             }
           is PvEPlayerMap ->
             showView(R.layout.pve_preview_item) { _, _ ->
               (this as PvEFilterListView).bind(item) {
+                viewModel.onItemClick(item)
               }
             }
           is PvEPlayerButton ->

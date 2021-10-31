@@ -15,8 +15,7 @@ class AuctionItem @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0,
-) : ConstraintLayout(context, attrs, defStyleAttr),
-  KoinComponent {
+) : ConstraintLayout(context, attrs, defStyleAttr), KoinComponent {
 
   private val dictionary: Dictionary by inject()
 
