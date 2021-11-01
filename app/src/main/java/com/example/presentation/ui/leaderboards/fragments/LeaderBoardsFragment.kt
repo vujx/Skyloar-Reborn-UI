@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentLeaderBoardsBinding
@@ -12,6 +14,7 @@ import com.example.presentation.ui.leaderboards.leaderboards.LeaderboardsAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsPicViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.Content
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.Loading
+import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.NavigateToPvePlayers
 import com.example.util.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,6 +35,10 @@ class LeaderBoardsFragment : BaseFragment(R.layout.fragment_leader_boards) {
     viewModel.requestData()
     observeViewModel()
     setUpRecyclerView()
+    adapter.onLeaderboardsClick = { type ->
+      viewModel.onLeaderBoardsClick(type)
+    }
+    adapter.isLeaderboards = true
     return binding.root
   }
 
@@ -57,8 +64,17 @@ class LeaderBoardsFragment : BaseFragment(R.layout.fragment_leader_boards) {
             binding.prgSearch.visible(true)
             adapter.setList(emptyList())
           }
+          is NavigateToPvePlayers -> {
+            navigateTo(
+              LeaderBoardsFragmentDirections.actionLeaderboardsFragmentToPvEFragment(data.type)
+            )
+          }
         }
       }
     )
+  }
+
+  private fun navigateTo(directions: NavDirections) {
+    NavHostFragment.findNavController(this).navigate(directions)
   }
 }

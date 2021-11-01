@@ -11,12 +11,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.R
 import com.example.databinding.ActivityMainBinding
 import com.example.util.ConnectionLiveData
+import com.example.util.visible
 
 class MainActivity : AppCompatActivity() {
 
   companion object {
+
     var listOfMonth: Map<Int, String>? = null
-    var listOfDifficulties: Map<Int, String>? = null
     var homeIntroText = ""
   }
 
@@ -66,8 +67,14 @@ class MainActivity : AppCompatActivity() {
       navHostFragment.navController,
     )
 
-    navController.addOnDestinationChangedListener { _, _, _ ->
+    navController.addOnDestinationChangedListener { _, destination, _ ->
       binding.toolbar.navigationIcon = null
+      when (destination.id) {
+        R.id.leaderboardsFragment -> binding.btmNav.visible(true)
+        R.id.pvEFragment -> binding.btmNav.visible(false)
+        R.id.pvEPlayerSearchDialog -> binding.btmNav.visible(false)
+        else -> binding.btmNav.visible(true)
+      }
     }
   }
 }

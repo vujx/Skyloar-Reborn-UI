@@ -6,13 +6,13 @@ class AuctionRepository(private val auctionDataSource: AuctionNetworkDataSource)
     page: Int,
     number: Int,
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?
+    minPrice: Long?,
+    maxPrice: Long?
   ) = auctionDataSource.getListOfAuctions(page, number, input, minPrice, maxPrice)
 
   suspend fun getNumberOfSearchResults(
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?
+    minPrice: Long?,
+    maxPrice: Long?
   ) = auctionDataSource.getNumberOfSearchResults(input, minPrice, maxPrice)
 }

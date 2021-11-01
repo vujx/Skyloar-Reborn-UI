@@ -9,6 +9,7 @@ import com.example.R.string
 import com.example.databinding.ErrorHandleBinding
 import com.example.domain.error.ErrorEntity
 import com.example.domain.error.ErrorEntity.AccessDenied
+import com.example.domain.error.ErrorEntity.BackendCaching
 import com.example.domain.error.ErrorEntity.Custom
 import com.example.domain.error.ErrorEntity.Network
 import com.example.domain.error.ErrorEntity.NotFound
@@ -50,6 +51,7 @@ class ErrorView @JvmOverloads constructor(
         notFound
       }
       is Custom<*> -> dictionary.getStringRes(string.unexpected_error)
+      is BackendCaching -> "Backend is curretly caching new data"
     }
     binding.tvErrorMessage.text = errorMessage
     binding.btnRetry.setOnClickListener {

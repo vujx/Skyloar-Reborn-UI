@@ -2,6 +2,7 @@ package com.example.presentation.ui.leaderboards.leaderboards
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.databinding.ItemLeaderboardsBinding
@@ -24,20 +25,35 @@ class LeaderboardsItem @JvmOverloads constructor(
     "http://185.203.18.254:7750/api/docs/info/",
   )
 
+  private val listOfTypes = listOf(
+    1,2,4,12,
+  )
+
   var position: Int = 0
 
   init {
     layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
   }
 
-  fun bind(item: LeaderBoards, position: Int, onClick: ((String) -> Unit)?) {
+  fun bind(
+    item: LeaderBoards,
+    position: Int,
+    isLeaderBoards: Boolean,
+    onClick: ((String) -> Unit)?,
+    onLeaderBoardsClick: ((Int) -> Unit)?) {
     binding.title.text = item.title
     binding.descTitle.text = item.descTitle
     binding.desc.text = item.desc
     binding.image.setImageResource(item.image)
+    Log.d("tusad", onClick.toString())
+    Log.d("tusad", onLeaderBoardsClick.toString())
     binding.root.setOnClickListener {
-      if (onClick != null && position < 4) {
-        onClick(listOfUrl[position])
+      if (!isLeaderBoards && position < 4) {
+        if (onClick != null) {
+          onClick(listOfUrl[position])
+        }
+      } else if(onLeaderBoardsClick != null && position < 4) {
+        onLeaderBoardsClick(listOfTypes[position])
       }
     }
   }

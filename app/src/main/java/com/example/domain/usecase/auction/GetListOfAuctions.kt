@@ -30,10 +30,10 @@ class GetListOfAuctions(
                 it as String
               },
               params[3]?.let {
-                it as Int
+                it as Long
               },
               params[4]?.let {
-                it as Int
+                it as Long
               }
             )
           },
@@ -43,10 +43,10 @@ class GetListOfAuctions(
                 it as String
               },
               params[3]?.let {
-                it as Int
+                it as Long
               },
               params[4]?.let {
-                it as Int
+                it as Long
               }
             )
           }

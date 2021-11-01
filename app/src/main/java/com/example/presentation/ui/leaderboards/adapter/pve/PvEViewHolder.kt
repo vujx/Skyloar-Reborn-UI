@@ -8,12 +8,16 @@ class PvEViewHolder(
 ) : RecyclerView.ViewHolder(itemPvE) {
 
   fun bind(
-    pvePlayer: PvEPlayer,
-    difficulty: String
+    pvePlayer: String,
+    time: String,
+    difficulty: String,
+    position: Int,
   ) {
     itemPvE.bind(
       pvePlayer,
-      difficulty
+      time,
+      difficulty,
+      position,
     )
   }
 }

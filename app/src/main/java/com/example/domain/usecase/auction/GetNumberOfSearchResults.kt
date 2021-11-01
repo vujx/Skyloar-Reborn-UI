@@ -15,10 +15,10 @@ class GetNumberOfSearchResults(
           it as String
         },
         params[1]?.let {
-          it as Int
+          it as Long
         },
         params[2]?.let {
-          it as Int
+          it as Long
         }
       )
     }

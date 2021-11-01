@@ -7,6 +7,7 @@ import com.example.domain.error.ErrorMapper
 import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import java.io.IOException
+import java.lang.Error
 import java.net.ConnectException
 import java.net.HttpURLConnection
 
@@ -14,10 +15,8 @@ class NetworkErrorMapper : ErrorMapper {
 
   override fun map(throwable: Throwable, errorType: Class<*>?) =
     when (throwable) {
-      is IOException -> {
-        Log.d("ispsiKaje", "sa")
-        ErrorEntity.Network
-      }
+      is IOException -> ErrorEntity.Network
+      is CustomException -> ErrorEntity.BackendCaching
       is ConnectException -> ErrorEntity.Network
       is ErrnoException -> ErrorEntity.Network
       is HttpException -> {

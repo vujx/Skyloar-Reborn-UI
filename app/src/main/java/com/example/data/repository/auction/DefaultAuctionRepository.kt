@@ -17,8 +17,8 @@ class DefaultAuctionRepository(
     page: Int,
     number: Int,
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?
+    minPrice: Long?,
+    maxPrice: Long?
   ): Result<List<AuctionEntityItem>> {
     return networkResponseHelper.safeApiCall(
       {
@@ -29,8 +29,8 @@ class DefaultAuctionRepository(
 
   override suspend fun getNumberOfSearchResults(
     input: String?,
-    minPrice: Int?,
-    maxPrice: Int?
+    minPrice: Long?,
+    maxPrice: Long?
   ): Result<NumberOfSearchResultsEntity> {
     return networkResponseHelper.safeApiCall(
       {

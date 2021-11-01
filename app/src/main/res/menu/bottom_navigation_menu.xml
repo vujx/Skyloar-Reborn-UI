@@ -23,7 +23,7 @@
       android:id="@+id/leaderboardsFragment"
       android:enabled="true"
       android:icon="@drawable/ic_baseline_leaderboard_24"
-      android:title="@string/leaderboards" />
+      android:title="@string/rating" />
 
   <item
       android:id="@+id/docFragment"

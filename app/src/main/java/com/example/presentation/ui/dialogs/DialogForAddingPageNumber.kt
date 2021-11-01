@@ -13,7 +13,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 
 class DialogForAddingPageNumber(
-  private val maxPage: Int,
+  private val maxPage: Long,
   private var onClickListener: ((Int) -> Unit)? = null,
   private val currentPage: Int
 ) : DialogFragment(), KoinComponent {

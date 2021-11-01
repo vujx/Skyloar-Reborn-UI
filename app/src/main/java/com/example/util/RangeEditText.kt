@@ -5,17 +5,17 @@ import android.text.Spanned
 
 class RangeEditText : InputFilter {
 
-  private var min: Int = 0
-  private var max: Int = 0
+  private var min: Long = 0
+  private var max: Long = 0
 
-  constructor(min: Int, max: Int) {
+  constructor(min: Long, max: Long) {
     this.min = min
     this.max = max
   }
 
   constructor(min: String, max: String) {
-    this.min = Integer.parseInt(min)
-    this.max = Integer.parseInt(max)
+    this.min = min.toLong()
+    this.max = max.toLong()
   }
 
   override fun filter(
@@ -35,7 +35,7 @@ class RangeEditText : InputFilter {
     return ""
   }
 
-  private fun isInRange(a: Int, b: Int, c: Int): Boolean {
+  private fun isInRange(a: Long, b: Long, c: Int): Boolean {
     return if (b > a) c in a..b else c in b..a
   }
 }

@@ -7,6 +7,9 @@ sealed class LeaderBoardsViewState{
      val data: List<LeaderBoards>
   ) : LeaderBoardsViewState()
   object Loading : LeaderBoardsViewState()
+  data class NavigateToPvePlayers(
+    val type: Int
+  ) : LeaderBoardsViewState()
 }
 
 
