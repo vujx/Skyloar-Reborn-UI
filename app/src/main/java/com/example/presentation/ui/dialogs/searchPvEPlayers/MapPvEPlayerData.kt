@@ -103,6 +103,7 @@ class MapPvEPlayerData {
     filterList: List<PvEPlayerFilterUiModels>,
     month: MutableMap<Int, String>,
     map: MutableMap<Int, String>,
+    page: Int,
   ): PvESearchResult {
     var selectedType = 0
     var selectedMonth = 0
@@ -133,6 +134,6 @@ class MapPvEPlayerData {
         }
       }
     }
-    return PvESearchResult(selectedType, selectedMonth, selectedMap)
+    return PvESearchResult(selectedType, selectedMonth, selectedMap, page)
   }
 }

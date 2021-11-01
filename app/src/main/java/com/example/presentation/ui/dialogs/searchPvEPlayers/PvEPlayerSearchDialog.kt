@@ -57,7 +57,7 @@ class PvEPlayerSearchDialog : Fragment() {
           is PvEPlayerButton ->
             showView(R.layout.pve_player_button) { _, _ ->
               (this as FrameLayout).setOnClickListener {
-                viewModel.onSearchClick(args.searchParams.maps, args.searchParams.months)
+                viewModel.onSearchClick(args.searchParams.maps, args.searchParams.months, args.searchParams.currentPage)
               }
             }
           else -> throw NotImplementedError("Unsupported list item type: $item")

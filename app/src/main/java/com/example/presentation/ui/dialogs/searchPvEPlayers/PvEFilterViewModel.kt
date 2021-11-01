@@ -38,9 +38,10 @@ class PvEFilterViewModel(
   fun onSearchClick(
     map: MutableMap<Int, String>,
     month: MutableMap<Int, String>,
+    page: Int
   ) {
     (viewState.value as? Content)?.filterList?.let { filterList ->
-      viewState.postValue(NavigateToPvEFragment(mapper.getSearchResult(filterList, month, map)))
+      viewState.postValue(NavigateToPvEFragment(mapper.getSearchResult(filterList, month, map, page)))
     }
   }
 }

@@ -6,5 +6,6 @@ sealed class ErrorEntity {
   object AccessDenied : ErrorEntity()
   object ServiceUnavailable : ErrorEntity()
   object Unknown : ErrorEntity()
+  object BackendCaching : ErrorEntity()
   data class Custom<T>(val status: Int, val errorModel: T) : ErrorEntity()
 }

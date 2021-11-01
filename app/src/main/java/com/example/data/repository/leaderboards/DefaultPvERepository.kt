@@ -6,6 +6,7 @@ import com.example.data.network.LeaderboardService
 import com.example.data.network.NetworkResponseHelper
 import com.example.domain.model.PvEPlayer
 import com.example.domain.repository.leaderboard.pve.PvENetworkDataSource
+import com.example.util.CustomException
 import com.example.util.Result
 
 class DefaultPvERepository(
@@ -51,7 +52,7 @@ class DefaultPvERepository(
           page,
           number
         )
-        if (response.code() == 401) null
+        if (response.code() == 401) throw CustomException("Backend is currently cashing data!")
         else response.body()!!.map { pveMapper.mapFromEntity(it) }
       }
     )

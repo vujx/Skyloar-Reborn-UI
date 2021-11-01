@@ -16,6 +16,7 @@ sealed class PvEFilterViewState {
 data class PvESearch(
   val maps: MutableMap<Int, String>,
   val months: MutableMap<Int, String>,
+  val currentPage: Int,
   val realType: Int,
   val type: Int,
   val month: Int,
@@ -26,5 +27,6 @@ data class PvESearch(
 data class PvESearchResult(
   val type: Int,
   val month: Int,
-  val map: Int
+  val map: Int,
+  val currentPage: Int,
 ) : Parcelable
