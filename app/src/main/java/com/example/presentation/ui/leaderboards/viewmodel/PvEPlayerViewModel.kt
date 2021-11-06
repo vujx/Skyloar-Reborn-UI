@@ -103,8 +103,10 @@ class PvEPlayerViewModel(
     if (page != "1 / 1") {
       if (getFirstPage(page) == 1) {
         getPvEPlayers(type, players, map, month, getLastPage(page), number)
+        pageNumber = getLastPage(page)
       } else {
         getPvEPlayers(type, players, map, month,getFirstPage(page) - 1, number)
+        pageNumber = getFirstPage(page) - 1
       }
     }
   }
@@ -120,7 +122,11 @@ class PvEPlayerViewModel(
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
         getPvEPlayers(type, players, map, month,1, number)
-      } else getPvEPlayers(type, players, map, month,getFirstPage(page) + 1, number)
+        pageNumber = 1
+      } else {
+        getPvEPlayers(type, players, map, month,getFirstPage(page) + 1, number)
+        pageNumber = getFirstPage(page)
+      }
     }
   }
 

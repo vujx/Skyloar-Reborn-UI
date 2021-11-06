@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.Content
-import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.Loading
-import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.NavigateToPvEFragment
 import kotlinx.coroutines.launch
 
 class PvEFilterViewModel(
@@ -22,7 +20,6 @@ class PvEFilterViewModel(
     selectedMonth: Int,
     selectedMap: Int,
   ) {
-    viewState.postValue(Loading)
     viewModelScope.launch {
       viewState.postValue(Content(mapper.map(map, month, type, realType, selectedMap, selectedMonth)))
     }
@@ -38,10 +35,9 @@ class PvEFilterViewModel(
   fun onSearchClick(
     map: MutableMap<Int, String>,
     month: MutableMap<Int, String>,
-    page: Int
-  ) {
+  ): PvESearchResult {
     (viewState.value as? Content)?.filterList?.let { filterList ->
-      viewState.postValue(NavigateToPvEFragment(mapper.getSearchResult(filterList, month, map, page)))
-    }
+      return mapper.getSearchResult(filterList, month, map)
+    } ?: return PvESearchResult(0,0, 0)
   }
 }

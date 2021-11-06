@@ -1,35 +1,34 @@
 package com.example.presentation.ui.leaderboards.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.Dictionary
 import com.example.R
 import com.example.databinding.FragmentPveBinding
 import com.example.presentation.ui.BaseFragment
-import com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearch
+import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEPlayerSearchDialog
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvESearchResult
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.visible
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PvEFragment : BaseFragment(R.layout.fragment_pve) {
+class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.Listener {
 
   private val viewModelPvE: PvEPlayerViewModel by viewModel()
   private val adapter: PvEAdapter by inject()
-  private val dictionary: Dictionary by inject()
 
   private var _binding: FragmentPveBinding? = null
   private val binding get() = _binding!!
@@ -39,6 +38,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
+    viewModelPvE.getMaps(args.type)
   }
 
   override fun onCreateView(
@@ -48,17 +48,6 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   ): View {
     _binding = FragmentPveBinding.inflate(inflater, container, false)
 
-    arguments?.getParcelable<PvESearchResult>("searchResult")?.let {
-      if(it.type == 0) {
-        viewModelPvE.getPvEPlayers(
-          args.type, args.type, it.map, it.month, it.currentPage, 20
-        )
-      } else {
-        viewModelPvE.getPvEPlayers(
-          args.type, it.type, it.map, it.month, it.currentPage, 20
-        )
-      }
-    } ?: viewModelPvE.getMaps(args.type)
     setUpRecyclerView()
     bind()
     onClickListener()
@@ -76,6 +65,10 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
     return when (item.itemId) {
       R.id.searchIcon -> {
         navigateToSearchDialog()
+        true
+      }
+      android.R.id.home -> {
+        findNavController().popBackStack()
         true
       }
       else -> true
@@ -109,8 +102,9 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
               if(viewModelPvE.currentPLayers == 0) viewModelPvE.getMaps(args.type)
               else getPvEPlayers(viewModelPvE.pageNumber)
             }
+            Log.d("ispis", result.error.toString())
             binding.errorView.showError(result.error,
-              dictionary.getStringRes(R.string.pvp_players_not_found))
+              "Backend is currently caching new data. Please wait a bit until it is done.")
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
@@ -204,20 +198,32 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve) {
   }
 
   private fun navigateToSearchDialog() {
-    navigateTo(PvEFragmentDirections.actionPvEFragmentToPvEPlayerSearchDialog(
-      PvESearch(
+    if(PvEPlayerViewModel.getMapList.isNotEmpty() && PvEPlayerViewModel.getMonthList.isNotEmpty()) {
+      Log.d("ispisovo", viewModelPvE.pageNumber.toString())
+      val dialog = PvEPlayerSearchDialog(
+        this,
         PvEPlayerViewModel.getMapList,
         PvEPlayerViewModel.getMonthList,
         args.type,
-        binding.bottomPage.getFirstPage(),
         viewModelPvE.currentPLayers,
         viewModelPvE.currentMonth,
         viewModelPvE.currentMap
       )
-    ))
+      activity?.supportFragmentManager?.let { dialog.show(it, "dsada")
+      }
+    } else {
+      showMessage()
+    }
   }
 
-  private fun navigateTo(directions: NavDirections) {
-    NavHostFragment.findNavController(this).navigate(directions)
+  private fun showMessage() {
+    Snackbar.make(binding.rvPvEPlayers, "Check your internet connection!", Snackbar.LENGTH_SHORT).show()
+  }
+
+  override fun onSubmit(searchResult: PvESearchResult) {
+    viewModelPvE.currentMap = searchResult.map
+    viewModelPvE.currentMonth = searchResult.month
+    if(searchResult.type != 0) viewModelPvE.currentPLayers = searchResult.type
+    getPvEPlayers(1)
   }
 }

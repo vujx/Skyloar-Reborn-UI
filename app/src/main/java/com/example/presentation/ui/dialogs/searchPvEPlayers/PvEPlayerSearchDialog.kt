@@ -1,32 +1,33 @@
 package com.example.presentation.ui.dialogs.searchPvEPlayers
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.navArgs
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.Dictionary
 import com.example.R
-import com.example.databinding.FragmentPvEPlayerSearchDialogBinding
+import com.example.R.style
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.Content
-import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.Loading
-import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState.NavigateToPvEFragment
 import com.example.util.MultiTypeAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
-class PvEPlayerSearchDialog : Fragment() {
+class PvEPlayerSearchDialog(
+  private var listener: Listener,
+  private val map: MutableMap<Int, String>,
+  private val month: MutableMap<Int, String>,
+  private val type: Int,
+  private val realType: Int,
+  private val selectedMonth: Int,
+  private val selectedMap: Int,
+) : DialogFragment(), KoinComponent {
 
   private val viewModel: PvEFilterViewModel by viewModel()
-
-  private var _binding: FragmentPvEPlayerSearchDialogBinding? = null
-  private val binding get() = _binding!!
-
-  private val args: PvEPlayerSearchDialogArgs by navArgs()
+  private val dictionary: Dictionary by inject()
 
   private var adapter: MultiTypeAdapter<PvEPlayerFilterUiModels>? =
     MultiTypeAdapter<PvEPlayerFilterUiModels>(mutableListOf()).apply {
@@ -54,57 +55,49 @@ class PvEPlayerSearchDialog : Fragment() {
                 viewModel.onItemClick(item)
               }
             }
-          is PvEPlayerButton ->
-            showView(R.layout.pve_player_button) { _, _ ->
-              (this as FrameLayout).setOnClickListener {
-                viewModel.onSearchClick(args.searchParams.maps, args.searchParams.months, args.searchParams.currentPage)
-              }
-            }
           else -> throw NotImplementedError("Unsupported list item type: $item")
         }
       }
     }
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    _binding = FragmentPvEPlayerSearchDialogBinding.inflate(inflater, container, false)
 
-    initAdapter()
+  override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
+    val inflater = requireActivity().layoutInflater
+    val view = inflater.inflate(R.layout.fragment_pv_e_player_search_dialog, null)
+
     observeViewModel()
-    viewModel.requestData(
-      args.searchParams.maps,
-      args.searchParams.months,
-      args.searchParams.realType,
-      args.searchParams.type,
-      args.searchParams.month,
-      args.searchParams.map,
-    )
-    return binding.root
+    viewModel.requestData(map, month, type, realType, selectedMonth, selectedMap)
+    val rvListOfSearchResult = view.findViewById<RecyclerView>(R.id.recyclerView)
+    initAdapter(rvListOfSearchResult)
+
+    return MaterialAlertDialogBuilder(
+      requireActivity(),
+      style.MaterialAlertDialog_OK_color
+    ).setView(view)
+      .setPositiveButton(dictionary.getStringRes(R.string.search)) { _, _ ->
+        listener.onSubmit(
+          viewModel.onSearchClick(map, month)
+        )
+        dialog?.cancel()
+      }.setNegativeButton(dictionary.getStringRes(R.string.cancel)) { _, _ ->
+        dialog?.cancel()
+      }.create()
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    _binding = null
     adapter = null
   }
 
-  private fun initAdapter() {
-    binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    binding.recyclerView.adapter = adapter
+  private fun initAdapter(rv: RecyclerView) {
+    rv.layoutManager = LinearLayoutManager(requireContext())
+    rv.adapter = adapter
   }
 
   private fun observeViewModel() {
     viewModel.viewState.observe(
-      viewLifecycleOwner, { data ->
+      requireActivity(), { data ->
         when(data) {
           is Content -> renderContent(data)
-          is Loading -> binding.prgSearch.showProgressBar(true)
-          is NavigateToPvEFragment -> navigateTo(
-            PvEPlayerSearchDialogDirections.navigateToPvEFragment(
-              data.searchValue, args.searchParams.realType
-            ))
         }
       }
     )
@@ -112,10 +105,10 @@ class PvEPlayerSearchDialog : Fragment() {
 
   private fun renderContent(data: Content) {
     adapter?.update(data.filterList)
-    binding.prgSearch.showProgressBar(false)
   }
 
-  private fun navigateTo(directions: NavDirections) {
-    NavHostFragment.findNavController(this).navigate(directions)
+  interface Listener {
+
+    fun onSubmit(searchResult: PvESearchResult)
   }
 }

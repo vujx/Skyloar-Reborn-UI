@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
       when (destination.id) {
         R.id.leaderboardsFragment -> binding.btmNav.visible(true)
         R.id.pvEFragment -> binding.btmNav.visible(false)
-        R.id.pvEPlayerSearchDialog -> binding.btmNav.visible(false)
         else -> binding.btmNav.visible(true)
       }
     }

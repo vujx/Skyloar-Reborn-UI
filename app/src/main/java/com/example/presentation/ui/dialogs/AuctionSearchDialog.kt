@@ -25,7 +25,8 @@ class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), Ko
     val searchCard = view.findViewById<TextInputEditText>(R.id.etSearchCardName)
     val minPrice = view.findViewById<TextInputEditText>(R.id.etMinPrice)
     val maxPrice = view.findViewById<TextInputEditText>(R.id.etMaxPrice)
-
+    setFilters(minPrice)
+    setFilters(maxPrice)
     return MaterialAlertDialogBuilder(
       requireActivity(),
       style.MaterialAlertDialog_OK_color
