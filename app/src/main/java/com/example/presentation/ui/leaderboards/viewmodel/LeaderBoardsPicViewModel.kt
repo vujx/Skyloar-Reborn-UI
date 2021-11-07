@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.Content
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.Loading
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.NavigateToPvePlayers
+import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.NavigateToPvpPlayers
 import com.example.util.SingleLiveEvent
 
 class LeaderBoardsPicViewModel(
@@ -19,5 +20,9 @@ class LeaderBoardsPicViewModel(
 
   fun onLeaderBoardsClick(type: Int) {
     viewState.postValue(NavigateToPvePlayers(type))
+  }
+
+  fun onLeaderBoardsPvPClick(type: String) {
+    viewState.postValue(NavigateToPvpPlayers(type))
   }
 }

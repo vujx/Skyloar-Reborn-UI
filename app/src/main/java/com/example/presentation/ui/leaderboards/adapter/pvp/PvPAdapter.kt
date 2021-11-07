@@ -19,7 +19,7 @@ class PvPAdapter : RecyclerView.Adapter<PvPViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: PvPViewHolder, position: Int) {
-    holder.bind(listOfPvPPlayers[position])
+    holder.bind(listOfPvPPlayers[position], position)
   }
 
   override fun getItemCount(): Int = listOfPvPPlayers.size

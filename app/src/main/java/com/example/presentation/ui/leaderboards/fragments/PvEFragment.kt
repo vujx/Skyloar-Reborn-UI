@@ -114,7 +114,6 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
             adapter.setList(emptyList())
           }
         }
-        hideKeyBoard()
       })
 
     viewModelPvE.numOfSearchResult.observe(

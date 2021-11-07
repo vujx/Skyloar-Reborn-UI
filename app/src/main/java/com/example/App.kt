@@ -105,7 +105,7 @@ class App : Application() {
   private val viewModelModule = module {
     viewModel { AuctionViewModel(get()) }
     viewModel { StatViewModel(get()) }
-    viewModel { PvPPlayerViewModel(get()) }
+    viewModel { PvPPlayerViewModel(get(), get()) }
     viewModel { LeaderboardsViewModel(get(), get()) }
     viewModel { PvEPlayerViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get()) }

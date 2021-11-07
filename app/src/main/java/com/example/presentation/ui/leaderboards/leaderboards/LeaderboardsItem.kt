@@ -29,6 +29,8 @@ class LeaderboardsItem @JvmOverloads constructor(
     1,2,4,12,
   )
 
+  private val listOfPvPTypes = listOf("1v1", "2v2")
+
   var position: Int = 0
 
   init {
@@ -40,7 +42,8 @@ class LeaderboardsItem @JvmOverloads constructor(
     position: Int,
     isLeaderBoards: Boolean,
     onClick: ((String) -> Unit)?,
-    onLeaderBoardsClick: ((Int) -> Unit)?) {
+    onLeaderBoardsClick: ((Int) -> Unit)?,
+    onLeaderBoardsPvPClick: ((String) -> Unit)?) {
     binding.title.text = item.title
     binding.descTitle.text = item.descTitle
     binding.desc.text = item.desc
@@ -54,6 +57,8 @@ class LeaderboardsItem @JvmOverloads constructor(
         }
       } else if(onLeaderBoardsClick != null && position < 4) {
         onLeaderBoardsClick(listOfTypes[position])
+      } else if(onLeaderBoardsPvPClick != null && position > 3) {
+        onLeaderBoardsPvPClick(listOfPvPTypes[position - 4])
       }
     }
   }

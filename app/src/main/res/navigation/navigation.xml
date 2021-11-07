@@ -29,6 +29,9 @@
     <action
         android:id="@+id/action_leaderboardsFragment_to_pvEFragment"
         app:destination="@id/pvEFragment" />
+    <action
+        android:id="@+id/action_leaderboardsFragment_to_pvPFragment"
+        app:destination="@id/pvPFragment" />
   </fragment>
   <fragment
       android:id="@+id/docFragment"
@@ -46,5 +49,14 @@
         app:argType="integer" />
 
   </fragment>
+  <fragment
+      android:id="@+id/pvPFragment"
+      android:name="com.example.presentation.ui.leaderboards.fragments.PvPFragment"
+      android:label="PvP Players"
+      tools:layout="@layout/fragment_pvp">
 
+  <argument
+      android:name="type"
+      app:argType="string" />
+  </fragment>
 </navigation>

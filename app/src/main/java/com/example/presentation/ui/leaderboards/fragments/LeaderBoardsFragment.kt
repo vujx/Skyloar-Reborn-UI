@@ -15,6 +15,7 @@ import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsPicViewMod
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.Content
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.Loading
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.NavigateToPvePlayers
+import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsViewState.NavigateToPvpPlayers
 import com.example.util.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,6 +38,9 @@ class LeaderBoardsFragment : BaseFragment(R.layout.fragment_leader_boards) {
     setUpRecyclerView()
     adapter.onLeaderboardsClick = { type ->
       viewModel.onLeaderBoardsClick(type)
+    }
+    adapter.onLeaderBoardsPvPClick = { type ->
+      viewModel.onLeaderBoardsPvPClick(type)
     }
     adapter.isLeaderboards = true
     return binding.root
@@ -67,6 +71,11 @@ class LeaderBoardsFragment : BaseFragment(R.layout.fragment_leader_boards) {
           is NavigateToPvePlayers -> {
             navigateTo(
               LeaderBoardsFragmentDirections.actionLeaderboardsFragmentToPvEFragment(data.type)
+            )
+          }
+          is NavigateToPvpPlayers -> {
+            navigateTo(
+              LeaderBoardsFragmentDirections.actionLeaderboardsFragmentToPvPFragment(data.type)
             )
           }
         }
