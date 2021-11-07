@@ -1,7 +1,6 @@
 package com.example.presentation.ui.leaderboards.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -179,7 +178,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
         getFirstPage(binding.bottomPage.getPage())
       )
     }
-    binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_PVE) }
+    binding.bottomPage.onExportPress = { onExportPress(createExportUrl()) }
     binding.swipeRefresh.setOnRefreshListener {
       getPvEPlayers(viewModelPvE.pageNumber)
       binding.prgSearch.showProgressBar(false)
@@ -199,7 +198,6 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
 
   private fun navigateToSearchDialog() {
     if(PvEPlayerViewModel.getMapList.isNotEmpty() && PvEPlayerViewModel.getMonthList.isNotEmpty()) {
-      Log.d("ispisovo", viewModelPvE.pageNumber.toString())
       val dialog = PvEPlayerSearchDialog(
         this,
         PvEPlayerViewModel.getMapList,
@@ -217,7 +215,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
   }
 
   private fun showMessage() {
-    Snackbar.make(binding.rvPvEPlayers, "Check your internet connection!", Snackbar.LENGTH_SHORT).show()
+    Snackbar.make(binding.rvPvEPlayers, binding.errorView.getErrorMessage(), Snackbar.LENGTH_SHORT).show()
   }
 
   override fun onSubmit(searchResult: PvESearchResult) {
@@ -225,5 +223,9 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
     viewModelPvE.currentMonth = searchResult.month
     if(searchResult.type != 0) viewModelPvE.currentPLayers = searchResult.type
     getPvEPlayers(1)
+  }
+
+  private fun createExportUrl(): String {
+    return Constants.BASE_URL + "/api/leaderboards/pve?type=${args.type}&players=${viewModelPvE.currentPLayers}&map=${viewModelPvE.currentMap}&month=${viewModelPvE.currentMonth}&page=${viewModelPvE.pageNumber}&number=20&export=true"
   }
 }
