@@ -31,11 +31,10 @@ class PvEPlayerViewModel(
   var currentMonth = 0
   var currentPLayers = 0
 
-  private fun getInitPvePlayer(type: Int, players: Int,map: Int, month: Int) {
+  private fun getInitPvePlayer(type: Int, map: Int, month: Int) {
     getPvEPlayers(type, type, map, month, 1, 20)
     currentMonth = month
     currentMap = map
-    currentPLayers = players
   }
 
   fun getMaps(type: Int) {
@@ -47,7 +46,7 @@ class PvEPlayerViewModel(
           when(val month = getRanges("ranges")) {
             is Success -> {
               getMonthList = month.data
-              getInitPvePlayer(type, type, getMapList.keys.first(), getMonthList.keys.first())
+              getInitPvePlayer(type, getMapList.keys.first(), getMonthList.keys.first())
             }
             is Result.Error -> {
               getNumOfSearchResult(-1, 1)
@@ -103,10 +102,8 @@ class PvEPlayerViewModel(
     if (page != "1 / 1") {
       if (getFirstPage(page) == 1) {
         getPvEPlayers(type, players, map, month, getLastPage(page), number)
-        pageNumber = getLastPage(page)
       } else {
         getPvEPlayers(type, players, map, month,getFirstPage(page) - 1, number)
-        pageNumber = getFirstPage(page) - 1
       }
     }
   }
@@ -122,10 +119,8 @@ class PvEPlayerViewModel(
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
         getPvEPlayers(type, players, map, month,1, number)
-        pageNumber = 1
       } else {
         getPvEPlayers(type, players, map, month,getFirstPage(page) + 1, number)
-        pageNumber = getFirstPage(page)
       }
     }
   }

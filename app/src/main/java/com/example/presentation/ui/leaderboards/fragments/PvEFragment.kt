@@ -39,6 +39,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
     viewModelPvE.getMaps(args.type)
+    viewModelPvE.currentPLayers = args.type
   }
 
   override fun onCreateView(
@@ -99,10 +100,9 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
             setProgressBarAndSearchResult(visibilityErrorView = true)
             adapter.setList(emptyList())
             binding.errorView.onRetryClick = {
-              if(viewModelPvE.currentPLayers == 0) viewModelPvE.getMaps(args.type)
+              if(viewModelPvE.currentMap == 0) viewModelPvE.getMaps(args.type)
               else getPvEPlayers(viewModelPvE.pageNumber)
             }
-            Log.d("ispis", result.error.toString())
             binding.errorView.showError(result.error,
               "Backend is currently caching new data. Please wait a bit until it is done.")
           }
@@ -179,9 +179,9 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
         getFirstPage(binding.bottomPage.getPage())
       )
     }
-    binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_AUCTIONS) }
+    binding.bottomPage.onExportPress = { onExportPress(Constants.BASE_URL_EXPORT_PVE) }
     binding.swipeRefresh.setOnRefreshListener {
-      getPvEPlayers(binding.bottomPage.getFirstPage())
+      getPvEPlayers(viewModelPvE.pageNumber)
       binding.prgSearch.showProgressBar(false)
     }
   }
