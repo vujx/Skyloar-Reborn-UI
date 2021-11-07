@@ -51,7 +51,7 @@ class ErrorView @JvmOverloads constructor(
         notFound
       }
       is Custom<*> -> dictionary.getStringRes(string.unexpected_error)
-      is BackendCaching -> "Backend is curretly caching new data"
+      is BackendCaching -> "Backend is currently caching new data. Please wait a bit until it is done."
     }
     binding.tvErrorMessage.text = errorMessage
     binding.btnRetry.setOnClickListener {

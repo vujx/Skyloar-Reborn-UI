@@ -8,16 +8,17 @@ class MapPvEPlayerData {
     map: MutableMap<Int, String>,
     month: MutableMap<Int, String>,
     type: Int,
-    realType: Int,
+    checkedType: Int,
     selectMap: Int,
     selectMonth: Int,
   ): MutableList<PvEPlayerFilterUiModels> {
+    Log.d("ispisovo", type.toString())
     val content = mutableListOf<PvEPlayerFilterUiModels>()
       when(type) {
         2 -> {
           content.add(PvEPlayerHeader("Player"))
           (1..2).forEach {
-            if(realType == it) {
+            if(checkedType == it) {
               content.add(PvEPlayerType(it.toString(), true, it))
             } else content.add(PvEPlayerType(it.toString(), false, it))
           }
@@ -25,7 +26,7 @@ class MapPvEPlayerData {
         4 -> {
           content.add(PvEPlayerHeader("Player"))
           (1..4).forEach {
-            if(realType == it) {
+            if(checkedType == it) {
               content.add(PvEPlayerType(it.toString(), true, it))
             } else content.add(PvEPlayerType(it.toString(), false, it))
           }
@@ -55,9 +56,6 @@ class MapPvEPlayerData {
         position++
       }
     }
-
-    content.add(PvEPlayerButton)
-
     return content
   }
 
@@ -103,7 +101,6 @@ class MapPvEPlayerData {
     filterList: List<PvEPlayerFilterUiModels>,
     month: MutableMap<Int, String>,
     map: MutableMap<Int, String>,
-    page: Int,
   ): PvESearchResult {
     var selectedType = 0
     var selectedMonth = 0
@@ -134,6 +131,6 @@ class MapPvEPlayerData {
         }
       }
     }
-    return PvESearchResult(selectedType, selectedMonth, selectedMap, page)
+    return PvESearchResult(selectedType, selectedMonth, selectedMap)
   }
 }

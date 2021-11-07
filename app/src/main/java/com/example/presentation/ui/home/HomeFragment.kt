@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
   ): View {
     _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+    homeViewModel.getIntroText()
     bind()
 
     return binding.root
@@ -70,7 +71,8 @@ class HomeFragment : Fragment() {
       }
     )
   }
-  fun TextView.removeLinksUnderline() {
+
+  private fun TextView.removeLinksUnderline() {
     val spannable = SpannableString(text)
     for (u in spannable.getSpans(0, spannable.length, URLSpan::class.java)) {
       spannable.setSpan(object : URLSpan(u.url) {

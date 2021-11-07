@@ -2,16 +2,24 @@ package com.example.presentation.ui
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
+import android.app.DownloadManager.Request
 import android.content.Context
+import android.content.Context.DOWNLOAD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import android.util.Patterns
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.example.presentation.ui.dialogs.DialogForAddingPageNumber
+import com.example.util.Constants
+import com.example.util.Constants.BASE_URL_EXPORT_PVE
+import java.net.URLEncoder
 
 open class BaseFragment(
   layoutId: Int,
@@ -26,18 +34,20 @@ open class BaseFragment(
 
   @SuppressLint("WrongConstant")
   fun onExportPress(url: String) {
-    if (checkSelfPermission(
-        requireContext(),
-        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-      ) == PackageManager.PERMISSION_DENIED
-    ) {
-      requestPermissions(
-        arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-        STORAGE_PERMISSION_CODE
-      )
-    } else {
-      downloadFile(url)
-    }
+    val myUrl = Constants.BASE_URL + URLEncoder.encode(Constants.URL_EXPORT_PVE, "utf-8")
+    Log.d("ispis", myUrl)
+    Log.d("ispisovo", Uri.parse(BASE_URL_EXPORT_PVE).toString())
+
+    val request = DownloadManager.Request(myUrl.toUri())
+      .setTitle("File")
+      .setDescription("Downloading...")
+      .setMimeType("application/vnd.ms-excel")
+      .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+      .setAllowedOverMetered(true)
+
+    val dm = requireActivity().getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+
+    dm.enqueue(request)
   }
 
   fun onPagePress(lastPage: Int, currentPage: Int) {
