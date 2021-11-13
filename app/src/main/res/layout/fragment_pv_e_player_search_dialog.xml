@@ -13,4 +13,12 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 
+  <ProgressBar
+      android:id="@+id/pveProgressBar"
+      android:layout_width="70dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminateTint="#E53935"
+      />
+
 </FrameLayout>

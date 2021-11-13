@@ -10,6 +10,9 @@ sealed class LeaderBoardsViewState{
   data class NavigateToPvePlayers(
     val type: Int
   ) : LeaderBoardsViewState()
+  data class NavigateToPvpPlayers(
+    val type: String,
+  ) : LeaderBoardsViewState()
 }
 
 

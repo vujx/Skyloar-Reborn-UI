@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.presentation.ui.dialogs.searchPvPPlayers.PvPFilterListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pveFilterItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp"
+    />

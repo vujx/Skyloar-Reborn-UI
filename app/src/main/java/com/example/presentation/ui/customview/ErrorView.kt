@@ -29,6 +29,7 @@ class ErrorView @JvmOverloads constructor(
     ErrorHandleBinding.inflate(LayoutInflater.from(context), this)
   private val dictionary: com.example.Dictionary by inject()
   var onRetryClick: () -> Unit = {}
+  private var errorMessage = ""
 
   init {
     layoutParams =
@@ -41,7 +42,7 @@ class ErrorView @JvmOverloads constructor(
   fun showError(data: ErrorEntity, notFound: String) {
     binding.root.visible(true)
     binding.btnRetry.visible(true)
-    val errorMessage = when (data) {
+    errorMessage = when (data) {
       Network -> dictionary.getStringRes(string.check_internet)
       NotFound -> dictionary.getStringRes(string.unexpected_error)
       AccessDenied -> dictionary.getStringRes(string.unknown_host)
@@ -62,5 +63,9 @@ class ErrorView @JvmOverloads constructor(
 
   private fun hideError() {
     binding.root.visible(false)
+  }
+
+  fun getErrorMessage(): String {
+    return errorMessage
   }
 }

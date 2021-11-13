@@ -35,6 +35,8 @@ import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.dialogs.searchPvEPlayers.MapPvEPlayerData
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewModel
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState
+import com.example.presentation.ui.dialogs.searchPvPPlayers.MapPvPPlayerData
+import com.example.presentation.ui.dialogs.searchPvPPlayers.PvPSearchViewModel
 import com.example.presentation.ui.home.viewmodel.HomeViewModel
 import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
@@ -113,6 +115,8 @@ class App : Application() {
     viewModel { LeaderBoardsPicViewModel(get()) }
     factory { MapPvEPlayerData() }
     viewModel { PvEFilterViewModel(get()) }
+    factory { MapPvPPlayerData() }
+    viewModel { PvPSearchViewModel(get()) }
   }
 
   private val adapterModule = module {

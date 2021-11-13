@@ -7,7 +7,7 @@ class PvPViewHolder(
   private val itemPvP: PvPItem
 ) : RecyclerView.ViewHolder(itemPvP) {
 
-  fun bind(pvpPlayer: PvPPlayer) {
-    itemPvP.bind(pvpPlayer)
+  fun bind(pvpPlayer: PvPPlayer, position: Int) {
+    itemPvP.bind(pvpPlayer, position)
   }
 }

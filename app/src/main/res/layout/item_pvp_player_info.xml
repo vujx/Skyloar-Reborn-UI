@@ -11,20 +11,18 @@
       android:id="@+id/tvPlayer"
       android:layout_width="162dp"
       android:layout_height="wrap_content"
-      android:background="@drawable/tv_borders"
       android:gravity="center"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
-      android:textColor="@color/white" />
+      android:paddingVertical="16dp"
+      android:textColor="@color/white"
+      android:textStyle="bold"/>
 
   <TextView
       android:id="@+id/tvRating"
       android:layout_width="100dp"
-      android:layout_height="fill_parent"
-      android:background="@drawable/tv_borders"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
+      android:layout_height="wrap_content"
+      android:paddingVertical="16dp"
       android:gravity="center"
+      android:textStyle="bold"
       android:textColor="@color/white" />
 
 
@@ -32,39 +30,35 @@
       android:id="@+id/tvELO"
       android:layout_width="100dp"
       android:layout_height="fill_parent"
-      android:background="@drawable/tv_borders"
+      android:paddingVertical="16dp"
       android:gravity="center"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
+      android:textStyle="bold"
       android:textColor="@color/white" />
 
   <TextView
       android:id="@+id/tvActivity"
       android:layout_width="70dp"
       android:layout_height="fill_parent"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
-      android:background="@drawable/tv_borders"
+      android:paddingVertical="16dp"
       android:gravity="center"
+      android:textStyle="bold"
       android:textColor="@color/white" />
 
   <TextView
       android:id="@+id/tvMatches"
       android:layout_width="70dp"
       android:layout_height="fill_parent"
-      android:background="@drawable/tv_borders"
+      android:paddingVertical="16dp"
       android:gravity="center"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
+      android:textStyle="bold"
       android:textColor="@color/white" />
 
   <TextView
       android:id="@+id/tvWins"
       android:layout_width="70dp"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
       android:layout_height="fill_parent"
-      android:background="@drawable/tv_borders"
+      android:paddingVertical="16dp"
+      android:textStyle="bold"
       android:gravity="center"
       android:textColor="@color/white" />
 
@@ -72,9 +66,8 @@
       android:id="@+id/tvLosses"
       android:layout_width="70dp"
       android:layout_height="fill_parent"
-      android:background="@drawable/tv_borders"
+      android:paddingVertical="16dp"
       android:gravity="center"
-      android:paddingTop="16dp"
-      android:paddingBottom="16dp"
+      android:textStyle="bold"
       android:textColor="@color/white" />
 </merge>

@@ -1,11 +1,11 @@
 package com.example.domain.model
 
 data class PvPPlayer(
-  val activity: Int,
-  val baseElo: Int,
-  val losesLimited: Int,
-  val name: String,
-  val rating: Int,
-  val totalMatches: Int?,
-  val winsLimited: Int
+  val players: List<String>,
+  val baseElo: Long,
+  val rating: Long,
+  val activity: Long,
+  val winsLimited: Long,
+  val losesLimited: Long,
+  val totalMatches: Long?,
 )

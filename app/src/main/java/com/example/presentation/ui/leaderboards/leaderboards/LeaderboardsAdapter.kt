@@ -8,6 +8,8 @@ class LeaderboardsAdapter : RecyclerView.Adapter<LeaderBoardsViewHolder>() {
   private val listOfLeaderboards = mutableListOf<LeaderBoards>()
   var onDocClick: ((String) -> Unit)? = null
   var onLeaderboardsClick: ((Int) -> Unit)? = null
+  var onLeaderBoardsPvPClick: ((String) -> Unit)? = null
+
   var isLeaderboards: Boolean = false
 
   fun setList(list: List<LeaderBoards>) {
@@ -21,7 +23,7 @@ class LeaderboardsAdapter : RecyclerView.Adapter<LeaderBoardsViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: LeaderBoardsViewHolder, position: Int) {
-    holder.bind(listOfLeaderboards[position], position, onDocClick, onLeaderboardsClick, isLeaderboards)
+    holder.bind(listOfLeaderboards[position], position, onDocClick, onLeaderboardsClick, onLeaderBoardsPvPClick,isLeaderboards)
   }
 
   override fun getItemCount(): Int = listOfLeaderboards.size

@@ -11,16 +11,21 @@ class LeaderBoardsViewHolder(
       position: Int,
       onDocClick: ((String) -> Unit)?,
       onLeaderboardsClick: ((Int) -> Unit)?,
+      onLeaderboardsPvPClick: ((String) -> Unit)?,
       isLeaderBoards: Boolean
     ) {
       item.bind(leaderBoards, position, isLeaderBoards,{
         if (onDocClick != null) {
           onDocClick(it)
         }
-      }) {
+      }, {
         if(onLeaderboardsClick != null) {
           onLeaderboardsClick(it)
         }
-      }
+      }, {
+        if(onLeaderboardsPvPClick != null) {
+          onLeaderboardsPvPClick(it)
+        }
+      })
     }
 }

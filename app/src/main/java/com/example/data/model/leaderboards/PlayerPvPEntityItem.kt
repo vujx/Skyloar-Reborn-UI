@@ -1,14 +1,11 @@
 package com.example.data.model.leaderboards
 
 data class PlayerPvPEntityItem(
-  val activity: Double,
-  val baseElo: Int,
-  val losesLimited: Int?,
-  val name: String?,
+  val players: List<String>,
+  val baseElo: Long,
   val rating: Double,
-  val totalMatches: Int?,
-  val winsLimited: Int?,
-  val players: List<String>?,
-  val wins: Int?,
-  val losses: Int?
+  val activity: Double,
+  val wins: Long,
+  val losses: Long,
+  val matches: Long?,
 )
