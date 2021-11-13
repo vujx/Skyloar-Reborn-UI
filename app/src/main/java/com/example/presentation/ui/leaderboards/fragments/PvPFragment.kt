@@ -13,15 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentPvpBinding
 import com.example.presentation.ui.BaseFragment
+import com.example.presentation.ui.dialogs.searchPvPPlayers.PvPPlayerSearchDialog
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
+import com.example.util.Constants
 import com.example.util.Resource
 import com.example.util.visible
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
+class PvPFragment : BaseFragment(R.layout.fragment_pvp), PvPPlayerSearchDialog.Listener {
 
   private val adapter: PvPAdapter by inject()
   private val viewModelPvP: PvPPlayerViewModel by viewModel()
@@ -59,7 +61,7 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.searchIcon -> {
-        // TODO search dialog
+        navigateToSearchDialog()
         true
       }
       android.R.id.home -> {
@@ -182,14 +184,32 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp) {
         getFirstPage(binding.bottomPage.getPage())
       )
     }
-    binding.bottomPage.onExportPress = { onExportPress("") }
+    binding.bottomPage.onExportPress = { onExportPress(createExportUrl()) }
     binding.swipeRefresh.setOnRefreshListener {
       getPvPPlayers(viewModelPvP.pageNumber)
       binding.prgSearch.showProgressBar(false)
     }
   }
 
+  private fun navigateToSearchDialog() {
+    if(PvPPlayerViewModel.getMonthList.isNotEmpty()) {
+      val dialog = PvPPlayerSearchDialog(
+        this, PvPPlayerViewModel.getMonthList, viewModelPvP.currentMonth
+      )
+      activity?.supportFragmentManager?.let { dialog.show(it, "PVPDialog") }
+    } else showMessage()
+  }
+
   private fun showMessage() {
     Snackbar.make(binding.rvPvPPlayers, binding.errorView.getErrorMessage(), Snackbar.LENGTH_SHORT).show()
+  }
+
+  override fun onSubmit(selectedMonth: Int) {
+    viewModelPvP.getPvPPlayers(args.type, selectedMonth, 1, 20)
+  }
+
+  private fun createExportUrl(): String {
+    return Constants.BASE_URL + "/api/leaderboards/pvp?type=${args.type}&month=${viewModelPvP.currentMonth}" +
+      "&page=${viewModelPvP.pageNumber}&number=20&export=true"
   }
 }
