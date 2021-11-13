@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example">
 
@@ -11,24 +12,29 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:hardwareAccelerated="false"
-        android:fullBackupContent="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SRUI"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".presentation.MainActivity"
+        <activity
+            android:name=".presentation.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN"
-                    android:screenOrientation="portrait" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <intent-filter>
+            <action
+                android:name="android.intent.action.MAIN"
+                android:screenOrientation="portrait" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
