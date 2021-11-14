@@ -1,6 +1,5 @@
 package com.example.presentation.ui.stat.adapter
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.data.model.stat.StatEntity
@@ -21,7 +20,6 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
-    Log.d("ispis", "${listOfStatValue.size}")
     listOfStatValue[position]?.let { holder.bind(it, position) }
   }
 

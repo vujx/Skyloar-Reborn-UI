@@ -2,7 +2,6 @@ package com.example.presentation.ui.leaderboards.leaderboards
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.databinding.ItemLeaderboardsBinding
@@ -48,8 +47,6 @@ class LeaderboardsItem @JvmOverloads constructor(
     binding.descTitle.text = item.descTitle
     binding.desc.text = item.desc
     binding.image.setImageResource(item.image)
-    Log.d("tusad", onClick.toString())
-    Log.d("tusad", onLeaderBoardsClick.toString())
     binding.root.setOnClickListener {
       if (!isLeaderBoards && position < 4) {
         if (onClick != null) {

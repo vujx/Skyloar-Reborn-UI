@@ -34,7 +34,6 @@ import com.example.presentation.ui.auctions.adapter.AuctionAdapter
 import com.example.presentation.ui.auctions.viewmodel.AuctionViewModel
 import com.example.presentation.ui.dialogs.searchPvEPlayers.MapPvEPlayerData
 import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewModel
-import com.example.presentation.ui.dialogs.searchPvEPlayers.PvEFilterViewState
 import com.example.presentation.ui.dialogs.searchPvPPlayers.MapPvPPlayerData
 import com.example.presentation.ui.dialogs.searchPvPPlayers.PvPSearchViewModel
 import com.example.presentation.ui.home.viewmodel.HomeViewModel
@@ -42,7 +41,6 @@ import com.example.presentation.ui.leaderboards.adapter.pve.PvEAdapter
 import com.example.presentation.ui.leaderboards.adapter.pvp.PvPAdapter
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsMapper
 import com.example.presentation.ui.leaderboards.viewmodel.LeaderBoardsPicViewModel
-import com.example.presentation.ui.leaderboards.viewmodel.LeaderboardsViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvEPlayerViewModel
 import com.example.presentation.ui.leaderboards.viewmodel.PvPPlayerViewModel
 import com.example.presentation.ui.stat.adapter.StatAdapter
@@ -108,7 +106,6 @@ class App : Application() {
     viewModel { AuctionViewModel(get()) }
     viewModel { StatViewModel(get()) }
     viewModel { PvPPlayerViewModel(get(), get()) }
-    viewModel { LeaderboardsViewModel(get(), get()) }
     viewModel { PvEPlayerViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get()) }
     factory { LeaderBoardsMapper() }

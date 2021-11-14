@@ -13,8 +13,7 @@ class DefaultHomeImpl(
   override suspend fun getIntroHomeTex(): Result<String> {
     return networkResponseHelper.safeApiCall(
       {
-        val response = homeService.getHomeText()
-        response.body()!!
+        homeService.getHomeText().body()!!
       }
     )
   }

@@ -1,7 +1,6 @@
 package com.example.presentation.ui.stat
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +51,6 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
         when (result) {
           is Resource.Success -> {
             setProgressBarAndSearchResult(visibilityValue = true)
-            Log.d("check", result.value.size.toString())
             adapter.setListOfStatValues(result.value)
           }
           is Resource.Loading -> {

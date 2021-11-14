@@ -29,7 +29,7 @@ class DocFragment : BaseFragment(R.layout.fragment_doc) {
     adapter.onDocClick = { docUrl ->
       openBrowser(docUrl)
     }
-    clickListeners()
+
     setUpRecyclerView()
     return binding.root
   }
@@ -50,9 +50,5 @@ class DocFragment : BaseFragment(R.layout.fragment_doc) {
         LeaderBoards("Info", R.drawable.doc_pic,"Docs #4", "Click here to open docs in new tab."),
       )
     )
-  }
-
-  private fun clickListeners() {
-
   }
 }
