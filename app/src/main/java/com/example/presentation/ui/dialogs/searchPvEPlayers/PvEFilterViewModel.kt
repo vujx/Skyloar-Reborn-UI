@@ -38,6 +38,6 @@ class PvEFilterViewModel(
   ): PvESearchResult {
     (viewState.value as? Content)?.filterList?.let { filterList ->
       return mapper.getSearchResult(filterList, month, map)
-    } ?: return PvESearchResult(0,0, 0)
+    } ?: return PvESearchResult(0, 0, 0)
   }
 }

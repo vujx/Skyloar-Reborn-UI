@@ -22,7 +22,7 @@ class DefaultPvPRepository(
   ): Result<NumberOfSearchResultsEntity> {
     return networkResponseHelper.safeApiCall({
       val response = leaderboardService.getPvPCount(type, month)
-      if(response.code() == 401) throw CustomException("Backend is currently cashing data!")
+      if (response.code() == 401) throw CustomException("Backend is currently cashing data!")
       else response.body()!!
     })
   }

@@ -1,7 +1,6 @@
 package com.example.presentation.ui.leaderboards.adapter.pve
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.PvEPlayer
 
 class PvEViewHolder(
   private val itemPvE: PvEItem

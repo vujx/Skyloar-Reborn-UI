@@ -18,7 +18,8 @@ class PvEFilterListView @JvmOverloads constructor(
 
   private val dictionary: Dictionary by inject()
   private val binding = ItemPvePlyerSearchListBinding.inflate(
-    LayoutInflater.from(context), this
+    LayoutInflater.from(context),
+    this
   )
 
   fun bind(
@@ -50,7 +51,6 @@ class PvEFilterListView @JvmOverloads constructor(
           binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey_lighter))
         else
           binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey))
-
       }
     }
 

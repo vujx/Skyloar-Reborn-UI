@@ -18,7 +18,8 @@ class PvPFilterListView @JvmOverloads constructor(
 
   private val dictionary: Dictionary by inject()
   private val binding = ItemPvePlyerSearchListBinding.inflate(
-    LayoutInflater.from(context), this
+    LayoutInflater.from(context),
+    this
   )
 
   fun bind(

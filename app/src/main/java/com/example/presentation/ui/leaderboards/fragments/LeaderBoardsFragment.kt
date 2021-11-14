@@ -27,11 +27,14 @@ class LeaderBoardsFragment : BaseFragment(R.layout.fragment_leader_boards) {
   private val adapter = LeaderboardsAdapter()
 
   override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
+    inflater: LayoutInflater,
+    container: ViewGroup?,
     savedInstanceState: Bundle?,
   ): View {
     _binding = FragmentLeaderBoardsBinding.inflate(
-      inflater, container, false
+      inflater,
+      container,
+      false
     )
     viewModel.requestData()
     observeViewModel()
@@ -58,8 +61,9 @@ class LeaderBoardsFragment : BaseFragment(R.layout.fragment_leader_boards) {
 
   private fun observeViewModel() {
     viewModel.viewState.observe(
-      viewLifecycleOwner, { data ->
-        when(data) {
+      viewLifecycleOwner,
+      { data ->
+        when (data) {
           is Content -> {
             binding.prgSearch.visible(false)
             adapter.setList(data.data)

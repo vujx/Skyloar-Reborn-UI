@@ -28,17 +28,19 @@ class PvPPlayerViewModel(
   var currentMonth = -1
 
   private fun getInitPvPPlayer(type: String, month: Int) {
-    getPvPPlayers(type,
+    getPvPPlayers(
+      type,
       month,
       1,
-      20)
+      20
+    )
     currentMonth = month
   }
 
   fun getMonth(type: String) {
     viewModelScope.launch {
       _pvpPlayer.postValue(Resource.Loading())
-      when(val result = getRanges("ranges")) {
+      when (val result = getRanges("ranges")) {
         is Success -> {
           getMonthList = result.data
           getInitPvPPlayer(type, getMonthList.keys.first())
@@ -61,7 +63,7 @@ class PvPPlayerViewModel(
       pageNumber = page
       when (val result = getPvPPlayers(listOf(type, month, page, number))) {
         is Success -> {
-          if(result.data.pvpPlayers.isNullOrEmpty()) _pvpPlayer.postValue(Resource.Empty())
+          if (result.data.pvpPlayers.isNullOrEmpty()) _pvpPlayer.postValue(Resource.Empty())
           _pvpPlayer.postValue(Resource.Success(result.data.pvpPlayers))
           getNumOfSearchResult(result.data.numberOfSearchResultsEntity.count, page)
           currentMonth = month
@@ -84,7 +86,7 @@ class PvPPlayerViewModel(
       if (getFirstPage(page) == 1) {
         getPvPPlayers(type, month, getLastPage(page), number)
       } else {
-        getPvPPlayers(type, month,getFirstPage(page) - 1, number)
+        getPvPPlayers(type, month, getFirstPage(page) - 1, number)
       }
     }
   }
@@ -97,9 +99,9 @@ class PvPPlayerViewModel(
   ) {
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
-        getPvPPlayers(type, month,1, number)
+        getPvPPlayers(type, month, 1, number)
       } else {
-        getPvPPlayers(type, month,getFirstPage(page) + 1, number)
+        getPvPPlayers(type, month, getFirstPage(page) + 1, number)
       }
     }
   }

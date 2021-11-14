@@ -1,8 +1,6 @@
 package com.example.presentation.ui.dialogs
 
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.Dictionary

@@ -14,7 +14,8 @@ class LeaderboardsItem @JvmOverloads constructor(
 
   private val binding: ItemLeaderboardsBinding = ItemLeaderboardsBinding.inflate(
     LayoutInflater.from(context),
-    this, true
+    this,
+    true
   )
 
   private val listOfUrl = listOf(
@@ -25,7 +26,10 @@ class LeaderboardsItem @JvmOverloads constructor(
   )
 
   private val listOfTypes = listOf(
-    1,2,4,12,
+    1,
+    2,
+    4,
+    12,
   )
 
   private val listOfPvPTypes = listOf("1v1", "2v2")
@@ -42,7 +46,8 @@ class LeaderboardsItem @JvmOverloads constructor(
     isLeaderBoards: Boolean,
     onClick: ((String) -> Unit)?,
     onLeaderBoardsClick: ((Int) -> Unit)?,
-    onLeaderBoardsPvPClick: ((String) -> Unit)?) {
+    onLeaderBoardsPvPClick: ((String) -> Unit)?
+  ) {
     binding.title.text = item.title
     binding.descTitle.text = item.descTitle
     binding.desc.text = item.desc
@@ -52,9 +57,9 @@ class LeaderboardsItem @JvmOverloads constructor(
         if (onClick != null) {
           onClick(listOfUrl[position])
         }
-      } else if(onLeaderBoardsClick != null && position < 4) {
+      } else if (onLeaderBoardsClick != null && position < 4) {
         onLeaderBoardsClick(listOfTypes[position])
-      } else if(onLeaderBoardsPvPClick != null && position > 3) {
+      } else if (onLeaderBoardsPvPClick != null && position > 3) {
         onLeaderBoardsPvPClick(listOfPvPTypes[position - 4])
       }
     }

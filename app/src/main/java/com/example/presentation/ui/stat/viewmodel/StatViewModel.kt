@@ -23,7 +23,7 @@ class StatViewModel(private val getStatValues: GetStatValues) :
 
   fun getListOfStatValues() = viewModelScope.launch {
     _statValues.postValue(Resource.Loading())
-    when(val result = getStatValues()) {
+    when (val result = getStatValues()) {
       is Success -> _statValues.postValue(Resource.Success(result.data))
       is Error -> _statValues.postValue(Resource.Failure(result.error))
     }

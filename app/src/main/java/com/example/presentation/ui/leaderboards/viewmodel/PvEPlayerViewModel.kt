@@ -43,7 +43,7 @@ class PvEPlayerViewModel(
       when (val result = getMapsUseCase(type)) {
         is Success -> {
           getMapList = result.data
-          when(val month = getRanges("ranges")) {
+          when (val month = getRanges("ranges")) {
             is Success -> {
               getMonthList = month.data
               getInitPvePlayer(type, getMapList.keys.first(), getMonthList.keys.first())
@@ -53,7 +53,6 @@ class PvEPlayerViewModel(
               _pvePlayer.postValue(Resource.Failure(month.error))
             }
           }
-
         }
         is Result.Error -> {
           getNumOfSearchResult(-1, 1)
@@ -76,7 +75,7 @@ class PvEPlayerViewModel(
       pageNumber = page
       when (val result = getPvEPlayersUseCase(type, players, map, month, page, number)) {
         is Success -> {
-          if(result.data.pvePlayers.isNullOrEmpty()) _pvePlayer.postValue(Resource.Empty())
+          if (result.data.pvePlayers.isNullOrEmpty()) _pvePlayer.postValue(Resource.Empty())
           _pvePlayer.postValue(Resource.Success(result.data.pvePlayers))
           getNumOfSearchResult(result.data.numberOfSearchResults.count, page)
           currentMonth = month
@@ -103,7 +102,7 @@ class PvEPlayerViewModel(
       if (getFirstPage(page) == 1) {
         getPvEPlayers(type, players, map, month, getLastPage(page), number)
       } else {
-        getPvEPlayers(type, players, map, month,getFirstPage(page) - 1, number)
+        getPvEPlayers(type, players, map, month, getFirstPage(page) - 1, number)
       }
     }
   }
@@ -118,9 +117,9 @@ class PvEPlayerViewModel(
   ) {
     if (page != "1 / 1") {
       if (getFirstPage(page) == getLastPage(page)) {
-        getPvEPlayers(type, players, map, month,1, number)
+        getPvEPlayers(type, players, map, month, 1, number)
       } else {
-        getPvEPlayers(type, players, map, month,getFirstPage(page) + 1, number)
+        getPvEPlayers(type, players, map, month, getFirstPage(page) + 1, number)
       }
     }
   }

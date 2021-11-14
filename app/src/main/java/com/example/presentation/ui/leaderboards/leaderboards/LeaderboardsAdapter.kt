@@ -23,7 +23,7 @@ class LeaderboardsAdapter : RecyclerView.Adapter<LeaderBoardsViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: LeaderBoardsViewHolder, position: Int) {
-    holder.bind(listOfLeaderboards[position], position, onDocClick, onLeaderboardsClick, onLeaderBoardsPvPClick,isLeaderboards)
+    holder.bind(listOfLeaderboards[position], position, onDocClick, onLeaderboardsClick, onLeaderBoardsPvPClick, isLeaderboards)
   }
 
   override fun getItemCount(): Int = listOfLeaderboards.size
