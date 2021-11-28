@@ -24,12 +24,14 @@ class DefaultPvERepository(
   ): Result<NumberOfSearchResultsEntity> {
     return networkResponseHelper.safeApiCall(
       {
-        leaderboardService.getPvECount(
-          type,
-          players,
-          map,
-          month
-        ).body()!!
+        val response = leaderboardService.getPvECount(
+          type = type,
+          players = players,
+          map = map,
+          month = month
+        )
+        if (response.code() == 401) throw CustomException("Backend is currently cashing data!")
+        else response.body()!!
       }
     )
   }
@@ -45,12 +47,12 @@ class DefaultPvERepository(
     return networkResponseHelper.safeApiCall(
       {
         val response = leaderboardService.getListOfPvEPlayers(
-          type,
-          players,
-          map,
-          month,
-          page,
-          number
+          type = type,
+          players = players,
+          map = map,
+          month = month,
+          page = page,
+          number = number
         )
         if (response.code() == 401) throw CustomException("Backend is currently cashing data!")
         else response.body()!!.map { pveMapper.mapFromEntity(it) }

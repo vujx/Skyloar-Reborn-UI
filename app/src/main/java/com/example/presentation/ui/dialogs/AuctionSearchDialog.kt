@@ -1,8 +1,6 @@
 package com.example.presentation.ui.dialogs
 
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.Dictionary
@@ -16,6 +14,9 @@ import org.koin.core.component.KoinComponent
 
 class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), KoinComponent {
 
+  companion object {
+    private const val START_RANGE = 1L
+  }
   private val dictionary: Dictionary by inject()
 
   override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -25,8 +26,8 @@ class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), Ko
     val searchCard = view.findViewById<TextInputEditText>(R.id.etSearchCardName)
     val minPrice = view.findViewById<TextInputEditText>(R.id.etMinPrice)
     val maxPrice = view.findViewById<TextInputEditText>(R.id.etMaxPrice)
-    minPrice.filters = arrayOf(RangeEditText(1, Long.MAX_VALUE))
-    maxPrice.filters = arrayOf(RangeEditText(1, Long.MAX_VALUE))
+    minPrice.filters = arrayOf(RangeEditText(START_RANGE, Long.MAX_VALUE))
+    maxPrice.filters = arrayOf(RangeEditText(START_RANGE, Long.MAX_VALUE))
     return MaterialAlertDialogBuilder(
       requireActivity(),
       style.MaterialAlertDialog_OK_color
@@ -48,11 +49,6 @@ class AuctionSearchDialog(private val listener: Listener) : DialogFragment(), Ko
       null
     else
       input.toLong()
-
-  private fun setFilters(view: View) {
-    val etDefense = view.findViewById<TextInputEditText>(R.id.etPage)
-    etDefense.filters = arrayOf(RangeEditText(1, Long.MAX_VALUE))
-  }
 
   interface Listener {
 

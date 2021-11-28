@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 class StatViewModel(private val getStatValues: GetStatValues) :
   ViewModel() {
 
-  private val _statValues = MutableLiveData<Resource<List<StatEntity?>>>()
-  val statValues: LiveData<Resource<List<StatEntity?>>> = _statValues
+  private val _statValues = MutableLiveData<Resource<MutableMap<String, StatEntity?>>>()
+  val statValues: LiveData<Resource<MutableMap<String, StatEntity?>>> = _statValues
 
   init {
     getListOfStatValues()
@@ -23,7 +23,7 @@ class StatViewModel(private val getStatValues: GetStatValues) :
 
   fun getListOfStatValues() = viewModelScope.launch {
     _statValues.postValue(Resource.Loading())
-    when(val result = getStatValues()) {
+    when (val result = getStatValues()) {
       is Success -> _statValues.postValue(Resource.Success(result.data))
       is Error -> _statValues.postValue(Resource.Failure(result.error))
     }

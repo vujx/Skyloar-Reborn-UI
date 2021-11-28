@@ -27,7 +27,7 @@ class PvPPlayerSearchDialog(
   private var adapter: MultiTypeAdapter<PvPPlayerFilterUiModels>? =
     MultiTypeAdapter<PvPPlayerFilterUiModels>(mutableListOf()).apply {
       forItem { item ->
-        when(item) {
+        when (item) {
           is HeaderPvP -> {
             showView(R.layout.item_pve_search_header) { _, _ ->
               (this as TextView).text = item.title
@@ -54,7 +54,6 @@ class PvPPlayerSearchDialog(
     observeViewModel()
     viewModel.requestData(month, selectedMonth)
 
-
     return MaterialAlertDialogBuilder(
       requireActivity(),
       style.MaterialAlertDialog_OK_color
@@ -80,8 +79,9 @@ class PvPPlayerSearchDialog(
 
   private fun observeViewModel() {
     viewModel.viewState.observe(
-      requireActivity(), { data ->
-        when(data) {
+      requireActivity(),
+      { data ->
+        when (data) {
           is Content -> renderContent(data)
         }
       }

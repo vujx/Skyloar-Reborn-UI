@@ -9,6 +9,7 @@ import com.example.Dictionary
 import com.example.R
 import com.example.databinding.ItemPvpPlayerInfoBinding
 import com.example.domain.model.PvPPlayer
+import com.example.util.numberWithCommas
 import com.example.util.visible
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -41,10 +42,10 @@ class PvPItem @JvmOverloads constructor(
       binding.tvMatches.text = it.toString()
     } ?: binding.tvMatches.visible(false)
     binding.tvPlayer.text = pvpPlayer.players.joinToString()
-    binding.tvRating.text = pvpPlayer.rating.toString()
-    binding.tvELO.text = pvpPlayer.baseElo.toString()
-    binding.tvWins.text = pvpPlayer.winsLimited.toString()
-    binding.tvLosses.text = pvpPlayer.losesLimited.toString()
+    binding.tvRating.text = numberWithCommas(pvpPlayer.rating)
+    binding.tvELO.text = numberWithCommas(pvpPlayer.baseElo)
+    binding.tvWins.text = numberWithCommas(pvpPlayer.winsLimited)
+    binding.tvLosses.text = numberWithCommas(pvpPlayer.losesLimited)
     binding.tvActivity.text = "${pvpPlayer.activity}%"
   }
 }

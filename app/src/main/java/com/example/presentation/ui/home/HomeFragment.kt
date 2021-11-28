@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.Dictionary
 import com.example.R.string
 import com.example.databinding.FragmentHomeBinding
+import com.example.domain.error.ErrorEntity
 import com.example.presentation.ui.home.viewmodel.HomeViewModel
 import com.example.util.Resource
 import com.example.util.visible
@@ -67,6 +68,10 @@ class HomeFragment : Fragment() {
             binding.prgSearch.visible(false)
           }
           is Resource.Loading -> binding.prgSearch.visible(true)
+          else -> {
+            binding.errorView.showError(ErrorEntity.Unknown, dictionary.getStringRes(string.check_internet))
+            binding.prgSearch.visible(false)
+          }
         }
       }
     )
@@ -75,12 +80,17 @@ class HomeFragment : Fragment() {
   private fun TextView.removeLinksUnderline() {
     val spannable = SpannableString(text)
     for (u in spannable.getSpans(0, spannable.length, URLSpan::class.java)) {
-      spannable.setSpan(object : URLSpan(u.url) {
-        override fun updateDrawState(ds: TextPaint) {
-          super.updateDrawState(ds)
-          ds.isUnderlineText = false
-        }
-      }, spannable.getSpanStart(u), spannable.getSpanEnd(u), 0)
+      spannable.setSpan(
+        object : URLSpan(u.url) {
+          override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.isUnderlineText = false
+          }
+        },
+        spannable.getSpanStart(u),
+        spannable.getSpanEnd(u),
+        0
+      )
     }
     text = spannable
   }

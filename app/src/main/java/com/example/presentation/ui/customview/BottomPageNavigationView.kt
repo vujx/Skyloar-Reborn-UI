@@ -56,9 +56,4 @@ class BottomPageNavigationView @JvmOverloads constructor(
     val page = getPage()
     return page.substring(0, page.indexOf(' ')).toInt()
   }
-
-  fun getLastPage(): Int {
-    val page = getPage()
-    return page.substring(getFirstPage().toString().length + 3).toInt()
-  }
 }

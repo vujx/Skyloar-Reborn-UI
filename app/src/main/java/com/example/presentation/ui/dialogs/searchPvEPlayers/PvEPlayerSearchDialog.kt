@@ -95,8 +95,9 @@ class PvEPlayerSearchDialog(
 
   private fun observeViewModel() {
     viewModel.viewState.observe(
-      requireActivity(), { data ->
-        when(data) {
+      requireActivity(),
+      { data ->
+        when (data) {
           is Content -> renderContent(data)
         }
       }

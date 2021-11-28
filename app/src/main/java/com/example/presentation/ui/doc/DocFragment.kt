@@ -1,7 +1,6 @@
 package com.example.presentation.ui.doc
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.R
 import com.example.databinding.FragmentDocBinding
 import com.example.presentation.ui.BaseFragment
-import com.example.presentation.ui.doc.model.Doc
 import com.example.presentation.ui.leaderboards.leaderboards.LeaderBoards
 import com.example.presentation.ui.leaderboards.leaderboards.LeaderboardsAdapter
 
@@ -29,7 +27,7 @@ class DocFragment : BaseFragment(R.layout.fragment_doc) {
     adapter.onDocClick = { docUrl ->
       openBrowser(docUrl)
     }
-    clickListeners()
+
     setUpRecyclerView()
     return binding.root
   }
@@ -44,15 +42,11 @@ class DocFragment : BaseFragment(R.layout.fragment_doc) {
     binding.recyclerView.adapter = adapter
     adapter.setList(
       listOf(
-        LeaderBoards("Auctions", R.drawable.doc_pic,"Docs #1", "Click here to open docs in new tab."),
-        LeaderBoards("Statistics", R.drawable.doc_pic,"Docs #2", "Click here to open docs in new tab."),
-        LeaderBoards("Leaderboards", R.drawable.doc_pic,"Docs #3", "Click here to open docs in new tab."),
-        LeaderBoards("Info", R.drawable.doc_pic,"Docs #4", "Click here to open docs in new tab."),
+        LeaderBoards("Auctions", R.drawable.doc_pic, "Docs #1", "Click here to open docs in new tab."),
+        LeaderBoards("Statistics", R.drawable.doc_pic, "Docs #2", "Click here to open docs in new tab."),
+        LeaderBoards("Leaderboards", R.drawable.doc_pic, "Docs #3", "Click here to open docs in new tab."),
+        LeaderBoards("Info", R.drawable.doc_pic, "Docs #4", "Click here to open docs in new tab."),
       )
     )
-  }
-
-  private fun clickListeners() {
-
   }
 }

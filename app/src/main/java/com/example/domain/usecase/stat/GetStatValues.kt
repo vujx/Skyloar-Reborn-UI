@@ -19,7 +19,7 @@ class GetStatValues(
 ) {
 
   private var countFailure = 0
-  private var listOfStatValues = mutableListOf<StatEntity?>()
+  private var listOfStatValues = mutableMapOf<String, StatEntity?>()
 
   suspend operator fun invoke() =
     withContext(Dispatchers.IO) {
@@ -40,26 +40,26 @@ class GetStatValues(
                 )
                 when (response) {
                   is Result.Success -> {
-                    listOfStatValues.add(response.data)
+                    listOfStatValues.put(path, response.data)
                   }
                   is Result.Error -> {
                     countFailure++
                     if (response.error == ErrorEntity.Network) throw ConnectException()
                     else if (countFailure > 4) throw Exception()
-                    else listOfStatValues.add(null)
+                    else listOfStatValues.put(path, null)
                   }
                 }
               }
             } else async {
               when (val response = statRepo.getCount(path)) {
                 is Result.Success -> {
-                  listOfStatValues.add(response.data)
+                  listOfStatValues.put(path, response.data)
                 }
                 is Result.Error -> {
                   countFailure++
                   if (response.error == ErrorEntity.Network) throw ConnectException()
                   else if (countFailure > 4) throw Exception()
-                  else listOfStatValues.add(null)
+                  else listOfStatValues.put(path, null)
                 }
               }
             }

@@ -2,9 +2,9 @@ package com.example.presentation.ui.leaderboards.viewmodel
 
 import com.example.presentation.ui.leaderboards.leaderboards.LeaderBoards
 
-sealed class LeaderBoardsViewState{
+sealed class LeaderBoardsViewState {
   data class Content(
-     val data: List<LeaderBoards>
+    val data: List<LeaderBoards>
   ) : LeaderBoardsViewState()
   object Loading : LeaderBoardsViewState()
   data class NavigateToPvePlayers(
@@ -14,5 +14,3 @@ sealed class LeaderBoardsViewState{
     val type: String,
   ) : LeaderBoardsViewState()
 }
-
-

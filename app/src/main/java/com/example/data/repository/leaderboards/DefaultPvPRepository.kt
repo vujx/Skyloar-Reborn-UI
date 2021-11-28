@@ -6,6 +6,7 @@ import com.example.data.network.LeaderboardService
 import com.example.data.network.NetworkResponseHelper
 import com.example.domain.model.PvPPlayer
 import com.example.domain.repository.leaderboard.pvp.PvPNetworkDataSource
+import com.example.util.CustomException
 import com.example.util.Result
 
 class DefaultPvPRepository(
@@ -20,7 +21,9 @@ class DefaultPvPRepository(
     month: Int
   ): Result<NumberOfSearchResultsEntity> {
     return networkResponseHelper.safeApiCall({
-      leaderboardService.getPvPCount(type, month).body()!!
+      val response = leaderboardService.getPvPCount(type, month)
+      if (response.code() == 401) throw CustomException("Backend is currently cashing data!")
+      else response.body()!!
     })
   }
 
@@ -33,7 +36,8 @@ class DefaultPvPRepository(
     return networkResponseHelper.safeApiCall(
       {
         val response = leaderboardService.getListOfPvPPlayers(type, month, page, number)
-        if (response.code() == 401) null else response.body()!!.map { pvpMapper.mapFromEntity(it) }
+        if (response.code() == 401) throw CustomException("Backend is currently cashing data!")
+        else response.body()!!.map { pvpMapper.mapFromEntity(it) }
       }
     )
   }

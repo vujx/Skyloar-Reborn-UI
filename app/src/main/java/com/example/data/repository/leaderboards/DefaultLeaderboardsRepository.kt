@@ -8,8 +8,7 @@ import com.example.util.Result
 class DefaultLeaderboardsRepository(
   private val leaderboardService: LeaderboardService,
   private val networkResponseHelper: NetworkResponseHelper,
-) :
-  LeaderboardsNetworkDataSource {
+) : LeaderboardsNetworkDataSource {
 
   override suspend fun getRange(path: String): Result<MutableMap<Int, String>> {
     return networkResponseHelper.safeApiCall({

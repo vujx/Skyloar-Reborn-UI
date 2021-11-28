@@ -88,12 +88,12 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp), PvPPlayerSearchDialog.L
     viewModelPvP.pvpPlayer.observe(
       viewLifecycleOwner,
       { result ->
-        when(result) {
+        when (result) {
           is Resource.Success -> {
-            if(result.value == null) adapter.setListOfPvPPlayers(emptyList())
+            if (result.value == null) adapter.setListOfPvPPlayers(emptyList())
             else {
               result.value.let { adapter.setListOfPvPPlayers(it) }
-              if(result.value[0].totalMatches == null) {
+              if (result.value[0].totalMatches == null) {
                 binding.tvMatches.visible(false)
               }
             }
@@ -103,11 +103,13 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp), PvPPlayerSearchDialog.L
             setProgressBarAndSearchResult(visibilityErrorView = true)
             adapter.setListOfPvPPlayers(emptyList())
             binding.errorView.onRetryClick = {
-              if(viewModelPvP.currentMonth == -1) viewModelPvP.getMonth(args.type)
+              if (viewModelPvP.currentMonth == -1) viewModelPvP.getMonth(args.type)
               else getPvPPlayers(viewModelPvP.pageNumber)
             }
-            binding.errorView.showError(result.error,
-              "Backend is currently caching new data. Please wait a bit until it is done.")
+            binding.errorView.showError(
+              result.error,
+              "Backend is currently caching new data. Please wait a bit until it is done."
+            )
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
@@ -118,7 +120,8 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp), PvPPlayerSearchDialog.L
             adapter.setListOfPvPPlayers(emptyList())
           }
         }
-      })
+      }
+    )
 
     viewModelPvP.numOfSearchResult.observe(
       viewLifecycleOwner,
@@ -192,9 +195,11 @@ class PvPFragment : BaseFragment(R.layout.fragment_pvp), PvPPlayerSearchDialog.L
   }
 
   private fun navigateToSearchDialog() {
-    if(PvPPlayerViewModel.getMonthList.isNotEmpty()) {
+    if (PvPPlayerViewModel.getMonthList.isNotEmpty()) {
       val dialog = PvPPlayerSearchDialog(
-        this, PvPPlayerViewModel.getMonthList, viewModelPvP.currentMonth
+        this,
+        PvPPlayerViewModel.getMonthList,
+        viewModelPvP.currentMonth
       )
       activity?.supportFragmentManager?.let { dialog.show(it, "PVPDialog") }
     } else showMessage()

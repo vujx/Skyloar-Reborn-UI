@@ -1,13 +1,11 @@
 package com.example.util
 
 import android.system.ErrnoException
-import android.util.Log
 import com.example.domain.error.ErrorEntity
 import com.example.domain.error.ErrorMapper
 import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Error
 import java.net.ConnectException
 import java.net.HttpURLConnection
 

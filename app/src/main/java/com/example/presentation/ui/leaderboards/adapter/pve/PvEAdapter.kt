@@ -3,7 +3,6 @@ package com.example.presentation.ui.leaderboards.adapter.pve
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.PvEPlayer
-import com.example.presentation.MainActivity
 
 class PvEAdapter : RecyclerView.Adapter<PvEViewHolder>() {
 

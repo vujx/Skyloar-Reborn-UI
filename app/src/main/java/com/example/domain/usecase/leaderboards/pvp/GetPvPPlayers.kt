@@ -40,7 +40,7 @@ class GetPvPPlayers(
       ).awaitAll()
     } ?: return@withContext Error(ErrorEntity.ServiceUnavailable)
 
-    return@withContext if(listOfPvPPlayer is Success && numberOfResults is Success) {
+    return@withContext if (listOfPvPPlayer is Success && numberOfResults is Success) {
       val data = PvPData(
         (listOfPvPPlayer as Success<List<PvPPlayer>?>).data,
         (numberOfResults as Success<NumberOfSearchResultsEntity>).data,

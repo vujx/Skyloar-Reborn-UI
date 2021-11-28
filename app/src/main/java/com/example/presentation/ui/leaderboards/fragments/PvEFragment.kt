@@ -99,11 +99,13 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
             setProgressBarAndSearchResult(visibilityErrorView = true)
             adapter.setList(emptyList())
             binding.errorView.onRetryClick = {
-              if(viewModelPvE.currentMap == 0) viewModelPvE.getMaps(args.type)
+              if (viewModelPvE.currentMap == 0) viewModelPvE.getMaps(args.type)
               else getPvEPlayers(viewModelPvE.pageNumber)
             }
-            binding.errorView.showError(result.error,
-              "Backend is currently caching new data. Please wait a bit until it is done.")
+            binding.errorView.showError(
+              result.error,
+              "Backend is currently caching new data. Please wait a bit until it is done."
+            )
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
@@ -114,7 +116,8 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
             adapter.setList(emptyList())
           }
         }
-      })
+      }
+    )
 
     viewModelPvE.numOfSearchResult.observe(
       viewLifecycleOwner,
@@ -196,7 +199,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
   }
 
   private fun navigateToSearchDialog() {
-    if(PvEPlayerViewModel.getMapList.isNotEmpty() && PvEPlayerViewModel.getMonthList.isNotEmpty()) {
+    if (PvEPlayerViewModel.getMapList.isNotEmpty() && PvEPlayerViewModel.getMonthList.isNotEmpty()) {
       val dialog = PvEPlayerSearchDialog(
         this,
         PvEPlayerViewModel.getMapList,
@@ -206,7 +209,8 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
         viewModelPvE.currentMonth,
         viewModelPvE.currentMap
       )
-      activity?.supportFragmentManager?.let { dialog.show(it, "dsada")
+      activity?.supportFragmentManager?.let {
+        dialog.show(it, "dsada")
       }
     } else {
       showMessage()
@@ -220,7 +224,7 @@ class PvEFragment : BaseFragment(R.layout.fragment_pve), PvEPlayerSearchDialog.L
   override fun onSubmit(searchResult: PvESearchResult) {
     viewModelPvE.currentMap = searchResult.map
     viewModelPvE.currentMonth = searchResult.month
-    if(searchResult.type != 0) viewModelPvE.currentPLayers = searchResult.type
+    if (searchResult.type != 0) viewModelPvE.currentPLayers = searchResult.type
     getPvEPlayers(1)
   }
 

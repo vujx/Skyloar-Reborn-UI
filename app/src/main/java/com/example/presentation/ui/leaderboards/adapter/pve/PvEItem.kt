@@ -2,13 +2,11 @@ package com.example.presentation.ui.leaderboards.adapter.pve
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.Dictionary
 import com.example.R
 import com.example.databinding.ItemPvePlayersInfoBinding
-import com.example.domain.model.PvEPlayer
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

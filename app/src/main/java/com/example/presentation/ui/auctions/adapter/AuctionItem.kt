@@ -8,6 +8,7 @@ import com.example.Dictionary
 import com.example.R
 import com.example.data.model.auction.AuctionEntityItem
 import com.example.databinding.ItemAuctionInfoBinding
+import com.example.util.numberWithCommas
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -34,9 +35,9 @@ class AuctionItem @JvmOverloads constructor(
     else
       binding.root.setBackgroundColor(dictionary.getColorRes(R.color.grey))
     binding.tvPlayer.text = auction.cardName
-    binding.tvRating.text = auction.startingPrice.toString()
-    binding.tvELO.text = auction.currentPrice.toString()
-    binding.tvActivity.text = auction.buyoutPrice.toString()
+    binding.tvRating.text = numberWithCommas(auction.startingPrice)
+    binding.tvELO.text = numberWithCommas(auction.currentPrice)
+    binding.tvActivity.text = numberWithCommas(auction.buyoutPrice)
     binding.tvMatches.text = auction.endingOn
   }
 }
