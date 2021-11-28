@@ -55,7 +55,7 @@ import org.koin.dsl.module
 class App : Application() {
 
   private val apiModule = module {
-    single { provideHttpClient(applicationContext) }
+    single { provideHttpClient() }
     single { provideRetrofit(get()) }
     single { provideAuctionService(get()) }
     single { provideLeaderboardService(get()) }
