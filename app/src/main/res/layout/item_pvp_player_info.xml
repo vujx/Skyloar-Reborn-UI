@@ -9,7 +9,7 @@
 
   <TextView
       android:id="@+id/tvPlayer"
-      android:layout_width="162dp"
+      android:layout_width="192dp"
       android:layout_height="wrap_content"
       android:gravity="center"
       android:paddingVertical="16dp"
@@ -18,7 +18,7 @@
 
   <TextView
       android:id="@+id/tvRating"
-      android:layout_width="100dp"
+      android:layout_width="120dp"
       android:layout_height="wrap_content"
       android:paddingVertical="16dp"
       android:gravity="center"
@@ -28,7 +28,7 @@
 
   <TextView
       android:id="@+id/tvELO"
-      android:layout_width="100dp"
+      android:layout_width="120dp"
       android:layout_height="fill_parent"
       android:paddingVertical="16dp"
       android:gravity="center"
@@ -37,7 +37,7 @@
 
   <TextView
       android:id="@+id/tvActivity"
-      android:layout_width="70dp"
+      android:layout_width="120dp"
       android:layout_height="fill_parent"
       android:paddingVertical="16dp"
       android:gravity="center"
@@ -46,7 +46,7 @@
 
   <TextView
       android:id="@+id/tvMatches"
-      android:layout_width="70dp"
+      android:layout_width="120dp"
       android:layout_height="fill_parent"
       android:paddingVertical="16dp"
       android:gravity="center"
@@ -55,7 +55,7 @@
 
   <TextView
       android:id="@+id/tvWins"
-      android:layout_width="70dp"
+      android:layout_width="120dp"
       android:layout_height="fill_parent"
       android:paddingVertical="16dp"
       android:textStyle="bold"
@@ -64,7 +64,7 @@
 
   <TextView
       android:id="@+id/tvLosses"
-      android:layout_width="70dp"
+      android:layout_width="120dp"
       android:layout_height="fill_parent"
       android:paddingVertical="16dp"
       android:gravity="center"
