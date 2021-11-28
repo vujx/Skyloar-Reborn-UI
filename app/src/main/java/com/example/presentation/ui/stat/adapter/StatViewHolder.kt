@@ -8,7 +8,7 @@ class StatViewHolder(
 ) : RecyclerView.ViewHolder(itemStat) {
 
   fun bind(
-    statValue: StatEntity?,
+    statValue: MutableMap<String, StatEntity?>,
     position: Int,
   ) {
     itemStat.bind(statValue, position)

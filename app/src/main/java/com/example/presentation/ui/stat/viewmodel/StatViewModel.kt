@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 class StatViewModel(private val getStatValues: GetStatValues) :
   ViewModel() {
 
-  private val _statValues = MutableLiveData<Resource<List<StatEntity?>>>()
-  val statValues: LiveData<Resource<List<StatEntity?>>> = _statValues
+  private val _statValues = MutableLiveData<Resource<MutableMap<String, StatEntity?>>>()
+  val statValues: LiveData<Resource<MutableMap<String, StatEntity?>>> = _statValues
 
   init {
     getListOfStatValues()

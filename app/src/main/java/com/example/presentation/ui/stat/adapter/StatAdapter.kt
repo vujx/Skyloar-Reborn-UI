@@ -6,11 +6,10 @@ import com.example.data.model.stat.StatEntity
 
 class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
 
-  private val listOfStatValue = mutableListOf<StatEntity?>()
+  private var listOfStatValue = mutableMapOf<String, StatEntity?>()
 
-  fun setListOfStatValues(list: List<StatEntity?>) {
-    listOfStatValue.clear()
-    listOfStatValue.addAll(list)
+  fun setListOfStatValues(list: MutableMap<String, StatEntity?>) {
+    listOfStatValue = list
     notifyDataSetChanged()
   }
 
@@ -20,7 +19,7 @@ class StatAdapter : RecyclerView.Adapter<StatViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: StatViewHolder, position: Int) {
-    listOfStatValue[position]?.let { holder.bind(it, position) }
+    holder.bind(listOfStatValue, position)
   }
 
   override fun getItemCount(): Int = listOfStatValue.size

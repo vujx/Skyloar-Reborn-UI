@@ -5,6 +5,7 @@ import android.animation.Animator.AnimatorListener
 import android.view.View
 import android.view.animation.BounceInterpolator
 import com.example.presentation.SplashActivity
+import java.util.regex.Pattern
 
 fun View.visible(visible: Boolean) {
   visibility = if (visible) View.VISIBLE else View.GONE
@@ -29,3 +30,9 @@ fun View.animateDown(actionToEndOfAnim: () -> Unit) {
     )
   }.start()
 }
+
+fun numberWithCommas(x: Number): String {
+  val regex = """\B(?=(\d{3})+(?!\d))""".toRegex()
+  return x.toString().replace(regex, ",")
+}
+

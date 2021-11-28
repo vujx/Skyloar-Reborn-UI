@@ -55,14 +55,14 @@ class StatFragment : BaseFragment(R.layout.fragment_stat) {
           }
           is Resource.Loading -> {
             setProgressBarAndSearchResult(visibilityProgressBar = true)
-            adapter.setListOfStatValues(emptyList())
+            adapter.setListOfStatValues(mutableMapOf())
           }
           is Resource.Failure -> {
             setProgressBarAndSearchResult(visibilityErrorView = true)
             binding.errorView.onRetryClick = {
               viewModelStat.getListOfStatValues()
             }
-            adapter.setListOfStatValues(emptyList())
+            adapter.setListOfStatValues(mutableMapOf())
             binding.errorView.showError(result.error, dictionary.getStringRes(R.string.stat_not_found))
           }
           else -> setProgressBarAndSearchResult()
