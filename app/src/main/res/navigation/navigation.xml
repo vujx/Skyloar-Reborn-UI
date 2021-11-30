@@ -28,10 +28,18 @@
       tools:layout="@layout/fragment_leader_boards">
     <action
         android:id="@+id/action_leaderboardsFragment_to_pvEFragment"
-        app:destination="@id/pvEFragment" />
+        app:destination="@id/pvEFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"/>
     <action
         android:id="@+id/action_leaderboardsFragment_to_pvPFragment"
-        app:destination="@id/pvPFragment" />
+        app:destination="@id/pvPFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"/>
   </fragment>
   <fragment
       android:id="@+id/docFragment"
