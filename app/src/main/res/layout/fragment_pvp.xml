@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/tvPlayer"
-            android:layout_width="192dp"
+            android:layout_width="182dp"
             android:layout_height="wrap_content"
             android:background="@color/darkred"
             android:gravity="center"
